@@ -1725,6 +1725,8 @@ window.goRecord=function goRecord(){
   document.getElementById('recSection').style.display='block';
   document.getElementById('recPanel').style.display='block';
   ['recLiveCard','txCard','analyzingCard'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+  const bpc=document.getElementById('buildProgressCard');if(bpc)bpc.style.display='none';
+  document.getElementById('recSection').style.display='none';
   document.getElementById('tplBadge').textContent=selTpl.name+' template';
   setSP(2);window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1839,11 +1841,92 @@ window.addMoreRec=function addMoreRec(){
 
 window.buildResume=async function buildResume(){
   const txt=document.getElementById('txBox').textContent||'';
-  if(txt.trim().length<20){showErr('Please tell us a bit more about yourself first.');return;}
-  hideErr();
+  if(txt.trim().length<20){
+    // Show error inside txCard
+    const e=document.getElementById('errMsg');
+    if(e){e.textContent='Please tell us a bit more about yourself first.';e.classList.add('show');}
+    return;
+  }
+  const e=document.getElementById('errMsg');if(e)e.classList.remove('show');
+
+  // Hide transcript card, show build progress
   const tc=document.getElementById('txCard');if(tc)tc.style.display='none';
   document.getElementById('recPanel').style.display='none';
-  const anim=startKW(txt);setSP(4);
+  const recSection=document.getElementById('recSection');
+
+  // Show inline build progress card
+  let buildCard=document.getElementById('buildProgressCard');
+  if(!buildCard){
+    buildCard=document.createElement('div');
+    buildCard.id='buildProgressCard';
+    buildCard.style.cssText='max-width:580px;margin:0 auto 2rem;padding:0 1.5rem';
+    buildCard.innerHTML=`
+      <div style="background:white;border:1px solid #e5e7eb;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08)">
+        <div id="bpBar" style="height:4px;background:linear-gradient(90deg,#1a6b5a,#e8601c);width:5%;transition:width .6s ease"></div>
+        <div style="padding:2.5rem 2rem;text-align:center">
+          <div style="width:52px;height:52px;border-radius:50%;background:#f0fdf4;border:2px solid #c8e6dc;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="9" y="11" width="6" height="9" rx="1" fill="#1a6b5a" opacity=".3"/><path d="M12 2a2 2 0 0 1 2 2v4a2 2 0 0 1-4 0V4a2 2 0 0 1 2-2z" fill="#1a6b5a"/><line x1="9" y1="10" x2="5" y2="10" stroke="#1a6b5a" stroke-width="1.5" stroke-linecap="round"/><line x1="15" y1="10" x2="19" y2="10" stroke="#1a6b5a" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div id="bpTitle" style="font-size:1.1rem;font-weight:700;color:#0f1f3d;margin-bottom:.35rem">Analyzing your recording...</div>
+          <div id="bpSub" style="font-size:.8rem;color:#6b7280;margin-bottom:1.5rem">Reading your story</div>
+          <div style="background:#f0f0f0;border-radius:99px;height:6px;overflow:hidden;margin-bottom:.5rem">
+            <div id="bpInner" style="height:100%;border-radius:99px;background:linear-gradient(90deg,#1a6b5a,#22876f);width:5%;transition:width .8s ease"></div>
+          </div>
+          <div id="bpPct" style="font-size:.7rem;color:#94a3b8;margin-top:.4rem">5%</div>
+        </div>
+        <!-- Floating keyword words -->
+        <div id="bpKeywords" style="height:48px;overflow:hidden;position:relative;border-top:1px solid #f0f0f0;background:#fafafa;padding:0 1rem"></div>
+      </div>`;
+    if(recSection)recSection.parentNode.insertBefore(buildCard,recSection.nextSibling);
+  }
+  // Insert inside page-build if not already there
+  const pageBuild = document.getElementById('page-build');
+  if(pageBuild && !document.getElementById('buildProgressCard')){
+    pageBuild.appendChild(buildCard);
+  }
+  // Hide rec section, show build card
+  document.getElementById('recSection').style.display='none';
+  buildCard.style.display='block';
+  setSP(4);
+
+  // Animate progress through stages
+  const stages=[
+    {pct:15,title:'Analyzing your recording...',sub:'Reading your story'},
+    {pct:35,title:'Finding your strengths...',sub:'You have more than you think'},
+    {pct:55,title:'Writing your resume...',sub:'Turning words into opportunity'},
+    {pct:75,title:'Matching to jobs...',sub:'Finding the best roles for you'},
+    {pct:90,title:'Almost there...',sub:'Polishing the final touches'},
+  ];
+  let si=0;
+  const setStage=(s)=>{
+    const t=document.getElementById('bpTitle');
+    const sb=document.getElementById('bpSub');
+    const bar=document.getElementById('bpInner');
+    const top=document.getElementById('bpBar');
+    const pct=document.getElementById('bpPct');
+    if(t)t.textContent=s.title;
+    if(sb)sb.textContent=s.sub;
+    if(bar){bar.style.width=s.pct+'%';}
+    if(top){top.style.width=s.pct+'%';}
+    if(pct)pct.textContent=s.pct+'%';
+  };
+  setStage(stages[0]);
+  const stageInt=setInterval(()=>{
+    si=Math.min(si+1,stages.length-1);
+    setStage(stages[si]);
+  },2200);
+
+  // Float keywords
+  const kws=txt.split(/\s+/).filter(w=>w.length>4).slice(0,20);
+  let ki=0;
+  const kwInt=setInterval(()=>{
+    const kw=kws[ki%kws.length];ki++;
+    const span=document.createElement('span');
+    span.textContent=kw;
+    span.style.cssText=`position:absolute;font-size:.65rem;font-weight:600;color:#1a6b5a;opacity:0;left:${10+Math.random()*70}%;top:8px;transition:opacity .4s,transform 1.5s`;
+    const kpEl=document.getElementById('bpKeywords');
+    if(kpEl){kpEl.appendChild(span);requestAnimationFrame(()=>{span.style.opacity='.8';span.style.transform='translateY(-4px)';});setTimeout(()=>span.remove(),2000);}
+  },400);
 
   try{
     const res=await fetch('https://api.anthropic.com/v1/messages',{
@@ -1865,174 +1948,141 @@ Return ONLY valid JSON, no markdown:
 Return AT LEAST 15 jobRecommendations across multiple industries varying seniority. Return 5-6 industriesSummary.`}]
       })
     });
+
+    clearInterval(stageInt);clearInterval(kwInt);
+
     if(!res.ok){
-      const e=await res.json().catch(()=>({}));
-      if(res.status===401)throw new Error('Invalid API key. Please check your key.');
-      if(res.status===403)throw new Error('API key has no access. Enable billing at console.anthropic.com.');
-      if(res.status===429)throw new Error('Too many requests. Wait a moment and try again.');
-      throw new Error(e?.error?.message||`Error ${res.status}`);
+      const err=await res.json().catch(()=>({}));
+      buildCard.style.display='none';
+      const tc2=document.getElementById('txCard');if(tc2)tc2.style.display='block';
+      const e2=document.getElementById('errMsg');
+      if(e2){
+        e2.textContent='⚠ '+(res.status===401?'Invalid API key.':res.status===429?'Too many requests — wait a moment.':err?.error?.message||`Error ${res.status}`);
+        e2.classList.add('show');
+      }
+      setSP(3);return;
     }
+
     const data=await res.json();
     if(data.error)throw new Error(data.error.message);
     const r=JSON.parse(data.content[0].text.replace(/```json|```/g,'').trim());
-    anim.stop();document.getElementById('kwStage').classList.remove('show');
-    renderResults(r);
-  }catch(e){
-    anim.stop();document.getElementById('kwStage').classList.remove('show');
-    const tc2=document.getElementById('txCard');if(tc2)tc2.style.display='block';
-    setSP(3);showErr('⚠ '+( e.message||'Something went wrong. Please try again.'));
+
+    // Final progress
+    setStage({pct:100,title:'Resume ready!',sub:'Download and start applying'});
+    setTimeout(()=>{
+      buildCard.style.display='none';
+      document.getElementById('recSection').style.display='none';
+      renderResults(r);
+    },600);
+
+  }catch(err){
+    clearInterval(stageInt);clearInterval(kwInt);
+    buildCard.style.display='none';
+    document.getElementById('recSection').style.display='block';
+    const tc3=document.getElementById('txCard');if(tc3)tc3.style.display='block';
+    const e3=document.getElementById('errMsg');
+    if(e3){e3.textContent='⚠ '+(err.message||'Something went wrong. Please try again.');e3.classList.add('show');}
+    setSP(3);
   }
 }
 
 function renderResults(r){
-  window._r=r;const t=selTpl;
+  window._r=r;
+  // Show results section
+  const res=document.getElementById('results');
+  if(res)res.classList.add('show');
 
-  // Mode badge
-  const mb=document.getElementById('modeBadge');
-  if(r.conversationMode==='INTERVIEW'){
-    mb.style.background='rgba(16,217,138,0.08)';mb.style.border='1px solid rgba(16,217,138,0.2)';mb.style.color='#10d98a';
-    mb.innerHTML='<svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Interview mode detected — candidate info extracted';
-    mb.classList.add('show');
-  } else {
-    mb.style.background='rgba(59,108,250,0.08)';mb.style.border='1px solid rgba(59,108,250,0.2)';mb.style.color='var(--blue-l)';
-    mb.innerHTML='<svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="currentColor"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Solo mode — resume built from your recording';
-    mb.classList.add('show');
+  // Render resume body using selected template
+  const t=selTpl;
+  const body=document.getElementById('resumeBody');
+  if(body){
+    const exp=(r.experience||[]).map(j=>`
+      <div style="margin-bottom:1rem">
+        <div style="font-weight:700;font-size:.9rem;color:#0f1f3d">${j.title} · ${j.company}</div>
+        <div style="font-size:.75rem;color:#6b7280;margin:.15rem 0 .3rem">${j.dates||''}</div>
+        ${(j.bullets||[]).map(b=>`<div style="font-size:.82rem;color:#374151;line-height:1.6">• ${b}</div>`).join('')}
+      </div>`).join('');
+    const edu=(r.education||[]).map(e=>`
+      <div style="font-size:.82rem;color:#374151;margin-bottom:.25rem"><strong>${e.degree}</strong> — ${e.institution}${e.year?', '+e.year:''}</div>`).join('');
+    const skills=(r.skills||[]).map(s=>`<span style="background:rgba(26,107,90,.08);border:1px solid rgba(26,107,90,.2);color:#1a6b5a;padding:.2rem .6rem;border-radius:4px;font-size:.75rem;font-weight:600">${s}</span>`).join('');
+    body.innerHTML=`
+      <div style="border-bottom:2px solid ${t.a||'#1a6b5a'};padding-bottom:.75rem;margin-bottom:1rem">
+        <div style="font-size:1.5rem;font-weight:800;color:${t.a||'#0f1f3d'};letter-spacing:-.02em">${r.name||'Your Name'}</div>
+        <div style="font-size:.78rem;color:#6b7280;margin-top:.2rem">${[r.email,r.phone,r.location].filter(Boolean).join(' · ')}</div>
+      </div>
+      ${r.summary?`<div style="margin-bottom:1.25rem">
+        <div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:${t.a||'#1a6b5a'};margin-bottom:.4rem">Summary</div>
+        <div style="font-size:.85rem;color:#374151;line-height:1.65">${r.summary}</div>
+      </div>`:''}
+      ${exp?`<div style="margin-bottom:1.25rem">
+        <div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:${t.a||'#1a6b5a'};margin-bottom:.6rem">Experience</div>
+        ${exp}
+      </div>`:''}
+      ${edu?`<div style="margin-bottom:1.25rem">
+        <div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:${t.a||'#1a6b5a'};margin-bottom:.4rem">Education</div>
+        ${edu}
+      </div>`:''}
+      ${skills?`<div>
+        <div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:${t.a||'#1a6b5a'};margin-bottom:.5rem">Skills</div>
+        <div style="display:flex;flex-wrap:wrap;gap:.35rem">${skills}</div>
+      </div>`:''}`;
   }
-
-  // Resume HTML based on template
-  let rHTML='';
-  const ac=t.a,bg=t.bg,dk=t.dark;
-
-  if(t.centered){
-    rHTML=`<div style="background:${bg};padding:2rem;border-radius:8px;text-align:center">
-      <div style="font-size:2rem;font-weight:800;letter-spacing:-.04em;color:${ac};margin-bottom:.25rem">${r.name}</div>
-      <div style="font-size:.72rem;color:${dk?'rgba(255,255,255,.5)':'#888'};margin-bottom:.5rem">${r.email} &nbsp;·&nbsp; ${r.phone} &nbsp;·&nbsp; ${r.location}</div>
-      <div style="height:2px;background:${ac};margin-bottom:1.25rem"></div>
-      <div style="text-align:left">
-        <div style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${ac};margin-bottom:.5rem;text-align:center">Summary</div>
-        <div style="font-size:.875rem;color:${dk?'rgba(255,255,255,.7)':'#444'};line-height:1.7;margin-bottom:1rem;text-align:left">${r.summary}</div>
-        <div style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${ac};margin-bottom:.75rem;text-align:center">Experience</div>
-        ${(r.experience||[]).map(e=>`<div style="margin-bottom:.875rem"><div style="font-weight:700;font-size:.875rem;color:${dk?'white':'#111'}">${e.title}</div><div style="font-size:.68rem;color:${dk?'rgba(255,255,255,.45)':'#888'};margin-bottom:.25rem">${e.company} · ${e.dates}</div><div style="font-size:.8rem;color:${dk?'rgba(255,255,255,.65)':'#555'};line-height:1.65">${(e.bullets||[]).map(b=>`• ${b}`).join('<br>')}</div></div>`).join('')}
-        <div style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${ac};margin-bottom:.75rem;margin-top:.75rem;text-align:center">Education</div>
-        ${(r.education||[]).map(e=>`<div style="margin-bottom:.5rem"><div style="font-weight:700;font-size:.875rem;color:${dk?'white':'#111'}">${e.degree}</div><div style="font-size:.68rem;color:${dk?'rgba(255,255,255,.45)':'#888'}">${e.institution} · ${e.year}</div></div>`).join('')}
-        <div style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${ac};margin-bottom:.5rem;margin-top:.75rem;text-align:center">Skills</div>
-        <div style="display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center">${(r.skills||[]).map(s=>`<span style="background:${ac}18;border:1px solid ${ac}35;color:${ac};padding:.22rem .6rem;border-radius:20px;font-size:.72rem;font-weight:500">${s}</span>`).join('')}</div>
-      </div>
-    </div>`;
-  } else if(t.cat==='two'||t.cat==='two-col'||t.two){
-    rHTML=`<div style="display:grid;grid-template-columns:220px 1fr;min-height:400px;border-radius:8px;overflow:hidden">
-      <div style="background:${t.sb||ac};padding:1.5rem;color:white">
-        <div style="font-size:1.2rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.2rem;color:white">${r.name}</div>
-        <div style="font-size:.62rem;opacity:.65;margin-bottom:1rem;line-height:1.6">${r.email}<br>${r.phone}<br>${r.location}</div>
-        <div style="font-size:.55rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;opacity:.55;margin-bottom:.4rem">Skills</div>
-        ${(r.skills||[]).map(s=>`<div style="background:rgba(255,255,255,.12);border-radius:3px;padding:.18rem .5rem;font-size:.65rem;margin-bottom:3px;color:white">${s}</div>`).join('')}
-      </div>
-      <div style="padding:1.5rem;background:${bg}">
-        <div style="font-size:.55rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:${ac};margin-bottom:.4rem">Summary</div>
-        <div style="font-size:.8rem;color:${dk?'rgba(255,255,255,.7)':'#444'};line-height:1.65;margin-bottom:1rem">${r.summary}</div>
-        <div style="font-size:.55rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:${ac};margin-bottom:.5rem">Experience</div>
-        ${(r.experience||[]).map(e=>`<div style="margin-bottom:.75rem"><div style="font-weight:700;font-size:.84rem;color:${dk?'white':'#111'}">${e.title}</div><div style="font-size:.65rem;color:${dk?'rgba(255,255,255,.4)':'#888'};margin-bottom:.25rem">${e.company} · ${e.dates}</div><div style="font-size:.76rem;color:${dk?'rgba(255,255,255,.65)':'#555'};line-height:1.6">${(e.bullets||[]).map(b=>`• ${b}`).join('<br>')}</div></div>`).join('')}
-      </div>
-    </div>`;
-  } else if(t.cat==='bold'||t.cat==='creative'){
-    rHTML=`<div style="background:${bg};padding:2rem;border-radius:8px">
-      <div style="font-size:2rem;font-weight:900;letter-spacing:-.04em;color:${ac};line-height:1;margin-bottom:.25rem">${r.name}</div>
-      <div style="font-size:.68rem;color:${dk?'rgba(255,255,255,.4)':'#999'};margin-bottom:1rem">${r.email} · ${r.phone} · ${r.location}</div>
-      <div style="height:3px;background:${ac};margin-bottom:1rem"></div>
-      <div style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${ac};margin-bottom:.5rem">Summary</div>
-      <div style="font-size:.84rem;color:${dk?'rgba(255,255,255,.7)':'#444'};line-height:1.7;margin-bottom:1rem">${r.summary}</div>
-      <div style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${ac};margin-bottom:.5rem">Experience</div>
-      ${(r.experience||[]).map(e=>`<div style="margin-bottom:.875rem"><div style="font-weight:700;font-size:.875rem;color:${ac}">${e.title}</div><div style="font-size:.65rem;color:${dk?'rgba(255,255,255,.4)':'#999'};margin-bottom:.25rem">${e.company} · ${e.dates}</div><div style="font-size:.8rem;color:${dk?'rgba(255,255,255,.65)':'#555'};line-height:1.65">${(e.bullets||[]).map(b=>`• ${b}`).join('<br>')}</div></div>`).join('')}
-      <div style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${ac};margin-bottom:.5rem;margin-top:.75rem">Skills</div>
-      <div style="display:flex;flex-wrap:wrap;gap:.35rem">${(r.skills||[]).map(s=>`<span style="background:${ac};color:${dk?bg:'white'};padding:.22rem .6rem;border-radius:3px;font-size:.7rem;font-weight:600">${s}</span>`).join('')}</div>
-    </div>`;
-  } else if(t.cat==='modern'||t.cat==='tech'||t.cat==='healthcare'){
-    rHTML=`<div style="background:${bg};border-radius:8px;overflow:hidden">
-      <div style="background:${ac};padding:1.5rem 2rem">
-        <div style="font-size:1.75rem;font-weight:800;letter-spacing:-.04em;color:white;margin-bottom:.15rem">${r.name}</div>
-        <div style="font-size:.68rem;color:rgba(255,255,255,.7)">${r.email} · ${r.phone} · ${r.location}</div>
-      </div>
-      <div style="padding:1.5rem 2rem">
-        <div style="font-size:.55rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:${ac};margin-bottom:.4rem">Summary</div>
-        <div style="font-size:.84rem;color:#444;line-height:1.7;margin-bottom:1rem">${r.summary}</div>
-        <div style="font-size:.55rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:${ac};margin-bottom:.5rem">Experience</div>
-        ${(r.experience||[]).map(e=>`<div style="margin-bottom:.75rem;padding-left:.75rem;border-left:3px solid ${ac}"><div style="font-weight:700;font-size:.875rem;color:#111">${e.title}</div><div style="font-size:.65rem;color:#888;margin-bottom:.2rem">${e.company} · ${e.dates}</div><div style="font-size:.78rem;color:#555;line-height:1.6">${(e.bullets||[]).map(b=>`• ${b}`).join('<br>')}</div></div>`).join('')}
-        <div style="font-size:.55rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:${ac};margin:.75rem 0 .5rem">Skills</div>
-        <div style="display:flex;flex-wrap:wrap;gap:.35rem">${(r.skills||[]).map(s=>`<span style="background:${ac}18;border:1px solid ${ac}40;color:${ac};padding:.2rem .55rem;border-radius:4px;font-size:.7rem;font-weight:500">${s}</span>`).join('')}</div>
-      </div>
-    </div>`;
-  } else {
-    rHTML=`<div>
-      <div style="font-size:1.75rem;font-weight:800;letter-spacing:-.04em;color:${ac};margin-bottom:.2rem">${r.name}</div>
-      <div style="font-size:.68rem;color:#888;padding-bottom:1rem;border-bottom:${t.cat==='classic'?`2px solid ${ac}`:'1px solid #eee'};margin-bottom:.25rem">${r.email} · ${r.phone} · ${r.location}</div>
-      <div class="r-sec" style="color:${ac}">Summary</div><div class="r-summary">${r.summary}</div>
-      <div class="r-sec" style="color:${ac}">Experience</div>
-      ${(r.experience||[]).map(e=>`<div style="margin-bottom:.875rem"><div class="r-item-title">${e.title}</div><div class="r-item-sub">${e.company} · ${e.dates}</div><div class="r-item-desc">${(e.bullets||[]).map(b=>`• ${b}`).join('<br>')}</div></div>`).join('')}
-      <div class="r-sec" style="color:${ac}">Education</div>
-      ${(r.education||[]).map(e=>`<div style="margin-bottom:.5rem"><div class="r-item-title">${e.degree}</div><div class="r-item-sub">${e.institution} · ${e.year}</div></div>`).join('')}
-      <div class="r-sec" style="color:${ac}">Skills</div>
-      <div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.25rem">${(r.skills||[]).map(s=>`<span style="background:${ac}15;border:1px solid ${ac}25;color:${ac};padding:.2rem .55rem;border-radius:4px;font-size:.7rem;font-weight:500">${s}</span>`).join('')}</div>
-    </div>`;
-  }
-  document.getElementById('resumeBody').innerHTML=rHTML;
 
   // Transferable skills
-  document.getElementById('insightsGrid').innerHTML=`
-    <div class="insight-card skills" style="grid-column:1/-1;background:white;border:1px solid #e5e7eb;border-radius:14px;padding:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.05)">
-      <div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1a6b5a;margin-bottom:.2rem;display:flex;align-items:center;gap:.4rem"><div style="width:7px;height:7px;border-radius:50%;background:#1a6b5a"></div>Your transferable strengths</div>
+  const ig=document.getElementById('insightsGrid');
+  if(ig&&r.transferableSkills){
+    ig.innerHTML=`<div style="background:white;border:1px solid #e5e7eb;border-radius:14px;padding:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.05);margin-bottom:1.5rem">
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1a6b5a;margin-bottom:.2rem">Your transferable strengths</div>
       <div style="font-size:.75rem;color:#6b7280;margin-bottom:1rem">Skills employers value across industries</div>
-      <div class="tr-grid">${(r.transferableSkills||[]).map(s=>`<div class="tr-item"><div class="tr-title">${s.skill}</div><div class="tr-desc">${s.reason}</div></div>`).join('')}</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem">
+        ${(r.transferableSkills||[]).map(s=>`
+          <div style="background:#f0fdf4;border:1px solid #c8e6dc;border-radius:10px;padding:.875rem">
+            <div style="font-weight:700;font-size:.82rem;color:#1a6b5a;margin-bottom:.25rem">${s.skill}</div>
+            <div style="font-size:.75rem;color:#4a6070;line-height:1.5">${s.reason}</div>
+          </div>`).join('')}
+      </div>
     </div>`;
+    ig.classList.add('show');
+  }
+
+  // Industry fit + salary
+  const indSec=document.getElementById('indSection');
+  const indList=document.getElementById('indList');
+  if(indList&&r.industriesSummary){
+    indList.innerHTML=(r.industriesSummary||[]).sort((a,b)=>b.fitScore-a.fitScore).map(ind=>{
+      const color=ind.fitScore>=80?'#1a6b5a':ind.fitScore>=60?'#e8601c':'#6b7280';
+      const bg=ind.fitScore>=80?'#f0fdf4':ind.fitScore>=60?'#fff7ed':'#f9fafb';
+      return `<div style="background:white;border:1px solid #e5e7eb;border-radius:12px;padding:1.25rem;margin-bottom:.75rem;box-shadow:0 1px 6px rgba(0,0,0,.04)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem">
+          <div style="font-weight:700;font-size:.9rem;color:#0f1f3d">${ind.name}</div>
+          <div style="background:${bg};color:${color};font-weight:700;font-size:.75rem;padding:.2rem .75rem;border-radius:20px">${ind.fitScore}% fit</div>
+        </div>
+        <div style="background:#f0f0f0;border-radius:99px;height:5px;overflow:hidden;margin-bottom:.6rem">
+          <div style="height:100%;width:${ind.fitScore}%;background:${color};border-radius:99px;transition:width 1s ease"></div>
+        </div>
+        <div style="font-size:.78rem;color:#4a6070;line-height:1.5;margin-bottom:.5rem">${ind.fitReason||''}</div>
+        ${ind.topRoles?`<div style="display:flex;gap:.35rem;flex-wrap:wrap">${ind.topRoles.map(role=>`<span style="background:#f8fafc;border:1px solid #e2e8f0;color:#374151;padding:.15rem .5rem;border-radius:4px;font-size:.68rem;font-weight:500">${role}</span>`).join('')}</div>`:''}
+      </div>`;
+    }).join('');
+    if(indSec)indSec.classList.add('show');
+  }
 
   // Job recommendations
-  const jobs=r.jobRecommendations||[];
-  if(jobs.length){
-    window._jobs=jobs;
-    const js=document.getElementById('jobsSection');js.classList.add('show');
-    document.getElementById('jobsCount').textContent=`${jobs.length} roles matched to your background`;
-    const inds=[...new Set(jobs.map(j=>j.industry))];
-    document.getElementById('jobsFilters').innerHTML=
-      `<button onclick="filterJobs('all',this)" style="padding:.22rem .6rem;border-radius:10px;border:1px solid var(--blue);background:var(--blue);color:white;font-size:.65rem;font-weight:600;cursor:pointer;font-family:var(--font)">All</button>`+
-      inds.map(i=>`<button onclick="filterJobs('${i}',this)" style="padding:.22rem .6rem;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:.65rem;font-weight:500;cursor:pointer;font-family:var(--font)">${i}</button>`).join('');
-    renderJobs(jobs);
+  window._jobs=r.jobRecommendations||[];
+  const jobSec=document.getElementById('jobsSection');
+  const jobsFilters=document.getElementById('jobsFilters');
+  if(jobsFilters&&window._jobs.length){
+    const inds=[...new Set(window._jobs.map(j=>j.industry))];
+    jobsFilters.innerHTML=`<button onclick="filterJobs('all',this)" style="padding:.25rem .7rem;border-radius:20px;border:1px solid #1a6b5a;background:#1a6b5a;color:white;font-size:.68rem;cursor:pointer;font-family:var(--font);font-weight:600">All</button>`+
+      inds.map(i=>`<button onclick="filterJobs('${i}',this)" style="padding:.25rem .7rem;border-radius:20px;border:1px solid #e5e7eb;background:white;color:#4a6070;font-size:.68rem;cursor:pointer;font-family:var(--font)">${i}</button>`).join('');
   }
+  document.getElementById('jobsCount').textContent=`${window._jobs.length} matches`;
+  filterJobs('all',null);
+  if(jobSec)jobSec.classList.add('show');
 
-  // Industries
-  const inds=r.industriesSummary||[];
-  if(inds.length){
-    document.getElementById('indSection').classList.add('show');
-    document.getElementById('indList').innerHTML=inds.sort((a,b)=>b.fitScore-a.fitScore).map(ind=>{
-      const col=ind.fitScore>=80?'#10d98a':ind.fitScore>=60?'#6b8ffb':'#8892a4';
-      return `<div class="ind-item">
-        <div class="ind-top"><div class="ind-name">${ind.name}</div><span class="badge badge-match">${ind.fitScore}% fit</span></div>
-        <div class="ind-score-bar"><div class="ind-score-fill" style="width:${ind.fitScore}%;background:${col}"></div></div>
-        <div class="ind-reason">${ind.fitReason}</div>
-        <div class="ind-roles">${(ind.topRoles||[]).map(r=>`<span class="ind-role">${r}</span>`).join('')}</div>
-      </div>`;}).join('');
-  }
-
-  document.getElementById('results').classList.add('show');
-  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function renderJobs(jobs){
-  document.getElementById('jobsList').innerHTML=jobs.map(j=>{
-    const fit=j.industryFitScore||75;
-    const fitCol=fit>=80?'#10d98a':fit>=60?'#6b8ffb':'#8892a4';
-    const demBadge=j.demandLevel==='High'?'badge-high':j.demandLevel==='Medium'?'badge-med':'badge-low';
-    const gaps=(j.skillsGap||[]).filter(g=>g&&g.trim());
-    return `<div class="job-card">
-      <div class="job-top">
-        <div><div class="job-title">${j.title}</div><div class="job-meta">${j.industry} · ${j.salaryRange||'Salary varies'}</div></div>
-        <div class="job-badges"><span class="badge badge-match">${fit}% match</span><span class="badge ${demBadge}">${j.demandLevel||'Medium'} demand</span></div>
-      </div>
-      <div class="fit-bar"><div class="fit-fill" style="width:${fit}%;background:${fitCol}"></div></div>
-      ${j.demandNote?`<div class="job-demand">📍 ${j.demandNote}</div>`:''}
-      ${gaps.length?`<div class="job-gap-label">Skills to develop</div><div class="job-gap-tags">${gaps.map(g=>`<span class="gap-tag">${g}</span>`).join('')}</div>`:''}
-      ${j.applicationTip?`<div class="job-tip"><div class="job-tip-label">Application tip</div><div class="job-tip-text">${j.applicationTip}</div></div>`:''}
-      ${j.searchTerms?`<div class="job-search"><span class="job-search-label">Search:</span><span class="job-search-term">${j.searchTerms}</span></div>`:''}
-    </div>`;}).join('');
-}
 
 window.filterJobs=function filterJobs(ind,btn){
   document.querySelectorAll('#jobsFilters button').forEach(b=>{b.style.background='var(--card)';b.style.color='var(--muted)';b.style.borderColor='var(--border)';});
@@ -2073,6 +2123,8 @@ window.resetAll=function resetAll(){
   document.getElementById('txDiv').style.display='none';
   document.getElementById('recPanel').style.display='block';
   ['recLiveCard','txCard','analyzingCard'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+  const bpc=document.getElementById('buildProgressCard');if(bpc)bpc.style.display='none';
+  document.getElementById('recSection').style.display='none';
   document.getElementById('recSection').style.display='none';
   document.getElementById('tplSection').style.display='block';
   document.getElementById('stepsBar').style.display='flex';
