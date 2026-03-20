@@ -97,11 +97,15 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
 .tpl-name-row2{display:flex;align-items:center;gap:.3rem;flex-wrap:wrap}
 .tpl-cat{font-size:.5rem;padding:.1rem .35rem;border-radius:6px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0}
 .tpl-industry{font-size:.48rem;padding:.08rem .3rem;border-radius:4px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);white-space:nowrap}
-.cat-classic{background:rgba(255,255,255,.06);color:var(--muted)}
-.cat-modern{background:var(--blue-dim);color:var(--blue-l)}
-.cat-bold{background:rgba(250,50,50,.1);color:#f87171}
-.cat-simple{background:rgba(16,217,138,.08);color:var(--green)}
-.cat-centered{background:rgba(234,179,8,.1);color:#ca8a04}
+.cat-corporate{background:rgba(14,31,61,.08);color:#0f1f3d}
+.cat-tech{background:rgba(37,99,235,.1);color:#1d4ed8}
+.cat-healthcare{background:rgba(4,120,87,.1);color:#047857}
+.cat-creative{background:rgba(124,58,237,.1);color:#7c3aed}
+.cat-business{background:rgba(30,58,95,.08);color:#1e3a5f}
+.cat-education{background:rgba(123,63,0,.08);color:#7b3f00}
+.cat-two-col{background:rgba(14,116,144,.1);color:#0e7490}
+.cat-centered{background:rgba(234,179,8,.1);color:#b45309}
+.cat-minimal{background:rgba(55,65,81,.08);color:#374151}
 
 /* Preview mini styles */
 .p{width:100%;height:100%;font-size:5px;line-height:1.4;overflow:hidden;color:#333}
@@ -480,7 +484,7 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
         <div style="padding:1.5rem;background:white">
           <div style="border-bottom:2px solid #1a6b5a;padding-bottom:.6rem;margin-bottom:.75rem">
             <div style="font-size:1.2rem;font-weight:800;color:#0f1f3d;letter-spacing:-.02em">Jordan Williams</div>
-            <div style="font-size:.6rem;color:#64748b;margin-top:.1rem">jordan@email.com · (555) 000-0000 · Brooklyn, NY</div>
+            <div style="font-size:.6rem;color:#64748b;margin-top:.1rem"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1a7075687e7b745a7f777b737634797577">[email&#160;protected]</a> · (555) 000-0000 · Brooklyn, NY</div>
           </div>
           <!-- Summary -->
           <div style="font-size:.5rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1a6b5a;margin-bottom:.3rem">Summary</div>
@@ -819,13 +823,16 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
     <div class="sec-title">Choose your resume style</div>
     <div class="sec-sub">Pick the look that fits you. You can change it anytime.</div>
     <div class="filter-row">
-      <button class="filter on" onclick="filterTpl('all',this)">All 29</button>
-      <button class="filter" onclick="filterTpl('classic',this)">Classic</button>
-      <button class="filter" onclick="filterTpl('modern',this)">Modern</button>
-      <button class="filter" onclick="filterTpl('bold',this)">Bold</button>
-      <button class="filter" onclick="filterTpl('simple',this)">Simple</button>
-      <button class="filter" onclick="filterTpl('two',this)">Two Column</button>
-      <button class="filter" onclick="filterTpl('centered',this)">Centered Name</button>
+      <button class="filter on" onclick="filterTpl('all',this)">All 50</button>
+      <button class="filter" onclick="filterTpl('corporate',this)">Corporate</button>
+      <button class="filter" onclick="filterTpl('tech',this)">Tech</button>
+      <button class="filter" onclick="filterTpl('healthcare',this)">Healthcare</button>
+      <button class="filter" onclick="filterTpl('creative',this)">Creative</button>
+      <button class="filter" onclick="filterTpl('business',this)">Business</button>
+      <button class="filter" onclick="filterTpl('education',this)">Education</button>
+      <button class="filter" onclick="filterTpl('two-col',this)">Two Column</button>
+      <button class="filter" onclick="filterTpl('centered',this)">Centered</button>
+      <button class="filter" onclick="filterTpl('minimal',this)">Minimal</button>
     </div>
     <div class="tpl-grid" id="tplGrid"></div>
     <button class="proceed" onclick="goRecord()">
@@ -1218,7 +1225,7 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── CONFIG ──
 const API_KEY = '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';
 
@@ -1279,7 +1286,7 @@ function fullPreviewHTML(t){
       ${skillsSection}
     </div>`;}
 
-  if(t.cat==='two'){
+  if(t.cat==='two'||t.cat==='two-col'||t.two){
     return `<div style="display:grid;grid-template-columns:240px 1fr;min-height:600px;font-family:Inter,sans-serif">
       <div style="background:${t.sb||c};padding:2rem;color:white">
         <div style="width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.2);margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;color:white">JW</div>
@@ -1300,7 +1307,7 @@ function fullPreviewHTML(t){
       </div>
     </div>`;}
 
-  if(t.cat==='bold'){
+  if(t.cat==='bold'||t.cat==='creative'){
     return `<div style="background:${bg};padding:2.5rem;font-family:Inter,sans-serif">
       <div style="font-size:2.5rem;font-weight:900;letter-spacing:-.04em;color:${c};line-height:1;margin-bottom:.25rem">James Williams</div>
       <div style="font-size:.75rem;color:${mutedColor};margin-bottom:1rem">james@email.com &nbsp;·&nbsp; (917) 555-0123 &nbsp;·&nbsp; Brooklyn, New York</div>
@@ -1315,7 +1322,7 @@ function fullPreviewHTML(t){
       ${skillsSection}
     </div>`;}
 
-  if(t.cat==='modern'){
+  if(t.cat==='modern'||t.cat==='tech'||t.cat==='healthcare'){
     return `<div style="background:${bg};font-family:Inter,sans-serif;overflow:hidden">
       <div style="background:${c};padding:2rem">
         <div style="font-size:2rem;font-weight:800;letter-spacing:-.04em;color:white;margin-bottom:.25rem">James Williams</div>
@@ -1348,36 +1355,75 @@ function fullPreviewHTML(t){
   </div>`;
 }
 const TPLS=[
-  {id:1,name:'Executive',cat:'classic',a:'#1a1a2e',bg:'#fff'},
-  {id:2,name:'Timeless',cat:'classic',a:'#2c3e50',bg:'#fff'},
-  {id:3,name:'Heritage',cat:'classic',a:'#7b3f00',bg:'#fdf9f3'},
-  {id:4,name:'Prestige',cat:'classic',a:'#1b4332',bg:'#fff'},
-  {id:5,name:'Formal',cat:'classic',a:'#333',bg:'#fff'},
-  {id:6,name:'Slate',cat:'modern',a:'#2563eb',bg:'#f8fafc'},
-  {id:7,name:'Emerald',cat:'modern',a:'#059669',bg:'#f0fdf4'},
-  {id:8,name:'Violet',cat:'modern',a:'#7c3aed',bg:'#faf5ff'},
-  {id:9,name:'Steel',cat:'modern',a:'#475569',bg:'#f1f5f9'},
-  {id:10,name:'Coral',cat:'modern',a:'#e85d04',bg:'#fff7ed'},
-  {id:11,name:'Impact',cat:'bold',a:'#dc2626',bg:'#fff'},
-  {id:12,name:'Midnight',cat:'bold',a:'#fff',bg:'#0f172a',dark:true},
-  {id:13,name:'Gold',cat:'bold',a:'#d97706',bg:'#1c1917',dark:true},
-  {id:14,name:'Electric',cat:'bold',a:'#06b6d4',bg:'#0c1445',dark:true},
-  {id:15,name:'Crimson',cat:'bold',a:'#fff',bg:'#9b1c1c',dark:true},
-  {id:16,name:'Clean',cat:'simple',a:'#374151',bg:'#fff'},
-  {id:17,name:'Minimal',cat:'simple',a:'#6b7280',bg:'#fff'},
-  {id:18,name:'Pure',cat:'simple',a:'#111',bg:'#fff'},
-  {id:19,name:'Soft',cat:'simple',a:'#4b5563',bg:'#f9fafb'},
-  {id:20,name:'Airy',cat:'simple',a:'#0ea5e9',bg:'#fff'},
-  {id:21,name:'Split',cat:'two',a:'#1e40af',bg:'#eff6ff',sb:'#1e40af'},
-  {id:22,name:'Divide',cat:'two',a:'#065f46',bg:'#ecfdf5',sb:'#065f46'},
-  {id:23,name:'Contrast',cat:'two',a:'#fff',bg:'#1f2937',sb:'#374151',dark:true},
-  {id:24,name:'Sage',cat:'two',a:'#3f3f46',bg:'#fafaf9',sb:'#a8a29e'},
-  {id:25,name:'Dusk',cat:'two',a:'#fff',bg:'#312e81',sb:'#4338ca',dark:true},
-  // CENTERED NAME
-  {id:26,name:'Centered',cat:'centered',a:'#1a1a2e',bg:'#fff',centered:true},
-  {id:27,name:'Symmetry',cat:'centered',a:'#0f766e',bg:'#f0fdf4',centered:true},
-  {id:28,name:'Spotlight',cat:'centered',a:'#7c3aed',bg:'#faf5ff',centered:true},
-  {id:29,name:'Pinnacle',cat:'centered',a:'#fff',bg:'#0f172a',dark:true,centered:true},
+  // ── CORPORATE / EXECUTIVE (ATS-first, clean, authoritative) ──
+  {id:1, name:'Boardroom',    cat:'corporate', a:'#0d1b2a', bg:'#ffffff'},
+  {id:2, name:'Director',     cat:'corporate', a:'#1a2744', bg:'#ffffff'},
+  {id:3, name:'C-Suite',      cat:'corporate', a:'#14213d', bg:'#fafafa'},
+  {id:4, name:'Parliament',   cat:'corporate', a:'#2d3436', bg:'#ffffff'},
+  {id:5, name:'Chancellor',   cat:'corporate', a:'#1e3a5f', bg:'#ffffff'},
+  {id:6, name:'Pinnacle',     cat:'corporate', a:'#0f2942', bg:'#f8f9fa'},
+  {id:7, name:'Executive',    cat:'corporate', a:'#22223b', bg:'#ffffff'},
+  {id:8, name:'Meridian',     cat:'corporate', a:'#1b3a4b', bg:'#ffffff'},
+
+  // ── TECH / ENGINEERING ──
+  {id:9,  name:'Silicon',     cat:'tech', a:'#2563eb', bg:'#f8fafc'},
+  {id:10, name:'Stack',       cat:'tech', a:'#0f172a', bg:'#f1f5f9'},
+  {id:11, name:'Deploy',      cat:'tech', a:'#1d4ed8', bg:'#eff6ff'},
+  {id:12, name:'Kernel',      cat:'tech', a:'#334155', bg:'#f8fafc'},
+  {id:13, name:'Commit',      cat:'tech', a:'#0369a1', bg:'#f0f9ff'},
+  {id:14, name:'Agile',       cat:'tech', a:'#0e7490', bg:'#ecfeff'},
+  {id:15, name:'Pipeline',    cat:'tech', a:'#1e40af', bg:'#ffffff'},
+
+  // ── HEALTHCARE / SCIENCE ──
+  {id:16, name:'Vitals',      cat:'healthcare', a:'#0d6e6e', bg:'#f0fdfa'},
+  {id:17, name:'Caduceus',    cat:'healthcare', a:'#047857', bg:'#ecfdf5'},
+  {id:18, name:'Clinical',    cat:'healthcare', a:'#065f46', bg:'#ffffff'},
+  {id:19, name:'Pulse',       cat:'healthcare', a:'#0f766e', bg:'#f0fdfa'},
+  {id:20, name:'Research',    cat:'healthcare', a:'#1e4d6b', bg:'#f8fafc'},
+  {id:21, name:'Scrubs',      cat:'healthcare', a:'#155e75', bg:'#ecfeff'},
+
+  // ── CREATIVE / DESIGN / MEDIA ──
+  {id:22, name:'Canvas',      cat:'creative', a:'#7c3aed', bg:'#faf5ff'},
+  {id:23, name:'Studio',      cat:'creative', a:'#9333ea', bg:'#ffffff'},
+  {id:24, name:'Frame',       cat:'creative', a:'#6d28d9', bg:'#f5f3ff'},
+  {id:25, name:'Portfolio',   cat:'creative', a:'#d97706', bg:'#fffbeb'},
+  {id:26, name:'Typeset',     cat:'creative', a:'#b45309', bg:'#fafaf9'},
+  {id:27, name:'Palette',     cat:'creative', a:'#c026d3', bg:'#fdf4ff'},
+
+  // ── BUSINESS / FINANCE / CONSULTING ──
+  {id:28, name:'Analyst',     cat:'business', a:'#1e3a5f', bg:'#ffffff'},
+  {id:29, name:'Venture',     cat:'business', a:'#1e3a5f', bg:'#f8f9fa', sb:'#1e3a5f', two:true},
+  {id:30, name:'Ledger',      cat:'business', a:'#064e3b', bg:'#f0fdf4'},
+  {id:31, name:'Trader',      cat:'business', a:'#1f2937', bg:'#ffffff'},
+  {id:32, name:'Consultant',  cat:'business', a:'#374151', bg:'#f9fafb'},
+  {id:33, name:'Advisor',     cat:'business', a:'#1e3a5f', bg:'#ffffff'},
+
+  // ── EDUCATION / NONPROFIT ──
+  {id:34, name:'Scholar',     cat:'education', a:'#7b3f00', bg:'#fdf9f3'},
+  {id:35, name:'Campus',      cat:'education', a:'#1b4332', bg:'#f0fdf4'},
+  {id:36, name:'Tenure',      cat:'education', a:'#1c1917', bg:'#fafaf9'},
+  {id:37, name:'Civitas',     cat:'education', a:'#134e4a', bg:'#f0fdfa'},
+
+  // ── TWO-COLUMN LAYOUTS ──
+  {id:38, name:'Dual',        cat:'two-col', a:'#1e40af', bg:'#eff6ff', sb:'#1e40af'},
+  {id:39, name:'Sidebar',     cat:'two-col', a:'#065f46', bg:'#ecfdf5', sb:'#065f46'},
+  {id:40, name:'Profile',     cat:'two-col', a:'#374151', bg:'#f9fafb', sb:'#6b7280'},
+  {id:41, name:'Contrast',    cat:'two-col', a:'#0f172a', bg:'#f8fafc', sb:'#1e293b'},
+  {id:42, name:'Horizon',     cat:'two-col', a:'#0e7490', bg:'#ecfeff', sb:'#0e7490'},
+  {id:43, name:'Blueprint',   cat:'two-col', a:'#1e3a5f', bg:'#f0f9ff', sb:'#1e3a5f'},
+
+  // ── CENTERED NAME ──
+  {id:44, name:'Symmetry',    cat:'centered', a:'#0f1f3d', bg:'#ffffff', centered:true},
+  {id:45, name:'Centered',    cat:'centered', a:'#1e3a5f', bg:'#f8fafc', centered:true},
+  {id:46, name:'Spotlight',   cat:'centered', a:'#1a6b5a', bg:'#f0fdf4', centered:true},
+  {id:47, name:'Marquee',     cat:'centered', a:'#7c3aed', bg:'#faf5ff', centered:true},
+
+  // ── MINIMAL / CLEAN ──
+  {id:48, name:'Minimal',     cat:'minimal', a:'#374151', bg:'#ffffff'},
+  {id:49, name:'Crisp',       cat:'minimal', a:'#1f2937', bg:'#ffffff'},
+  {id:50, name:'Pure',        cat:'minimal', a:'#111827', bg:'#fafafa'},
+];
+
 ];
 
 let selTpl=TPLS[0],key=API_KEY,isRec=false,transcript='',mr=null,recognition=null;
@@ -1425,7 +1471,7 @@ function prevHTML(t){
       <div style="font-size:3.5px;color:${dk?'rgba(255,255,255,.6)':'#555'};line-height:1.4;text-align:left">Logistics pro with 8+ years. Seeking supervisory role.</div>
     </div>`;}
 
-  if(t.cat==='two'){
+  if(t.cat==='two'||t.cat==='two-col'||t.two){
     const sbText=dk?'rgba(255,255,255,0.9)':'white';
     const sbMuted=dk?'rgba(255,255,255,0.5)':'rgba(255,255,255,0.7)';
     return `<div style="display:grid;grid-template-columns:38% 62%;height:100%;font-family:Inter,sans-serif">
@@ -1448,7 +1494,7 @@ function prevHTML(t){
       </div>
     </div>`;}
 
-  if(t.cat==='bold'){
+  if(t.cat==='bold'||t.cat==='creative'){
     return `<div style="background:${bg};padding:7px 8px;height:100%;font-family:Inter,sans-serif">
       <div style="font-size:9px;font-weight:900;color:${c};margin-bottom:1px;letter-spacing:-.02em;line-height:1">James</div>
       <div style="font-size:9px;font-weight:900;color:${c};opacity:.7;letter-spacing:-.02em;margin-bottom:3px">Williams</div>
@@ -1460,7 +1506,7 @@ function prevHTML(t){
       <div style="font-size:3px;color:${dk?'rgba(255,255,255,.35)':'#999'}">FedEx · 2017–2022</div>
     </div>`;}
 
-  if(t.cat==='modern'){
+  if(t.cat==='modern'||t.cat==='tech'||t.cat==='healthcare'){
     return `<div style="background:${bg};height:100%;font-family:Inter,sans-serif;overflow:hidden">
       <div style="background:${c};padding:5px 7px;margin-bottom:4px">
         <div style="font-size:7px;font-weight:800;color:white;letter-spacing:-.02em">James Williams</div>
@@ -1481,8 +1527,8 @@ function prevHTML(t){
       </div>
     </div>`;}
 
-  // classic or simple
-  const borderStyle=t.cat==='classic'?`border-bottom:1.5px solid ${c}`:'border-bottom:1px solid #ddd';
+  // classic / corporate / business / education / minimal / any
+  const borderStyle=t.cat==='classic'||t.cat==='corporate'?`border-bottom:1.5px solid ${c}`:'border-bottom:1px solid #ddd';
   return `<div style="background:${bg};padding:7px 8px;height:100%;font-family:Inter,sans-serif">
     <div style="font-size:${t.cat==='classic'?'8px':'7px'};font-weight:${t.cat==='classic'?'800':'700'};color:${c};letter-spacing:-.02em;margin-bottom:1px">James Williams</div>
     <div style="font-size:3.5px;color:#888;${borderStyle};padding-bottom:2px;margin-bottom:3px">james@email.com · Brooklyn, NY</div>
@@ -1495,12 +1541,27 @@ function prevHTML(t){
   </div>`;}
 
 const TPL_INDUSTRIES={
-  1:['Corporate','Finance','Law'],2:['Corporate','Government'],3:['Education','Nonprofit'],4:['Healthcare','Environment'],5:['Admin','Operations'],
-  6:['Tech','Startups'],7:['Healthcare','Science'],8:['Design','Creative'],9:['Business','Consulting'],10:['Marketing','Sales'],
-  11:['Bold Roles','Sales'],12:['Tech','Finance'],13:['Creative','Media'],14:['Tech','Gaming'],15:['Entertainment','Media'],
-  16:['General','Office'],17:['Minimalist','Any'],18:['Clean','Any'],19:['Service','Retail'],20:['Hospitality','Travel'],
-  21:['Tech','Finance'],22:['Healthcare','Nonprofit'],23:['Creative','Night'],24:['Natural','Lifestyle'],25:['Academic','Research'],
-  26:['Corporate','Law'],27:['Healthcare','Wellness'],28:['Creative','Design'],29:['Exec','Leadership'],
+  1:['Corporate','Finance','Law'],    2:['Corporate','Government'],       3:['Executive','Banking'],
+  4:['Corporate','Consulting'],       5:['Corporate','Insurance'],        6:['Executive','C-Level'],
+  7:['Corporate','Law','Finance'],    8:['Corporate','Business Dev'],
+  9:['Software Eng','Startups'],      10:['Engineering','DevOps'],        11:['Tech','Product'],
+  12:['Engineering','Systems'],       13:['Tech','Data Science'],         14:['Tech','Cloud'],
+  15:['Engineering','Architecture'],
+  16:['Nursing','Therapy'],           17:['Medicine','Research'],         18:['Clinical','Hospital'],
+  19:['Allied Health','Pharmacy'],    20:['Research','Lab Science'],      21:['Nursing','Allied Health'],
+  22:['Design','UX/UI'],             23:['Creative','Advertising'],      24:['Graphic Design','Media'],
+  25:['Marketing','Creative'],        26:['Journalism','Publishing'],     27:['Art Direction','Film'],
+  28:['Finance','Consulting'],        29:['Consulting','Strategy'],       30:['Accounting','Audit'],
+  31:['Trading','Investment'],        32:['Consulting','Management'],     33:['Financial Planning','Advisory'],
+  34:['Higher Ed','K-12'],           35:['Nonprofit','Social Work'],     36:['Admin','Education'],
+  37:['Policy','Advocacy'],
+  38:['Tech','Finance'],             39:['Healthcare','Nonprofit'],      40:['Operations','Admin'],
+  41:['Corporate','Any Industry'],   42:['Healthcare','Tech'],           43:['Finance','Engineering'],
+  44:['Corporate','Law'],            45:['Finance','Consulting'],        46:['Healthcare','Wellness'],
+  47:['Creative','Media'],
+  48:['Any Industry','Clean'],       49:['Any Industry','ATS-Safe'],     50:['Any Industry','Simple'],
+};
+
 };
 
 function renderTpls(filter='all'){
@@ -1517,7 +1578,7 @@ function renderTpls(filter='all'){
           <span style="cursor:pointer" onclick="pickTpl(${t.id})">${t.name}</span>
           <div style="display:flex;align-items:center;gap:.3rem">
             <span class="tpl-cat cat-${t.cat}">${t.cat}</span>
-            <button onclick="openPreview(${t.id})" style="background:rgba(59,108,250,0.12);border:1px solid rgba(59,108,250,0.2);color:#6b8ffb;border-radius:4px;padding:.15rem .4rem;font-size:.52rem;cursor:pointer;font-family:var(--font);white-space:nowrap;font-weight:600">👁 View</button>
+            <button onclick="openPreview(${t.id})" style="background:rgba(26,107,90,0.08);border:1px solid rgba(26,107,90,0.2);color:#1a6b5a;border-radius:4px;padding:.15rem .4rem;font-size:.52rem;cursor:pointer;font-family:var(--font);white-space:nowrap;font-weight:600">Preview</button>
           </div>
         </div>
         <div class="tpl-name-row2">${inds}</div>
@@ -1753,7 +1814,7 @@ function renderResults(r){
         <div style="display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center">${(r.skills||[]).map(s=>`<span style="background:${ac}18;border:1px solid ${ac}35;color:${ac};padding:.22rem .6rem;border-radius:20px;font-size:.72rem;font-weight:500">${s}</span>`).join('')}</div>
       </div>
     </div>`;
-  } else if(t.cat==='two'){
+  } else if(t.cat==='two'||t.cat==='two-col'||t.two){
     rHTML=`<div style="display:grid;grid-template-columns:220px 1fr;min-height:400px;border-radius:8px;overflow:hidden">
       <div style="background:${t.sb||ac};padding:1.5rem;color:white">
         <div style="font-size:1.2rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.2rem;color:white">${r.name}</div>
@@ -1768,7 +1829,7 @@ function renderResults(r){
         ${(r.experience||[]).map(e=>`<div style="margin-bottom:.75rem"><div style="font-weight:700;font-size:.84rem;color:${dk?'white':'#111'}">${e.title}</div><div style="font-size:.65rem;color:${dk?'rgba(255,255,255,.4)':'#888'};margin-bottom:.25rem">${e.company} · ${e.dates}</div><div style="font-size:.76rem;color:${dk?'rgba(255,255,255,.65)':'#555'};line-height:1.6">${(e.bullets||[]).map(b=>`• ${b}`).join('<br>')}</div></div>`).join('')}
       </div>
     </div>`;
-  } else if(t.cat==='bold'){
+  } else if(t.cat==='bold'||t.cat==='creative'){
     rHTML=`<div style="background:${bg};padding:2rem;border-radius:8px">
       <div style="font-size:2rem;font-weight:900;letter-spacing:-.04em;color:${ac};line-height:1;margin-bottom:.25rem">${r.name}</div>
       <div style="font-size:.68rem;color:${dk?'rgba(255,255,255,.4)':'#999'};margin-bottom:1rem">${r.email} · ${r.phone} · ${r.location}</div>
@@ -1780,7 +1841,7 @@ function renderResults(r){
       <div style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${ac};margin-bottom:.5rem;margin-top:.75rem">Skills</div>
       <div style="display:flex;flex-wrap:wrap;gap:.35rem">${(r.skills||[]).map(s=>`<span style="background:${ac};color:${dk?bg:'white'};padding:.22rem .6rem;border-radius:3px;font-size:.7rem;font-weight:600">${s}</span>`).join('')}</div>
     </div>`;
-  } else if(t.cat==='modern'){
+  } else if(t.cat==='modern'||t.cat==='tech'||t.cat==='healthcare'){
     rHTML=`<div style="background:${bg};border-radius:8px;overflow:hidden">
       <div style="background:${ac};padding:1.5rem 2rem">
         <div style="font-size:1.75rem;font-weight:800;letter-spacing:-.04em;color:white;margin-bottom:.15rem">${r.name}</div>
@@ -1937,11 +1998,4 @@ function showPage(n){
 function setSP(n){for(let i=1;i<=4;i++){const p=document.getElementById('sp'+i);p.classList.remove('active','done');if(i<n)p.classList.add('done');else if(i===n)p.classList.add('active');}}
 function setStatus(t,l){const el=document.getElementById('statusTxt');el.textContent=t;el.classList.toggle('live',l);}
 function showErr(m){const e=document.getElementById('errMsg');e.textContent=m;e.classList.add('show');}
-function hideErr(){document.getElementById('errMsg').classList.remove('show');}
-function toggleFaq(el){el.nextElementSibling.classList.toggle('open');el.querySelector('.faq-icon').classList.toggle('open');}
-
-// Init
-renderTpls();
-</script>
-</body>
-</html>
+function hideErr(){document.g
