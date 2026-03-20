@@ -854,110 +854,161 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
   <!-- RECORD -->
   <div class="rec-section" id="recSection" style="display:none">
     <div class="rec-layout">
-      <!-- LEFT: mic + live recording -->
+
+      <!-- LEFT: full recording flow -->
       <div>
-        <div class="card">
+
+        <!-- STATE 1: Press to start -->
+        <div class="card" id="recPanel">
           <div class="card-top"></div>
-          <div class="rec-panel" id="recPanel">
-            <div class="tpl-badge">
+          <div style="padding:2rem;text-align:center">
+            <div class="tpl-badge" style="margin-bottom:1.5rem">
               <span id="tplBadge">Executive template</span>
               <span>·</span>
-              <a onclick="goBack()">Change template</a>
+              <a onclick="goBack()" style="cursor:pointer;color:var(--muted);text-decoration:underline;font-size:.7rem">Change</a>
             </div>
-            <div class="mic-wrap" style="width:100px;height:100px;margin:1.5rem auto">
+
+            <!-- Big press-to-start button -->
+            <div style="margin:0 auto 1.5rem;position:relative;width:110px;height:110px">
               <div class="ring" id="r1"></div>
               <div class="ring d" id="r2"></div>
-              <button class="mic-btn" id="micBtn" onclick="startRec()" style="inset:12px">
-                <svg id="micIco" width="28" height="28" fill="none" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="white"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <button id="micBtn" onclick="startRec()" style="position:absolute;inset:12px;border-radius:50%;border:none;cursor:pointer;background:#1a6b5a;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(26,107,90,.35);transition:all .25s" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform=''">
+                <svg width="30" height="30" fill="none" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="white"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
               </button>
             </div>
-            <div class="status-txt" id="statusTxt" style="font-size:.8rem;margin-bottom:.5rem">Tap the mic and start talking</div>
-            <div class="prompt-txt" id="promptTxt" style="font-size:.9rem;margin-bottom:1.5rem">"Tell me about your most recent job..."</div>
-            <div style="padding:0 1rem 1.5rem">
-              <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem;font-size:.78rem;color:var(--muted);line-height:1.6;text-align:left">
-                <strong style="color:var(--text);display:block;margin-bottom:.4rem">Quick start:</strong>
-                Say your name → jobs (with dates) → education → what you want next.<br>
-                <span style="color:#fbbf24;font-size:.72rem;margin-top:.4rem;display:block">⚠ Say month AND year — "January 2017" not just "2017"</span>
+
+            <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.3rem">Press to start recording</div>
+            <div class="prompt-txt" id="promptTxt" style="font-size:.82rem;margin-bottom:1.25rem;color:var(--muted)">"Tell me about your most recent job..."</div>
+
+            <!-- Quick tip -->
+            <div style="background:#f0fdf4;border:1px solid #c8e6dc;border-radius:10px;padding:.875rem 1rem;font-size:.75rem;color:#1a6b5a;line-height:1.6;text-align:left;margin-bottom:.5rem">
+              <strong style="display:block;margin-bottom:.3rem;color:#155749">📋 Say in order:</strong>
+              Your name &amp; location → each job (with month + year dates) → education → what you're looking for
+            </div>
+          </div>
+        </div>
+
+        <!-- STATE 2: Live recording -->
+        <div class="card" id="recLiveCard" style="display:none">
+          <div style="height:4px;background:linear-gradient(90deg,#ef4444,#f97316);animation:recblink 1s infinite"></div>
+          <div style="padding:2rem;text-align:center">
+
+            <!-- Red recording indicator + timer -->
+            <div style="display:flex;align-items:center;justify-content:center;gap:.75rem;margin-bottom:1.25rem">
+              <div style="display:flex;align-items:center;gap:.4rem;background:#fef2f2;border:1px solid #fecaca;border-radius:20px;padding:.4rem .875rem">
+                <div style="width:8px;height:8px;border-radius:50%;background:#ef4444;animation:recblink .7s infinite"></div>
+                <span style="font-size:.72rem;font-weight:700;color:#ef4444;letter-spacing:.08em;text-transform:uppercase">Recording</span>
+              </div>
+              <div id="recTimer" style="font-family:var(--mono);font-size:1.6rem;font-weight:600;color:var(--text);letter-spacing:.04em;min-width:60px">0:00</div>
+            </div>
+
+            <!-- Waveform -->
+            <div class="waveform show" id="waveform" style="margin-bottom:1.25rem"><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
+
+            <!-- Live transcript preview -->
+            <div style="background:#f8fafb;border:1px solid var(--border);border-radius:10px;padding:.875rem 1rem;min-height:60px;max-height:100px;overflow:hidden;margin-bottom:1.5rem;text-align:left">
+              <div style="font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a6b5a;margin-bottom:.35rem">Capturing...</div>
+              <div id="recLiveText" style="font-size:.78rem;color:var(--muted);line-height:1.55;font-style:italic">Listening — speak naturally...</div>
+            </div>
+
+            <!-- Finish button -->
+            <button onclick="finishRec()" style="width:100%;padding:.9rem;background:#ef4444;color:white;border:none;border-radius:10px;font-family:var(--font);font-size:.9rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;box-shadow:0 4px 16px rgba(239,68,68,.3);transition:all .2s" onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="white"/></svg>
+              Finish recording
+            </button>
+          </div>
+
+          <!-- Script shown while recording -->
+          <div style="border-top:1px solid var(--border);padding:1.25rem 1.5rem;background:#fafafa">
+            <div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1a6b5a;margin-bottom:.875rem">What to say while recording</div>
+            <div style="display:flex;flex-direction:column;gap:.6rem">
+              <div style="display:flex;gap:.625rem;align-items:flex-start">
+                <div style="width:20px;height:20px;border-radius:50%;background:#e8f5f1;border:1px solid #c8e6dc;color:#1a6b5a;font-size:.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+                <div style="font-size:.75rem;color:var(--muted);line-height:1.5"><strong style="color:var(--text)">Name &amp; location:</strong> "My name is James Williams, I live in Brooklyn, New York, my number is 917-555-0123."</div>
+              </div>
+              <div style="display:flex;gap:.625rem;align-items:flex-start">
+                <div style="width:20px;height:20px;border-radius:50%;background:#e8f5f1;border:1px solid #c8e6dc;color:#1a6b5a;font-size:.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+                <div style="font-size:.75rem;color:var(--muted);line-height:1.5"><strong style="color:var(--text)">Each job:</strong> "I worked at FedEx from <span style="color:#d97706;font-weight:600">January 2017</span> to <span style="color:#d97706;font-weight:600">June 2022</span> as a warehouse supervisor. I managed a team of 12."</div>
+              </div>
+              <div style="display:flex;gap:.625rem;align-items:flex-start">
+                <div style="width:20px;height:20px;border-radius:50%;background:#e8f5f1;border:1px solid #c8e6dc;color:#1a6b5a;font-size:.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
+                <div style="font-size:.75rem;color:var(--muted);line-height:1.5"><strong style="color:var(--text)">Education:</strong> "I went to Brooklyn Tech, graduated 2013. Got a forklift certificate in 2018."</div>
+              </div>
+              <div style="display:flex;gap:.625rem;align-items:flex-start">
+                <div style="width:20px;height:20px;border-radius:50%;background:#fff3e0;border:1px solid #fed7aa;color:#e8601c;font-size:.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</div>
+                <div style="font-size:.75rem;color:var(--muted);line-height:1.5"><strong style="color:var(--text)">What you want:</strong> "I'm looking for a logistics supervisor role in the New York area."</div>
               </div>
             </div>
+            <div style="margin-top:.75rem;font-size:.7rem;color:#d97706;font-weight:500">⚠ Always say month AND year — "January 2017" not just "2017"</div>
           </div>
+        </div>
 
-          <!-- LIVE RECORDING UI -->
-          <div class="rec-live" id="recLive" style="padding:2rem">
-            <div class="rec-indicator">
-              <div class="rec-dot"></div>
-              <span class="rec-label">Recording</span>
+        <!-- STATE 3: Transcript review -->
+        <div class="card" id="txCard" style="display:none">
+          <div style="height:3px;background:linear-gradient(90deg,#1a6b5a,#22876f)"></div>
+          <div style="padding:1.5rem">
+            <div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1a6b5a;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem">
+              <svg width="12" height="12" fill="none" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4" stroke="#1a6b5a" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="#1a6b5a" stroke-width="1.5"/></svg>
+              Recording complete — review &amp; edit
             </div>
-            <div class="rec-timer" id="recTimer">0:00</div>
-            <div class="waveform show" id="waveform"><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
-            <div class="rec-transcript-live" id="recLiveText">Listening...</div>
-            <div class="rec-actions">
-              <button class="rec-finish-btn" onclick="finishRec()">
-                <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="white"/></svg>
-                Finish recording
-              </button>
-            </div>
-          </div>
-
-          <div class="divider" id="txDiv" style="display:none"></div>
-          <div class="tx-panel" id="txPanel">
-            <div class="panel-label">What you said</div>
-            <div class="tx-box" id="txBox" contenteditable="true" data-ph="Your words appear here — edit if needed..."></div>
+            <div class="tx-box" id="txBox" contenteditable="true" data-ph="Your words appear here — feel free to edit..."></div>
             <div class="err" id="errMsg"></div>
-            <div style="display:flex;gap:.5rem;margin-top:.875rem;flex-wrap:wrap">
+            <div style="display:flex;gap:.5rem;margin-top:.875rem">
               <button class="add-more-btn" onclick="addMoreRec()">
-                <svg width="12" height="12" fill="none" viewBox="0 0 24 24" style="display:inline;margin-right:3px"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="currentColor"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                <svg width="11" height="11" fill="none" viewBox="0 0 24 24" style="display:inline;margin-right:3px"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="currentColor"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
                 + Add more
               </button>
-              <button class="build-btn" style="flex:1;margin-top:0" onclick="buildResume()">
+              <button class="build-btn" style="flex:1;margin-top:0;background:#e8601c;box-shadow:0 4px 16px rgba(232,96,28,.3)" onclick="buildResume()">
                 <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
-                Build my free resume
+                Build my resume →
               </button>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- RIGHT: step-by-step guide -->
-      <div class="rec-guide">
-        <div style="font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-l);margin-bottom:1rem">What to say</div>
+      </div><!-- /left -->
+
+      <!-- RIGHT: guide panel (visible during all states) -->
+      <div class="rec-guide" id="recGuide">
+        <div style="font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#1a6b5a;margin-bottom:1rem">Recording guide</div>
         <div style="display:flex;flex-direction:column;gap:.875rem">
           <div style="display:flex;gap:.75rem;align-items:flex-start">
-            <div style="width:22px;height:22px;border-radius:50%;background:var(--green-dim);border:1px solid rgba(16,217,138,.2);color:var(--green);font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">1</div>
+            <div style="width:24px;height:24px;border-radius:50%;background:#e8f5f1;border:1px solid #c8e6dc;color:#1a6b5a;font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
             <div>
-              <div style="font-size:.78rem;font-weight:600;color:var(--text);margin-bottom:.2rem">Your details</div>
-              <div style="font-size:.72rem;color:var(--muted);line-height:1.5;font-style:italic">"My name is James Williams, my number is 917-555-0123, I live in Brooklyn, New York."</div>
+              <div style="font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem">Your details</div>
+              <div style="font-size:.73rem;color:var(--muted);line-height:1.55;font-style:italic">"My name is James Williams, I live in Brooklyn, NY, number is 917-555-0123."</div>
             </div>
           </div>
           <div style="display:flex;gap:.75rem;align-items:flex-start">
-            <div style="width:22px;height:22px;border-radius:50%;background:var(--blue-dim);border:1px solid rgba(59,108,250,.2);color:var(--blue-l);font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">2</div>
+            <div style="width:24px;height:24px;border-radius:50%;background:#e8f5f1;border:1px solid #c8e6dc;color:#1a6b5a;font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
             <div>
-              <div style="font-size:.78rem;font-weight:600;color:var(--text);margin-bottom:.2rem">Each job</div>
-              <div style="font-size:.72rem;color:var(--muted);line-height:1.5;font-style:italic">"I worked at FedEx in Brooklyn from <strong style="color:#fbbf24;font-style:normal">January 2017</strong> to <strong style="color:#fbbf24;font-style:normal">June 2022</strong>. I was a package handler."</div>
+              <div style="font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem">Each job</div>
+              <div style="font-size:.73rem;color:var(--muted);line-height:1.55;font-style:italic">"I worked at FedEx from <strong style="color:#d97706;font-style:normal">Jan 2017</strong> to <strong style="color:#d97706;font-style:normal">Jun 2022</strong> as a supervisor."</div>
             </div>
           </div>
           <div style="display:flex;gap:.75rem;align-items:flex-start">
-            <div style="width:22px;height:22px;border-radius:50%;background:var(--blue-dim);border:1px solid rgba(59,108,250,.2);color:var(--blue-l);font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">3</div>
+            <div style="width:24px;height:24px;border-radius:50%;background:#e8f5f1;border:1px solid #c8e6dc;color:#1a6b5a;font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
             <div>
-              <div style="font-size:.78rem;font-weight:600;color:var(--text);margin-bottom:.2rem">Education</div>
-              <div style="font-size:.72rem;color:var(--muted);line-height:1.5;font-style:italic">"I went to Brooklyn Tech, graduated 2013. I got a forklift certificate in 2018."</div>
+              <div style="font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem">Education</div>
+              <div style="font-size:.73rem;color:var(--muted);line-height:1.55;font-style:italic">"Brooklyn Tech, graduated 2013. Forklift cert 2018."</div>
             </div>
           </div>
           <div style="display:flex;gap:.75rem;align-items:flex-start">
-            <div style="width:22px;height:22px;border-radius:50%;background:var(--green-dim);border:1px solid rgba(16,217,138,.2);color:var(--green);font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">4</div>
+            <div style="width:24px;height:24px;border-radius:50%;background:#fff3e0;border:1px solid #fed7aa;color:#e8601c;font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</div>
             <div>
-              <div style="font-size:.78rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What you want</div>
-              <div style="font-size:.72rem;color:var(--muted);line-height:1.5;font-style:italic">"I'm looking for a supervisor role in logistics in the New York area."</div>
+              <div style="font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.2rem">What you want</div>
+              <div style="font-size:.73rem;color:var(--muted);line-height:1.55;font-style:italic">"Looking for supervisor role in logistics, New York area."</div>
             </div>
           </div>
         </div>
-        <div style="margin-top:1.25rem;padding:.75rem;background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.12);border-radius:8px;font-size:.72rem;color:#fbbf24;line-height:1.5">
-          ⚠ Always say the <strong>month AND year</strong> for job dates — "January 2017" not just "2017"
+        <div style="margin-top:1.25rem;padding:.75rem 1rem;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;font-size:.72rem;color:#92400e;line-height:1.55">
+          ⚠ Always say <strong>month AND year</strong> — "January 2017" not just "2017"
         </div>
-        <div style="margin-top:1rem;padding:.75rem;background:var(--blue-dim);border:1px solid rgba(59,108,250,.15);border-radius:8px;font-size:.72rem;color:var(--blue-l);line-height:1.5">
-          💡 Don't worry about being perfect — speak naturally. You can edit your transcript before building.
+        <div style="margin-top:.75rem;padding:.75rem 1rem;background:#f0fdf4;border:1px solid #c8e6dc;border-radius:8px;font-size:.72rem;color:#1a6b5a;line-height:1.55">
+          💡 Speak naturally — you can edit before building. Works in Chrome, Edge, and Safari.
         </div>
       </div>
+
     </div>
   </div>
 
@@ -974,31 +1025,48 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
   <!-- RESULTS -->
   <div class="results" id="results">
     <div class="mode-badge" id="modeBadge"></div>
+
+    <!-- Resume + Download -->
     <div class="resume-card">
       <div class="resume-bar">
-        <span class="resume-bar-label">Your resume</span>
+        <span class="resume-bar-label">Your resume is ready</span>
         <div class="dl-row">
-          <button class="dl-btn word" onclick="dlWord()">↓ Word / Google Docs</button>
-          <button class="dl-btn txt" onclick="dlText()">↓ Plain Text</button>
+          <button class="dl-btn word" onclick="dlWord()" style="display:flex;align-items:center;gap:.4rem;padding:.45rem 1rem;font-size:.72rem;font-weight:700;background:#1a6b5a;color:white;border:none;border-radius:8px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#155749'" onmouseout="this.style.background='#1a6b5a'">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            Word / Google Docs
+          </button>
+          <button class="dl-btn txt" onclick="dlText()" style="display:flex;align-items:center;gap:.4rem;padding:.45rem 1rem;font-size:.72rem;font-weight:700;background:white;color:#1a6b5a;border:1px solid #c8e6dc;border-radius:8px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='#f0fdf4'" onmouseout="this.style.background='white'">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="#1a6b5a" stroke-width="2" stroke-linecap="round"/></svg>
+            Plain Text
+          </button>
         </div>
       </div>
       <div class="resume-body" id="resumeBody"></div>
     </div>
+
+    <!-- Transferable Skills -->
     <div class="insights" id="insightsGrid"></div>
+
+    <!-- Industry Fit + Salary -->
+    <div class="ind-section" id="indSection">
+      <div class="ind-header">
+        <div class="ind-header-label">Industry fit &amp; salary ranges</div>
+      </div>
+      <div class="ind-list" id="indList"></div>
+    </div>
+
+    <!-- Job Recommendations -->
     <div class="jobs-section" id="jobsSection">
       <div class="jobs-header">
         <div class="jobs-header-left">
-          <div class="jobs-header-label">Job recommendations</div>
+          <div class="jobs-header-label">Recommended jobs</div>
           <div class="jobs-count" id="jobsCount"></div>
         </div>
         <div class="jobs-filters" id="jobsFilters"></div>
       </div>
       <div class="jobs-list" id="jobsList"></div>
     </div>
-    <div class="ind-section" id="indSection">
-      <div class="ind-header"><div class="ind-header-label">Industry fit analysis</div></div>
-      <div class="ind-list" id="indList"></div>
-    </div>
+
     <div class="reset-row"><button class="reset-btn" onclick="resetAll()">↺ Start over</button></div>
   </div>
 
@@ -1635,6 +1703,9 @@ window.goRecord=function goRecord(){
   document.getElementById('tplSection').style.display='none';
   document.getElementById('stepsBar').style.display='none';
   document.getElementById('recSection').style.display='block';
+  document.getElementById('recPanel').style.display='block';
+  if(document.getElementById('recLiveCard'))document.getElementById('recLiveCard').style.display='none';
+  if(document.getElementById('txCard'))document.getElementById('txCard').style.display='none';
   document.getElementById('tplBadge').textContent=selTpl.name+' template';
   setSP(2);window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1680,7 +1751,7 @@ window.startRec=function startRec(){
 
     // Show live recording UI, hide mic panel
     document.getElementById('recPanel').style.display='none';
-    document.getElementById('recLive').classList.add('show');
+    document.getElementById('recLiveCard').style.display='block';
     document.getElementById('r1').classList.add('pulse');
     document.getElementById('r2').classList.add('pulse');
 
@@ -1767,8 +1838,7 @@ window.buildResume=async function buildResume(){
   const txt=document.getElementById('txBox').textContent||'';
   if(txt.trim().length<20){showErr('Please tell us a bit more about yourself first.');return;}
   hideErr();
-  document.getElementById('txPanel').classList.remove('show');
-  document.getElementById('txDiv').style.display='none';
+  if(document.getElementById('txCard'))document.getElementById('txCard').style.display='none';
   document.getElementById('recPanel').style.display='none';
   const anim=startKW(txt);setSP(4);
 
@@ -1806,9 +1876,7 @@ Return AT LEAST 15 jobRecommendations across multiple industries varying seniori
     renderResults(r);
   }catch(e){
     anim.stop();document.getElementById('kwStage').classList.remove('show');
-    document.getElementById('recPanel').style.display='block';
-    document.getElementById('txPanel').classList.add('show');
-    document.getElementById('txDiv').style.display='block';
+    document.getElementById('txCard').style.display='block';
     setSP(3);showErr('⚠ '+( e.message||'Something went wrong. Please try again.'));
   }
 }
@@ -1907,9 +1975,9 @@ function renderResults(r){
 
   // Transferable skills
   document.getElementById('insightsGrid').innerHTML=`
-    <div class="insight-card skills" style="grid-column:1/-1">
-      <div class="insight-title">Your transferable strengths</div>
-      <div class="insight-sub">Skills employers value across industries</div>
+    <div class="insight-card skills" style="grid-column:1/-1;background:white;border:1px solid #e5e7eb;border-radius:14px;padding:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.05)">
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1a6b5a;margin-bottom:.2rem;display:flex;align-items:center;gap:.4rem"><div style="width:7px;height:7px;border-radius:50%;background:#1a6b5a"></div>Your transferable strengths</div>
+      <div style="font-size:.75rem;color:#6b7280;margin-bottom:1rem">Skills employers value across industries</div>
       <div class="tr-grid">${(r.transferableSkills||[]).map(s=>`<div class="tr-item"><div class="tr-title">${s.skill}</div><div class="tr-desc">${s.reason}</div></div>`).join('')}</div>
     </div>`;
 
@@ -2001,7 +2069,8 @@ window.resetAll=function resetAll(){
   document.getElementById('txPanel').classList.remove('show');
   document.getElementById('txDiv').style.display='none';
   document.getElementById('recPanel').style.display='block';
-  document.getElementById('recLive').classList.remove('show');
+  if(document.getElementById('recLiveCard'))document.getElementById('recLiveCard').style.display='none';
+  if(document.getElementById('txCard'))document.getElementById('txCard').style.display='none';
   document.getElementById('recSection').style.display='none';
   document.getElementById('tplSection').style.display='block';
   document.getElementById('stepsBar').style.display='flex';
