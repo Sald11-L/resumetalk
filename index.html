@@ -92,8 +92,11 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
 .tpl-check{position:absolute;top:6px;right:6px;width:18px;height:18px;background:var(--blue);border-radius:50%;display:none;align-items:center;justify-content:center}
 .tpl-card.selected .tpl-check{display:flex}
 .tpl-preview{height:140px;padding:0;overflow:hidden}
-.tpl-name{padding:6px 10px;border-top:1px solid var(--border);font-size:.63rem;font-weight:600;color:var(--text);background:var(--card);display:flex;justify-content:space-between;align-items:center}
-.tpl-cat{font-size:.52rem;padding:.1rem .4rem;border-radius:8px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.tpl-name{padding:6px 8px;border-top:1px solid var(--border);font-size:.63rem;font-weight:600;color:var(--text);background:var(--card);display:flex;flex-direction:column;gap:4px}
+.tpl-name-row1{display:flex;justify-content:space-between;align-items:center}
+.tpl-name-row2{display:flex;align-items:center;gap:.3rem;flex-wrap:wrap}
+.tpl-cat{font-size:.5rem;padding:.1rem .35rem;border-radius:6px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0}
+.tpl-industry{font-size:.48rem;padding:.08rem .3rem;border-radius:4px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--subtle);white-space:nowrap}
 .cat-classic{background:rgba(255,255,255,.06);color:var(--muted)}
 .cat-modern{background:var(--blue-dim);color:var(--blue-l)}
 .cat-bold{background:rgba(250,50,50,.1);color:#f87171}
@@ -181,7 +184,20 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
 .cheat-text em{color:var(--blue-l);font-style:normal}
 .cheat-warn{margin-top:.75rem;padding:.55rem .875rem;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.15);border-radius:8px;font-size:.73rem;color:#fbbf24;line-height:1.5}
 
-/* TRANSCRIPT */
+/* RECORDING LIVE UI */
+.rec-live{display:none;flex-direction:column;align-items:center;gap:.75rem;padding:1.5rem 2rem;text-align:center}
+.rec-live.show{display:flex}
+.rec-indicator{display:flex;align-items:center;gap:.5rem;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:20px;padding:.4rem 1rem}
+.rec-dot{width:8px;height:8px;border-radius:50%;background:#ef4444;animation:recblink .8s ease-in-out infinite}
+@keyframes recblink{0%,100%{opacity:1}50%{opacity:.3}}
+.rec-label{font-size:.72rem;font-weight:700;color:#ef4444;letter-spacing:.08em;text-transform:uppercase}
+.rec-timer{font-family:var(--mono);font-size:2.2rem;font-weight:500;color:var(--text);letter-spacing:.04em;line-height:1}
+.rec-transcript-live{font-size:.78rem;color:var(--muted);font-style:italic;min-height:2.5em;max-height:60px;overflow:hidden;line-height:1.5;padding:0 .5rem;text-align:center;transition:all .3s}
+.rec-actions{display:flex;gap:.75rem;width:100%;justify-content:center}
+.rec-finish-btn{flex:1;max-width:200px;padding:.875rem;background:#ef4444;color:white;border:none;border-radius:10px;font-family:var(--font);font-size:.875rem;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.4rem;box-shadow:0 4px 16px rgba(239,68,68,.3)}
+.rec-finish-btn:hover{background:#dc2626;transform:translateY(-1px)}
+.add-more-btn{background:none;border:1px solid var(--border);color:var(--muted);padding:.5rem 1.25rem;border-radius:8px;font-family:var(--font);font-size:.75rem;font-weight:500;cursor:pointer;transition:all .2s}
+.add-more-btn:hover{border-color:var(--blue);color:var(--blue-l)}
 .divider{height:1px;background:var(--border)}
 .tx-panel{padding:1.5rem 2rem;display:none}
 .tx-panel.show{display:block}
@@ -579,13 +595,11 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
         <div class="mic-wrap">
           <div class="ring" id="r1"></div>
           <div class="ring d" id="r2"></div>
-          <button class="mic-btn" id="micBtn" onclick="toggleRec()">
+          <button class="mic-btn" id="micBtn" onclick="startRec()">
             <svg id="micIco" width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="white"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
-            <svg id="stopIco" width="24" height="24" fill="none" viewBox="0 0 24 24" style="display:none"><rect x="6" y="6" width="12" height="12" rx="2" fill="white"/></svg>
           </button>
         </div>
         <div class="status-txt" id="statusTxt">Tap the mic and start talking</div>
-        <div class="waveform" id="waveform"><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
         <div class="prompt-txt" id="promptTxt">"Tell me about your most recent job..."</div>
         <div class="cheat">
           <div class="cheat-title">What to say — follow this order</div>
@@ -598,15 +612,38 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
           <div class="cheat-warn">⚠ Always say the month AND year — "January 2017" not just "2017"</div>
         </div>
       </div>
+
+      <!-- LIVE RECORDING UI -->
+      <div class="rec-live" id="recLive">
+        <div class="rec-indicator">
+          <div class="rec-dot"></div>
+          <span class="rec-label">Recording</span>
+        </div>
+        <div class="rec-timer" id="recTimer">0:00</div>
+        <div class="waveform show" id="waveform"><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div><div class="wb"></div></div>
+        <div class="rec-transcript-live" id="recLiveText">Listening...</div>
+        <div class="rec-actions">
+          <button class="rec-finish-btn" onclick="finishRec()">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="white"/></svg>
+            Finish recording
+          </button>
+        </div>
+      </div>
       <div class="divider" id="txDiv" style="display:none"></div>
       <div class="tx-panel" id="txPanel">
         <div class="panel-label">What you said</div>
         <div class="tx-box" id="txBox" contenteditable="true" data-ph="Your words appear here — edit if needed..."></div>
         <div class="err" id="errMsg"></div>
-        <button class="build-btn" onclick="buildResume()">
-          <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
-          Build my free resume
-        </button>
+        <div style="display:flex;gap:.5rem;margin-top:.875rem;flex-wrap:wrap">
+          <button class="add-more-btn" onclick="addMoreRec()">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" style="display:inline;margin-right:3px"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="currentColor"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            + Add more
+          </button>
+          <button class="build-btn" style="flex:1;margin-top:0" onclick="buildResume()">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+            Build my free resume
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -665,53 +702,37 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
     <div style="margin-bottom:3rem">
       <div class="sec-heading" style="margin-bottom:.4rem">Their voice. Their future.</div>
       <div class="sec-subtext">People just like you have used ResumeTalk to land jobs they deserve.</div>
-      <div class="people-grid">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem">
         <div class="person-card">
           <img class="person-photo" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300&h=200&fit=crop&crop=face" alt="Maya" loading="lazy">
           <div class="person-info">
-            <div class="person-name">Maya, 28</div>
+            <div class="person-name">Maya</div>
             <div class="person-role">Now: Retail Manager</div>
             <div class="person-quote">"I never knew how to put my experience on paper. ResumeTalk did it for me in minutes."</div>
           </div>
         </div>
         <div class="person-card">
-          <img class="person-photo" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&h=200&fit=crop&crop=face" alt="James" loading="lazy">
-          <div class="person-info">
-            <div class="person-name">James, 34</div>
-            <div class="person-role">Now: Logistics Coordinator</div>
-            <div class="person-quote">"I just talked about my work at FedEx and it built my whole resume. Incredible."</div>
-          </div>
-        </div>
-        <div class="person-card">
           <img class="person-photo" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=200&fit=crop&crop=face" alt="Sofia" loading="lazy">
           <div class="person-info">
-            <div class="person-name">Sofia, 24</div>
+            <div class="person-name">Sofia</div>
             <div class="person-role">Now: Medical Assistant</div>
             <div class="person-quote">"As a new graduate I had no idea how to start. This tool changed everything."</div>
           </div>
         </div>
         <div class="person-card">
-          <img class="person-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop&crop=face" alt="David" loading="lazy">
+          <img class="person-photo" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=200&fit=crop&crop=face" alt="Carlos" loading="lazy">
           <div class="person-info">
-            <div class="person-name">David, 41</div>
-            <div class="person-role">Now: Operations Supervisor</div>
-            <div class="person-quote">"After being laid off I didn't know where to start. ResumeTalk helped me land 3 interviews."</div>
+            <div class="person-name">Carlos</div>
+            <div class="person-role">Now: Customer Success</div>
+            <div class="person-quote">"Spoke for 3 minutes and got a full resume. Then got a job offer within a week."</div>
           </div>
         </div>
         <div class="person-card">
           <img class="person-photo" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=300&h=200&fit=crop&crop=face" alt="Amara" loading="lazy">
           <div class="person-info">
-            <div class="person-name">Amara, 31</div>
+            <div class="person-name">Amara</div>
             <div class="person-role">Now: HR Coordinator</div>
             <div class="person-quote">"I moved from Nigeria and my experience didn't translate. ResumeTalk fixed that."</div>
-          </div>
-        </div>
-        <div class="person-card">
-          <img class="person-photo" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=200&fit=crop&crop=face" alt="Carlos" loading="lazy">
-          <div class="person-info">
-            <div class="person-name">Carlos, 27</div>
-            <div class="person-role">Now: Customer Success</div>
-            <div class="person-quote">"Spoke for 3 minutes and got a full resume. Then got a job offer within a week."</div>
           </div>
         </div>
       </div>
@@ -1112,21 +1133,35 @@ function prevHTML(t){
     <div style="font-size:3.5px;color:#555">• Managed team of 12 · Reduced errors 30%</div>
   </div>`;}
 
+const TPL_INDUSTRIES={
+  1:['Corporate','Finance','Law'],2:['Corporate','Government'],3:['Education','Nonprofit'],4:['Healthcare','Environment'],5:['Admin','Operations'],
+  6:['Tech','Startups'],7:['Healthcare','Science'],8:['Design','Creative'],9:['Business','Consulting'],10:['Marketing','Sales'],
+  11:['Bold Roles','Sales'],12:['Tech','Finance'],13:['Creative','Media'],14:['Tech','Gaming'],15:['Entertainment','Media'],
+  16:['General','Office'],17:['Minimalist','Any'],18:['Clean','Any'],19:['Service','Retail'],20:['Hospitality','Travel'],
+  21:['Tech','Finance'],22:['Healthcare','Nonprofit'],23:['Creative','Night'],24:['Natural','Lifestyle'],25:['Academic','Research'],
+  26:['Corporate','Law'],27:['Healthcare','Wellness'],28:['Creative','Design'],29:['Exec','Leadership'],
+};
+
 function renderTpls(filter='all'){
   const grid=document.getElementById('tplGrid');
   const list=filter==='all'?TPLS:TPLS.filter(t=>t.cat===filter);
-  grid.innerHTML=list.map(t=>`
+  grid.innerHTML=list.map(t=>{
+    const inds=(TPL_INDUSTRIES[t.id]||[]).map(i=>`<span class="tpl-industry">${i}</span>`).join('');
+    return `
     <div class="tpl-card${t.id===selTpl.id?' selected':''}" data-id="${t.id}">
       <div class="tpl-check"><svg width="9" height="9" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="white" stroke-width="3" stroke-linecap="round"/></svg></div>
       <div class="tpl-preview" onclick="pickTpl(${t.id})">${prevHTML(t)}</div>
       <div class="tpl-name">
-        <span style="cursor:pointer" onclick="pickTpl(${t.id})">${t.name}</span>
-        <div style="display:flex;align-items:center;gap:.35rem">
-          <span class="tpl-cat cat-${t.cat}">${t.cat}</span>
-          <button onclick="openPreview(${t.id})" style="background:rgba(59,108,250,0.1);border:1px solid rgba(59,108,250,0.2);color:#6b8ffb;border-radius:4px;padding:.1rem .4rem;font-size:.55rem;cursor:pointer;font-family:var(--font);white-space:nowrap" title="Preview full resume">👁 Preview</button>
+        <div class="tpl-name-row1">
+          <span style="cursor:pointer" onclick="pickTpl(${t.id})">${t.name}</span>
+          <div style="display:flex;align-items:center;gap:.3rem">
+            <span class="tpl-cat cat-${t.cat}">${t.cat}</span>
+            <button onclick="openPreview(${t.id})" style="background:rgba(59,108,250,0.12);border:1px solid rgba(59,108,250,0.2);color:#6b8ffb;border-radius:4px;padding:.15rem .4rem;font-size:.52rem;cursor:pointer;font-family:var(--font);white-space:nowrap;font-weight:600">👁 View</button>
+          </div>
         </div>
+        <div class="tpl-name-row2">${inds}</div>
       </div>
-    </div>`).join('');
+    </div>`}).join('');
 }
 
 function pickTpl(id){
@@ -1153,40 +1188,87 @@ function goBack(){
   setSP(1);
 }
 
-async function toggleRec(){
-  if(!isRec){
-    try{
-      const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-      mr=new MediaRecorder(stream);
-      mr.ondataavailable=()=>{};
-      mr.onstop=()=>{
-        document.getElementById('txBox').textContent=transcript||'';
-        document.getElementById('txPanel').classList.add('show');
-        document.getElementById('txDiv').style.display='block';
-        setStatus('Done — review below and hit build',false);setSP(3);
+let recTimerInt=null,recSeconds=0;
+
+function startRec(){
+  navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+    // Reset recognition transcript for this session
+    if(recognition){
+      try{recognition.abort();}catch(e){}
+      let fin='';
+      recognition.onresult=e=>{
+        let interim='';
+        for(let i=e.resultIndex;i<e.results.length;i++){
+          if(e.results[i].isFinal)fin+=e.results[i][0].transcript+' ';
+          else interim+=e.results[i][0].transcript;
+        }
+        const current=fin+interim;
+        // append to existing transcript
+        const base=window._baseTranscript||'';
+        transcript=base+current;
+        // show live preview
+        const liveEl=document.getElementById('recLiveText');
+        if(liveEl)liveEl.textContent=current.slice(-120)||'Listening...';
       };
-      mr.start(200);
-      if(recognition){try{recognition.start();}catch(e){}}
-      isRec=true;
-      document.getElementById('micBtn').classList.add('rec');
-      document.getElementById('micIco').style.display='none';
-      document.getElementById('stopIco').style.display='block';
-      document.getElementById('r1').classList.add('pulse');
-      document.getElementById('r2').classList.add('pulse');
-      document.getElementById('waveform').classList.add('show');
-      setStatus('Listening — keep going!',true);
-    }catch(e){showErr('Microphone access denied. Please allow mic permissions.');}
-  }else{
-    if(recognition){try{recognition.stop();}catch(e){}}
-    if(mr&&mr.state!=='inactive'){mr.stop();try{mr.stream.getTracks().forEach(t=>t.stop());}catch(e){}}
-    isRec=false;
-    document.getElementById('micBtn').classList.remove('rec');
-    document.getElementById('micIco').style.display='block';
-    document.getElementById('stopIco').style.display='none';
-    document.getElementById('r1').classList.remove('pulse');
-    document.getElementById('r2').classList.remove('pulse');
-    document.getElementById('waveform').classList.remove('show');
-  }
+      try{recognition.start();}catch(e){}
+    }
+    mr=new MediaRecorder(stream);
+    mr.ondataavailable=()=>{};
+    mr.onstop=()=>{try{stream.getTracks().forEach(t=>t.stop());}catch(e){}};
+    mr.start(200);
+    isRec=true;
+
+    // Show live UI
+    document.getElementById('recPanel').style.display='none';
+    document.getElementById('recLive').classList.add('show');
+    document.getElementById('r1').classList.add('pulse');
+    document.getElementById('r2').classList.add('pulse');
+
+    // Timer
+    recSeconds=0;
+    updateTimer();
+    recTimerInt=setInterval(updateTimer,1000);
+  }).catch(()=>showErr('Microphone access denied. Please allow mic permissions.'));
+}
+
+function updateTimer(){
+  recSeconds++;
+  const m=Math.floor(recSeconds/60);
+  const s=recSeconds%60;
+  const el=document.getElementById('recTimer');
+  if(el)el.textContent=m+':'+(s<10?'0':'')+s;
+}
+
+function finishRec(){
+  if(recognition){try{recognition.stop();}catch(e){}}
+  if(mr&&mr.state!=='inactive'){mr.stop();}
+  clearInterval(recTimerInt);
+  isRec=false;
+
+  // Hide live UI, show transcript
+  document.getElementById('recLive').classList.remove('show');
+  document.getElementById('r1').classList.remove('pulse');
+  document.getElementById('r2').classList.remove('pulse');
+  document.getElementById('txBox').textContent=transcript||'';
+  document.getElementById('txPanel').classList.add('show');
+  document.getElementById('txDiv').style.display='block';
+  // Show mic panel again for "add more"
+  document.getElementById('recPanel').style.display='block';
+  setStatus('Done — review and hit build',false);setSP(3);
+}
+
+function addMoreRec(){
+  // Save existing transcript as base
+  window._baseTranscript=(document.getElementById('txBox').textContent||'')+' ';
+  transcript=window._baseTranscript;
+  // Hide transcript, show mic
+  document.getElementById('txPanel').classList.remove('show');
+  document.getElementById('txDiv').style.display='none';
+  document.getElementById('recLiveText').textContent='Listening...';
+  document.getElementById('recTimer').textContent='0:00';
+  recSeconds=0;
+  setStatus('Tap the mic to add more',false);setSP(2);
+  startRec();
 }
 
 // Keyword animation
@@ -1451,11 +1533,16 @@ function dlText(){
 }
 
 function resetAll(){
-  transcript='';
+  transcript='';window._baseTranscript='';
+  clearInterval(recTimerInt);
+  if(recognition){try{recognition.abort();}catch(e){}}
+  if(mr&&mr.state!=='inactive'){try{mr.stop();}catch(e){}}
+  isRec=false;
   document.getElementById('txBox').textContent='';
   document.getElementById('txPanel').classList.remove('show');
   document.getElementById('txDiv').style.display='none';
   document.getElementById('recPanel').style.display='block';
+  document.getElementById('recLive').classList.remove('show');
   document.getElementById('recSection').style.display='none';
   document.getElementById('tplSection').style.display='block';
   document.getElementById('results').classList.remove('show');
@@ -1467,6 +1554,8 @@ function resetAll(){
   document.getElementById('indSection').classList.remove('show');
   document.getElementById('indList').innerHTML='';
   document.getElementById('modeBadge').classList.remove('show');
+  document.getElementById('r1').classList.remove('pulse');
+  document.getElementById('r2').classList.remove('pulse');
   setStatus('Tap the mic and start talking',false);
   setSP(1);window._r=null;window._jobs=null;
   window.scrollTo({top:0,behavior:'smooth'});
