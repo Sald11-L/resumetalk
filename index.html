@@ -225,7 +225,8 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
 .kw-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(59,108,250,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(59,108,250,0.04) 1px,transparent 1px);background-size:32px 32px}
 .kw-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;z-index:2;text-align:center;padding:2rem}
 .kw-spinner{width:32px;height:32px;border:2px solid rgba(255,255,255,.06);border-top-color:var(--blue);border-radius:50%;animation:spin .85s linear infinite;margin-bottom:.5rem}
-@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@keyframes progress{0%{width:0%}60%{width:75%}100%{width:95%}}
 .kw-title{font-size:1.3rem;font-weight:700;letter-spacing:-.02em;color:var(--text);min-height:1.6em;transition:all .4s}
 .kw-sub{font-size:.68rem;color:var(--subtle);letter-spacing:.08em;text-transform:uppercase}
 .kw-word{position:absolute;font-weight:700;color:var(--text);pointer-events:none;z-index:1;animation:floatUp 3s ease-out forwards;opacity:0;white-space:nowrap}
@@ -941,6 +942,23 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
               </div>
             </div>
             <div style="margin-top:.75rem;font-size:.7rem;color:#d97706;font-weight:500">⚠ Always say month AND year — "January 2017" not just "2017"</div>
+          </div>
+        </div>
+
+        <!-- STATE 2.5: Analyzing -->
+        <div class="card" id="analyzingCard" style="display:none">
+          <div style="height:4px;background:linear-gradient(90deg,#1a6b5a,#e8601c,#1a6b5a);background-size:200% 100%;animation:shimmer 1.5s linear infinite"></div>
+          <div style="padding:2.5rem 2rem;text-align:center">
+            <div style="width:56px;height:56px;border-radius:50%;background:#f0fdf4;border:2px solid #c8e6dc;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem">
+              <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke="#1a6b5a" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </div>
+            <div style="font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:.3rem">Analyzing your recording...</div>
+            <div style="font-size:.8rem;color:var(--muted);margin-bottom:1.5rem">Transcribing your words</div>
+            <!-- Progress bar -->
+            <div style="background:#f0f0f0;border-radius:99px;height:6px;overflow:hidden;margin-bottom:.5rem">
+              <div style="height:100%;border-radius:99px;background:linear-gradient(90deg,#1a6b5a,#22876f);animation:progress 1.6s ease-out forwards"></div>
+            </div>
+            <div style="font-size:.68rem;color:var(--muted)">Ready to review in a moment</div>
           </div>
         </div>
 
@@ -1706,8 +1724,7 @@ window.goRecord=function goRecord(){
   document.getElementById('stepsBar').style.display='none';
   document.getElementById('recSection').style.display='block';
   document.getElementById('recPanel').style.display='block';
-  if(document.getElementById('recLiveCard'))document.getElementById('recLiveCard').style.display='none';
-  if(document.getElementById('txCard'))document.getElementById('txCard').style.display='none';
+  ['recLiveCard','txCard','analyzingCard'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
   document.getElementById('tplBadge').textContent=selTpl.name+' template';
   setSP(2);window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1785,70 +1802,46 @@ window.finishRec=function finishRec(){
   clearInterval(recTimerInt);
   isRec=false;
 
-  // Hide live UI, show transcript
-  document.getElementById('recLive').classList.remove('show');
-  document.getElementById('r1').classList.remove('pulse');
-  document.getElementById('r2').classList.remove('pulse');
-  document.getElementById('txBox').textContent=transcript||'';
-  document.getElementById('txPanel').classList.add('show');
-  document.getElementById('txDiv').style.display='block';
-  // Show mic panel again for "add more"
-  document.getElementById('recPanel').style.display='block';
-  setStatus('Done — review and hit build',false);setSP(3);
+  // Hide live recording card
+  const liveCard=document.getElementById('recLiveCard');
+  if(liveCard)liveCard.style.display='none';
+  const r1=document.getElementById('r1');if(r1)r1.classList.remove('pulse');
+  const r2=document.getElementById('r2');if(r2)r2.classList.remove('pulse');
+
+  // Show analyzing state immediately
+  showAnalyzing();
+}
+
+function showAnalyzing(){
+  const card=document.getElementById('analyzingCard');
+  if(card){card.style.display='block';}
+  // Auto-advance to transcript after recognition settles (500ms)
+  setTimeout(()=>{
+    const card=document.getElementById('analyzingCard');
+    if(card)card.style.display='none';
+    document.getElementById('txBox').textContent=transcript||'';
+    const tc2=document.getElementById('txCard');if(tc2)tc2.style.display='block';
+    setSP(3);
+  },1800);
 }
 
 window.addMoreRec=function addMoreRec(){
-  // Save existing transcript as base
   window._baseTranscript=(document.getElementById('txBox').textContent||'')+' ';
   transcript=window._baseTranscript;
-  // Hide transcript, show mic
-  document.getElementById('txPanel').classList.remove('show');
-  document.getElementById('txDiv').style.display='none';
+  document.getElementById('txCard').style.display='none';
+  document.getElementById('recPanel').style.display='block';
   document.getElementById('recLiveText').textContent='Listening...';
   document.getElementById('recTimer').textContent='0:00';
   recSeconds=0;
-  setStatus('Tap the mic to add more',false);setSP(2);
+  setSP(2);
   startRec();
-}
-
-// Keyword animation
-function extractKW(txt){
-  const words=txt.split(/\s+/);
-  const stop=new Set(['i','the','a','an','and','or','but','in','on','at','to','for','of','with','my','is','was','am','are','were','have','had','been','it','this','that','as','by','from','me','we','they','their','our','your','his','her','its','about','after','also','just','not','be','do','did','so','if','when','what','how','who','all','some','any','one','two','three','years','year','worked','working','job','work','great','good']);
-  const kws=[];const seen=new Set();
-  words.forEach((w,i)=>{
-    const cl=w.replace(/[^a-zA-Z']/g,'');
-    if(cl.length<3||stop.has(cl.toLowerCase()))return;
-    if(seen.has(cl.toLowerCase()))return;
-    seen.add(cl.toLowerCase());
-    const isProper=/^[A-Z]/.test(cl);
-    kws.push({word:cl,size:isProper?1.1+Math.random()*.4:.85+Math.random()*.3,color:isProper?(i%2===0?'#6b8ffb':'#10d98a'):'rgba(255,255,255,0.5)'});
-  });
-  return kws.slice(0,40);
-}
-
-function startKW(txt){
-  const stage=document.getElementById('kwStage');stage.classList.add('show');
-  const kws=extractKW(txt);let idx=0;
-  const stages=[{t:'Reading your story...',s:'Picking up every detail'},{t:'Finding your strengths...',s:'You have more than you think'},{t:'Writing your resume...',s:'Turning words into opportunity'},{t:'Almost there...',s:'Polishing the final touches'}];
-  let si=0;
-  const titleEl=document.getElementById('kwTitle');const subEl=document.getElementById('kwSub');
-  const st=setInterval(()=>{si=(si+1)%stages.length;titleEl.style.opacity=0;setTimeout(()=>{titleEl.textContent=stages[si].t;subEl.textContent=stages[si].s;titleEl.style.opacity=1;},300);},4000);
-  kwInt=setInterval(()=>{
-    if(idx>=kws.length)idx=0;
-    const kw=kws[idx++];
-    const el=document.createElement('div');el.className='kw-word';el.textContent=kw.word;
-    el.style.cssText=`left:${10+Math.random()*75}%;bottom:${10+Math.random()*30}%;font-size:${kw.size}rem;color:${kw.color};animation-duration:${2.5+Math.random()*1.5}s;animation-delay:${Math.random()*.3}s;font-family:var(--font)`;
-    stage.appendChild(el);setTimeout(()=>el.remove(),4000);
-  },350);
-  return{stop:()=>{clearInterval(kwInt);clearInterval(st);}};
 }
 
 window.buildResume=async function buildResume(){
   const txt=document.getElementById('txBox').textContent||'';
   if(txt.trim().length<20){showErr('Please tell us a bit more about yourself first.');return;}
   hideErr();
-  if(document.getElementById('txCard'))document.getElementById('txCard').style.display='none';
+  const tc=document.getElementById('txCard');if(tc)tc.style.display='none';
   document.getElementById('recPanel').style.display='none';
   const anim=startKW(txt);setSP(4);
 
@@ -1886,7 +1879,7 @@ Return AT LEAST 15 jobRecommendations across multiple industries varying seniori
     renderResults(r);
   }catch(e){
     anim.stop();document.getElementById('kwStage').classList.remove('show');
-    document.getElementById('txCard').style.display='block';
+    const tc2=document.getElementById('txCard');if(tc2)tc2.style.display='block';
     setSP(3);showErr('⚠ '+( e.message||'Something went wrong. Please try again.'));
   }
 }
@@ -2079,8 +2072,7 @@ window.resetAll=function resetAll(){
   document.getElementById('txPanel').classList.remove('show');
   document.getElementById('txDiv').style.display='none';
   document.getElementById('recPanel').style.display='block';
-  if(document.getElementById('recLiveCard'))document.getElementById('recLiveCard').style.display='none';
-  if(document.getElementById('txCard'))document.getElementById('txCard').style.display='none';
+  ['recLiveCard','txCard','analyzingCard'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
   document.getElementById('recSection').style.display='none';
   document.getElementById('tplSection').style.display='block';
   document.getElementById('stepsBar').style.display='flex';
