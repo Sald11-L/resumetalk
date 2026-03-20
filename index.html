@@ -420,219 +420,315 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
 <!-- ═══════════ HOME — LANDING PAGE ═══════════ -->
 <div class="page active" id="page-home">
 
-  <!-- HERO -->
-  <div style="max-width:800px;margin:0 auto;padding:5rem 2rem 3.5rem;text-align:center;animation:fadeUp .6s ease both">
-    <div style="display:inline-flex;align-items:center;gap:.5rem;background:var(--blue-dim);border:1px solid rgba(59,108,250,0.2);border-radius:20px;padding:.3rem .9rem;font-size:.72rem;font-weight:500;color:var(--blue-l);margin-bottom:1.75rem;letter-spacing:.02em">
-      <div style="width:6px;height:6px;border-radius:50%;background:var(--green)"></div>
-      Free · No account · Under 60 seconds
+  <!-- HERO SECTION -->
+  <div style="max-width:1100px;margin:0 auto;padding:4rem 2rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center">
+
+    <!-- LEFT: headline + CTA -->
+    <div style="animation:fadeUp .6s ease both">
+      <div style="display:inline-flex;align-items:center;gap:.5rem;background:var(--green-dim);border:1px solid rgba(16,217,138,.2);border-radius:20px;padding:.28rem .875rem;font-size:.7rem;font-weight:600;color:var(--green);margin-bottom:1.5rem;letter-spacing:.02em">
+        <div style="width:6px;height:6px;border-radius:50%;background:var(--green);animation:recblink .8s infinite"></div>
+        Free · No account · 60 seconds
+      </div>
+      <h1 style="font-size:clamp(2.2rem,4.5vw,3.6rem);font-weight:800;letter-spacing:-.04em;line-height:1.08;margin-bottom:1.1rem;color:var(--text)">
+        Speak your story.<br>
+        <span style="background:linear-gradient(135deg,var(--blue-l) 0%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Get hired.</span>
+      </h1>
+      <p style="font-size:.95rem;color:var(--muted);line-height:1.75;margin-bottom:2rem;font-weight:300;max-width:400px">Just talk about your work experience — ResumeTalk turns your voice into a polished, ATS-ready resume in under 60 seconds. No writing skills needed.</p>
+
+      <button onclick="showPage('build')" style="display:inline-flex;align-items:center;gap:.6rem;background:var(--blue);color:white;border:none;padding:.9rem 2rem;border-radius:12px;font-family:var(--font);font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 8px 28px var(--blue-glow);transition:all .25s;margin-bottom:1rem" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 14px 36px rgba(59,108,250,0.45)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 28px rgba(59,108,250,0.25)'">
+        <svg width="17" height="17" fill="none" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="white"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Build my free resume
+      </button>
+
+      <!-- Trust signals -->
+      <div style="display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;margin-top:.25rem">
+        <div style="display:flex;align-items:center;gap:.35rem;font-size:.72rem;color:var(--muted)">
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke="var(--green)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          No credit card
+        </div>
+        <div style="display:flex;align-items:center;gap:.35rem;font-size:.72rem;color:var(--muted)">
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="var(--green)" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Private & secure
+        </div>
+        <div style="display:flex;align-items:center;gap:.35rem;font-size:.72rem;color:var(--muted)">
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="var(--green)" stroke-width="1.6"/><path d="M12 6v6l4 2" stroke="var(--green)" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Ready in 60 seconds
+        </div>
+      </div>
+
+      <!-- Social proof -->
+      <div style="margin-top:2rem;padding:1.1rem 1.25rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;gap:.875rem">
+        <div style="display:flex;flex-shrink:0">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=32&h=32&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;border:2px solid var(--bg);object-fit:cover" alt="">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=32&h=32&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;border:2px solid var(--bg);margin-left:-8px;object-fit:cover" alt="">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=32&h=32&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;border:2px solid var(--bg);margin-left:-8px;object-fit:cover" alt="">
+          <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=32&h=32&fit=crop&crop=face" style="width:28px;height:28px;border-radius:50%;border:2px solid var(--bg);margin-left:-8px;object-fit:cover" alt="">
+        </div>
+        <div>
+          <div style="display:flex;gap:1px;margin-bottom:2px">
+            ${[...Array(5)].map(()=>`<svg width="11" height="11" viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`).join("")}
+          </div>
+          <div style="font-size:.7rem;color:var(--muted)"><span style="color:var(--text);font-weight:600">Loved by job seekers</span> — completely free</div>
+        </div>
+      </div>
     </div>
-    <h1 style="font-size:clamp(2.5rem,6vw,4.2rem);font-weight:800;letter-spacing:-.04em;line-height:1.05;margin-bottom:1.25rem;color:var(--text)">Your experience<br>deserves to be <em style="font-style:normal;background:linear-gradient(135deg,var(--blue-l),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">seen.</em></h1>
-    <p style="font-size:1.05rem;color:var(--muted);max-width:500px;margin:0 auto 2.5rem;line-height:1.7;font-weight:300">Just talk about your work experience. ResumeTalk turns your voice into a polished, ATS-ready resume in under 60 seconds — completely free.</p>
-    <button onclick="showPage('build')" style="display:inline-flex;align-items:center;gap:.6rem;background:var(--blue);color:white;border:none;padding:1rem 2.25rem;border-radius:12px;font-family:var(--font);font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 8px 32px var(--blue-glow);transition:all .2s;margin-bottom:.75rem" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 40px rgba(59,108,250,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 32px rgba(59,108,250,0.25)'">
-      <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="white"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
-      Build my free resume
-    </button>
-    <div style="font-size:.75rem;color:var(--subtle)">No account required &nbsp;·&nbsp; No credit card &nbsp;·&nbsp; Delete anytime</div>
+
+    <!-- RIGHT: resume preview mockup -->
+    <div style="position:relative;animation:fadeUp .6s .1s ease both">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.4)">
+        <!-- Browser chrome -->
+        <div style="background:var(--card);padding:.6rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem">
+          <div style="display:flex;gap:5px"><div style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></div><div style="width:10px;height:10px;border-radius:50%;background:#febc2e"></div><div style="width:10px;height:10px;border-radius:50%;background:#28c840"></div></div>
+          <div style="flex:1;background:rgba(255,255,255,.06);border-radius:6px;height:20px;margin:0 .5rem;display:flex;align-items:center;padding:0 .6rem"><span style="font-size:.6rem;color:var(--subtle)">resumetalk.org</span></div>
+        </div>
+        <!-- Resume preview -->
+        <div style="padding:1.25rem;background:#fff">
+          <!-- Name header -->
+          <div style="border-bottom:2px solid #1a1a2e;padding-bottom:.6rem;margin-bottom:.6rem">
+            <div style="font-size:1.1rem;font-weight:800;color:#1a1a2e;letter-spacing:-.02em;margin-bottom:.1rem">Jordan Williams</div>
+            <div style="font-size:.58rem;color:#888">jordan.williams@email.com · (555) 000-0000 · Brooklyn, New York</div>
+          </div>
+          <div style="font-size:.5rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1a1a2e;margin-bottom:.3rem">Summary</div>
+          <div style="font-size:.6rem;color:#555;line-height:1.5;margin-bottom:.6rem">Results-driven operations professional with 8+ years of experience in logistics management and team leadership. Proven track record of improving efficiency and delivering measurable results.</div>
+          <div style="font-size:.5rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#1a1a2e;margin-bottom:.3rem">Experience</div>
+          <div style="margin-bottom:.4rem">
+            <div style="font-size:.65rem;font-weight:700;color:#111">Warehouse Supervisor · FedEx</div>
+            <div style="font-size:.52rem;color:#888;margin-bottom:.2rem">Jan 2017 – Jun 2022 · Brooklyn, NY</div>
+            <div style="font-size:.58rem;color:#444;line-height:1.5">• Managed team of 12, reducing errors by 32%<br>• Trained 20+ new staff on safety protocols</div>
+          </div>
+          <div style="display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.5rem">
+            <span style="background:#1a1a2e18;border:1px solid #1a1a2e25;color:#1a1a2e;padding:.12rem .4rem;border-radius:3px;font-size:.52rem;font-weight:500">Leadership</span>
+            <span style="background:#1a1a2e18;border:1px solid #1a1a2e25;color:#1a1a2e;padding:.12rem .4rem;border-radius:3px;font-size:.52rem;font-weight:500">Logistics</span>
+            <span style="background:#1a1a2e18;border:1px solid #1a1a2e25;color:#1a1a2e;padding:.12rem .4rem;border-radius:3px;font-size:.52rem;font-weight:500">Operations</span>
+          </div>
+        </div>
+        <!-- AI badge overlay -->
+        <div style="padding:.75rem 1.25rem;background:var(--green-dim);border-top:1px solid rgba(16,217,138,.15);display:flex;align-items:center;gap:.5rem">
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--green)"></div>
+          <span style="font-size:.65rem;color:var(--green);font-weight:600">ATS-optimized · 15 job matches found · Ready to download</span>
+        </div>
+      </div>
+      <!-- Floating badge -->
+      <div style="position:absolute;top:-12px;right:-12px;background:var(--blue);color:white;border-radius:12px;padding:.5rem .875rem;font-size:.65rem;font-weight:700;box-shadow:0 8px 24px var(--blue-glow);display:flex;align-items:center;gap:.4rem">
+        <svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="white"/></svg>
+        Built in 47 seconds
+      </div>
+    </div>
   </div>
 
-  <!-- HERO PHOTO -->
-  <div style="max-width:960px;margin:0 auto 5rem;padding:0 2rem">
-    <div style="border-radius:20px;overflow:hidden;border:1px solid var(--border);position:relative;box-shadow:0 24px 64px rgba(0,0,0,0.4)">
-      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=960&h=420&fit=crop&crop=center" alt="People working on resumes together" style="width:100%;height:380px;object-fit:cover;display:block" loading="lazy">
-      <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(6,9,18,0.75) 0%,rgba(6,9,18,0.1) 55%,transparent 100%)"></div>
-      <div style="position:absolute;inset:0;display:flex;align-items:center;padding:3rem">
-        <div style="max-width:360px">
-          <div style="font-size:1.5rem;font-weight:800;letter-spacing:-.03em;color:white;line-height:1.2;margin-bottom:.75rem">Speak your story.<br>We write the resume.</div>
-          <div style="font-size:.85rem;color:rgba(255,255,255,.7);line-height:1.65;margin-bottom:1.5rem">No writing skills needed. No templates to fill in. Just speak naturally about your experience and let ResumeTalk do the rest.</div>
-          <button onclick="showPage('build')" style="background:white;color:var(--blue-d);border:none;padding:.65rem 1.5rem;border-radius:8px;font-family:var(--font);font-size:.82rem;font-weight:700;cursor:pointer;transition:opacity .2s" onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='1'">Start free →</button>
+  <!-- PHOTO BANNER: diverse professionals -->
+  <div style="max-width:1100px;margin:3rem auto;padding:0 2rem">
+    <div style="border-radius:20px;overflow:hidden;border:1px solid var(--border);position:relative;box-shadow:0 16px 48px rgba(0,0,0,0.3)">
+      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1100&h=320&fit=crop&crop=top" alt="Confident professional ready for success" style="width:100%;height:260px;object-fit:cover;display:block" loading="lazy">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(6,9,18,0.7) 0%,rgba(6,9,18,0.3) 50%,rgba(6,9,18,0.8) 100%);display:flex;align-items:center;justify-content:space-between;padding:2rem 3rem;flex-wrap:wrap;gap:1.5rem">
+        <div>
+          <div style="font-size:1.3rem;font-weight:800;letter-spacing:-.03em;color:white;line-height:1.25;margin-bottom:.4rem">Your next opportunity<br>starts with a great resume.</div>
+          <div style="font-size:.8rem;color:rgba(255,255,255,.65)">ResumeTalk is built for everyone — wherever you are in your career.</div>
+        </div>
+        <div style="display:flex;gap:2.5rem;flex-wrap:wrap">
+          <div style="text-align:center">
+            <div style="font-size:1.6rem;font-weight:800;color:white;letter-spacing:-.03em;line-height:1">98%</div>
+            <div style="font-size:.62rem;color:rgba(255,255,255,.55);margin-top:.2rem">Fortune 500 use<br>ATS screening</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:1.6rem;font-weight:800;color:white;letter-spacing:-.03em;line-height:1">3.5×</div>
+            <div style="font-size:.62rem;color:rgba(255,255,255,.55);margin-top:.2rem">more interviews with<br>keyword alignment</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:1.6rem;font-weight:800;color:white;letter-spacing:-.03em;line-height:1">29</div>
+            <div style="font-size:.62rem;color:rgba(255,255,255,.55);margin-top:.2rem">professional<br>templates</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:1.6rem;font-weight:800;color:white;letter-spacing:-.03em;line-height:1">Free</div>
+            <div style="font-size:.62rem;color:rgba(255,255,255,.55);margin-top:.2rem">always, no<br>account needed</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- HOW IT WORKS — 3 STEPS -->
-  <div style="max-width:960px;margin:0 auto 5rem;padding:0 2rem">
+  <!-- HOW IT WORKS: 3 steps -->
+  <div style="max-width:1100px;margin:0 auto 4rem;padding:0 2rem">
     <div style="text-align:center;margin-bottom:2.5rem">
       <div style="font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.6rem">How it works</div>
-      <div style="font-size:1.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text)">Three steps to a great resume</div>
+      <div style="font-size:1.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text)">Three steps to your dream job</div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem">
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;position:relative;overflow:hidden">
-        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--blue-l))"></div>
-        <div style="width:40px;height:40px;background:var(--blue-dim);border:1px solid rgba(59,108,250,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
-          <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="var(--blue-l)"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="var(--blue-l)" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden">
+      <div style="background:var(--surface);padding:2rem">
+        <div style="font-size:2rem;font-weight:800;color:var(--blue);opacity:.15;letter-spacing:-.04em;margin-bottom:.75rem">01</div>
+        <div style="width:36px;height:36px;background:var(--blue-dim);border:1px solid rgba(59,108,250,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="var(--blue-l)"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="var(--blue-l)" stroke-width="1.8" stroke-linecap="round"/></svg>
         </div>
-        <div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.4rem">Step 1</div>
-        <div style="font-weight:700;font-size:.95rem;color:var(--text);margin-bottom:.4rem">Pick a template &amp; speak</div>
-        <div style="font-size:.8rem;color:var(--muted);line-height:1.6">Choose from 29 professional templates. Then tap the mic and talk about your jobs, education, and skills in plain everyday language.</div>
+        <div style="font-weight:700;font-size:1rem;color:var(--text);margin-bottom:.4rem">Pick a template &amp; speak</div>
+        <div style="font-size:.8rem;color:var(--muted);line-height:1.65">Choose from 29 professionally designed templates. Tap the mic and talk naturally about your jobs, education, and skills. No scripts, no forms.</div>
       </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;position:relative;overflow:hidden">
-        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue-l),var(--green))"></div>
-        <div style="width:40px;height:40px;background:var(--green-dim);border:1px solid rgba(16,217,138,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
-          <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke="var(--green)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div style="background:var(--surface);padding:2rem;border-left:1px solid var(--border)">
+        <div style="font-size:2rem;font-weight:800;color:var(--blue);opacity:.15;letter-spacing:-.04em;margin-bottom:.75rem">02</div>
+        <div style="width:36px;height:36px;background:var(--blue-dim);border:1px solid rgba(59,108,250,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke="var(--blue-l)" stroke-width="1.6" stroke-linecap="round"/></svg>
         </div>
-        <div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:.4rem">Step 2</div>
-        <div style="font-weight:700;font-size:.95rem;color:var(--text);margin-bottom:.4rem">AI builds your resume</div>
-        <div style="font-size:.8rem;color:var(--muted);line-height:1.6">ResumeTalk's AI translates your words into professional resume language — ATS-optimized, keyword-rich, and formatted for maximum readability.</div>
+        <div style="font-weight:700;font-size:1rem;color:var(--text);margin-bottom:.4rem">AI writes your resume</div>
+        <div style="font-size:.8rem;color:var(--muted);line-height:1.65">ResumeTalk AI transforms your words into polished professional language — ATS-optimized, keyword-rich, and formatted to pass every screening system.</div>
       </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;position:relative;overflow:hidden">
-        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--green),#34d399)"></div>
-        <div style="width:40px;height:40px;background:var(--green-dim);border:1px solid rgba(16,217,138,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
-          <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="var(--green)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div style="background:var(--surface);padding:2rem;border-left:1px solid var(--border)">
+        <div style="font-size:2rem;font-weight:800;color:var(--green);opacity:.2;letter-spacing:-.04em;margin-bottom:.75rem">03</div>
+        <div style="width:36px;height:36px;background:var(--green-dim);border:1px solid rgba(16,217,138,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="var(--green)" stroke-width="1.6" stroke-linecap="round"/></svg>
         </div>
-        <div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:.4rem">Step 3</div>
-        <div style="font-weight:700;font-size:.95rem;color:var(--text);margin-bottom:.4rem">Download &amp; apply</div>
-        <div style="font-size:.8rem;color:var(--muted);line-height:1.6">Download your resume as a Word doc or plain text. Plus get 15+ job recommendations with salary ranges and industry fit scores.</div>
+        <div style="font-weight:700;font-size:1rem;color:var(--text);margin-bottom:.4rem">Download &amp; apply</div>
+        <div style="font-size:.8rem;color:var(--muted);line-height:1.65">Download your resume as Word or plain text. Plus get 15+ personalized job matches with salary ranges, industry fit scores, and application tips.</div>
       </div>
     </div>
   </div>
 
-  <!-- STATS BAR -->
-  <div style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:2rem;margin-bottom:5rem">
-    <div style="max-width:960px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center">
-      <div>
-        <div style="font-size:2rem;font-weight:800;letter-spacing:-.04em;background:linear-gradient(135deg,var(--blue-l),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">98%</div>
-        <div style="font-size:.75rem;color:var(--muted);margin-top:.25rem;line-height:1.5">of Fortune 500 use ATS<br>to screen resumes first</div>
-      </div>
-      <div>
-        <div style="font-size:2rem;font-weight:800;letter-spacing:-.04em;background:linear-gradient(135deg,var(--blue-l),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">75%</div>
-        <div style="font-size:.75rem;color:var(--muted);margin-top:.25rem;line-height:1.5">of qualified candidates<br>never pass ATS filters</div>
-      </div>
-      <div>
-        <div style="font-size:2rem;font-weight:800;letter-spacing:-.04em;background:linear-gradient(135deg,var(--blue-l),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">3.5×</div>
-        <div style="font-size:.75rem;color:var(--muted);margin-top:.25rem;line-height:1.5">more interviews with<br>a keyword-aligned resume</div>
-      </div>
-      <div>
-        <div style="font-size:2rem;font-weight:800;letter-spacing:-.04em;background:linear-gradient(135deg,var(--blue-l),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">60s</div>
-        <div style="font-size:.75rem;color:var(--muted);margin-top:.25rem;line-height:1.5">to build a complete<br>resume with ResumeTalk</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- RESUME TIPS FROM RESEARCH -->
-  <div style="max-width:960px;margin:0 auto 5rem;padding:0 2rem">
+  <!-- RESEARCH TIPS -->
+  <div style="max-width:1100px;margin:0 auto 4rem;padding:0 2rem">
     <div style="text-align:center;margin-bottom:2.5rem">
-      <div style="font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.6rem">What the research says</div>
-      <div style="font-size:1.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text);margin-bottom:.5rem">What makes a great resume in 2026</div>
-      <div style="font-size:.875rem;color:var(--muted);font-weight:300;max-width:480px;margin:0 auto">Tips drawn from Deloitte, top data scientists, and career experts. ResumeTalk applies all of these automatically.</div>
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.6rem">Expert insights</div>
+      <div style="font-size:1.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text);margin-bottom:.4rem">What makes a great resume in 2026</div>
+      <div style="font-size:.85rem;color:var(--muted);font-weight:300">ResumeTalk applies every one of these automatically.</div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem">
-        <div style="font-size:1.4rem;margin-bottom:.75rem">🎯</div>
-        <div style="font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.4rem">Lead with your strongest skills</div>
-        <div style="font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:.75rem">Deloitte recruiters say your resume should immediately signal your value. Lead with a sharp professional summary that names your role, experience level, and top strengths.</div>
-        <div style="font-size:.62rem;color:var(--subtle);font-style:italic">Source: Deloitte Recruiting Tips</div>
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.875rem">
+          <div style="width:28px;height:28px;background:var(--blue-dim);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:.8rem">🎯</span></div>
+          <div style="font-weight:700;font-size:.875rem;color:var(--text)">Lead with your value</div>
+        </div>
+        <div style="font-size:.78rem;color:var(--muted);line-height:1.6;margin-bottom:.6rem">Your summary should immediately signal who you are and what you bring. Deloitte recruiters say the first 3 lines determine whether they keep reading.</div>
+        <div style="font-size:.6rem;color:var(--subtle);font-style:italic">Deloitte Recruiting Tips</div>
       </div>
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem">
-        <div style="font-size:1.4rem;margin-bottom:.75rem">📊</div>
-        <div style="font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.4rem">Use numbers, not just words</div>
-        <div style="font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:.75rem">Data scientists and top earners say quantified bullets win. "Managed a team" is weak. "Managed a team of 12, reducing errors by 30%" is what gets interviews.</div>
-        <div style="font-size:.62rem;color:var(--subtle);font-style:italic">Source: Towards Data Science</div>
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.875rem">
+          <div style="width:28px;height:28px;background:var(--blue-dim);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:.8rem">📊</span></div>
+          <div style="font-weight:700;font-size:.875rem;color:var(--text)">Quantify everything</div>
+        </div>
+        <div style="font-size:.78rem;color:var(--muted);line-height:1.6;margin-bottom:.6rem">Resumes that landed $100k+ offers used numbers in every bullet. "Managed logistics" loses to "Managed 12-person team, cutting errors by 32%."</div>
+        <div style="font-size:.6rem;color:var(--subtle);font-style:italic">Towards Data Science</div>
       </div>
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem">
-        <div style="font-size:1.4rem;margin-bottom:.75rem">🔍</div>
-        <div style="font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.4rem">Match keywords exactly</div>
-        <div style="font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:.75rem">ATS systems look for exact keyword matches from the job description. If the posting says "data analysis" your resume must say "data analysis" — not "data analytics."</div>
-        <div style="font-size:.62rem;color:var(--subtle);font-style:italic">Source: Yahoo / ATS Research 2026</div>
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.875rem">
+          <div style="width:28px;height:28px;background:var(--blue-dim);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:.8rem">🔑</span></div>
+          <div style="font-weight:700;font-size:.875rem;color:var(--text)">Match keywords exactly</div>
+        </div>
+        <div style="font-size:.78rem;color:var(--muted);line-height:1.6;margin-bottom:.6rem">ATS systems match exact phrases. "Data analysis" ≠ "data analytics." Aligning your title to the job posting increases interview rates by 3.5×.</div>
+        <div style="font-size:.6rem;color:var(--subtle);font-style:italic">Yahoo / Jobscan 2026</div>
       </div>
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem">
-        <div style="font-size:1.4rem;margin-bottom:.75rem">📄</div>
-        <div style="font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.4rem">Format for machines first</div>
-        <div style="font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:.75rem">Tables, columns, and graphics cause ATS parsers to fail. Simple single-column layouts in .docx format have just a 4% failure rate vs. 18% for complex PDFs.</div>
-        <div style="font-size:.62rem;color:var(--subtle);font-style:italic">Source: EDLIGO Analysis 2025</div>
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.875rem">
+          <div style="width:28px;height:28px;background:var(--green-dim);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:.8rem">📄</span></div>
+          <div style="font-weight:700;font-size:.875rem;color:var(--text)">Simple format wins</div>
+        </div>
+        <div style="font-size:.78rem;color:var(--muted);line-height:1.6;margin-bottom:.6rem">Tables, columns, and graphics cause ATS to fail. Plain single-column .docx has a 4% failure rate vs. 18% for fancy PDFs. Clean beats creative.</div>
+        <div style="font-size:.6rem;color:var(--subtle);font-style:italic">EDLIGO Analysis 2025</div>
       </div>
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem">
-        <div style="font-size:1.4rem;margin-bottom:.75rem">💡</div>
-        <div style="font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.4rem">Tailor every application</div>
-        <div style="font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:.75rem">Aligning your resume title to the exact job title increases interview rates by 3.5× according to analysis of over 1 million applications. Generic resumes don't cut through.</div>
-        <div style="font-size:.62rem;color:var(--subtle);font-style:italic">Source: Jobscan / Hiring Lab 2024</div>
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.875rem">
+          <div style="width:28px;height:28px;background:var(--green-dim);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:.8rem">💡</span></div>
+          <div style="font-weight:700;font-size:.875rem;color:var(--text)">Add your skills section</div>
+        </div>
+        <div style="font-size:.78rem;color:var(--muted);line-height:1.6;margin-bottom:.6rem">Data analyst resumes that included a dedicated skills section were significantly more likely to pass ATS. List both hard and soft skills with job-description language.</div>
+        <div style="font-size:.6rem;color:var(--subtle);font-style:italic">Simplilearn Data Analyst Guide</div>
       </div>
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem">
-        <div style="font-size:1.4rem;margin-bottom:.75rem">✍️</div>
-        <div style="font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.4rem">Keep your voice authentic</div>
-        <div style="font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:.75rem">78% of hiring managers look for personalized details as a sign of genuine interest. AI should polish your resume, not replace your voice. ResumeTalk starts from your real words.</div>
-        <div style="font-size:.62rem;color:var(--subtle);font-style:italic">Source: Resume Now Survey 2025</div>
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.875rem">
+          <div style="width:28px;height:28px;background:var(--green-dim);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-size:.8rem">✍️</span></div>
+          <div style="font-weight:700;font-size:.875rem;color:var(--text)">Keep your voice</div>
+        </div>
+        <div style="font-size:.78rem;color:var(--muted);line-height:1.6;margin-bottom:.6rem">78% of hiring managers look for personalized details. Authenticity signals genuine interest. ResumeTalk starts from your real words — never generic filler.</div>
+        <div style="font-size:.6rem;color:var(--subtle);font-style:italic">Resume Now Survey 2025</div>
       </div>
     </div>
   </div>
 
-  <!-- NEWS CARDS -->
-  <div style="max-width:960px;margin:0 auto 5rem;padding:0 2rem">
+  <!-- NEWS ARTICLES -->
+  <div style="max-width:1100px;margin:0 auto 4rem;padding:0 2rem">
     <div style="text-align:center;margin-bottom:2rem">
-      <div style="font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.6rem">In the news</div>
-      <div style="font-size:1.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text)">What experts are saying</div>
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.5rem">In the news</div>
+      <div style="font-size:1.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text)">What the experts are reading</div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem">
       <a href="https://www.yahoo.com/lifestyle/articles/resume-format-beat-ats-hired-180330459.html" target="_blank" style="text-decoration:none">
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .2s;height:100%;display:flex;flex-direction:column" onmouseover="this.style.borderColor='rgba(59,108,250,.4)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)';this.style.transform=''">
-          <div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.6rem">Yahoo Lifestyle</div>
-          <div style="font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.5rem;line-height:1.4">The resume format that beats ATS and gets you hired</div>
-          <div style="font-size:.78rem;color:var(--muted);line-height:1.6;flex:1">The right formatting is the difference between being seen and being invisible. Plain .docx beats PDF — and simple layouts beat elaborate designs every time.</div>
-          <div style="margin-top:1rem;font-size:.65rem;color:var(--blue-l);display:flex;align-items:center;gap:.3rem;font-weight:600">Read article <svg width="10" height="10" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .2s;display:flex;gap:1rem;align-items:flex-start" onmouseover="this.style.borderColor='rgba(59,108,250,.35)';this.style.background='var(--card)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)';this.style.background='var(--surface)'">
+          <div style="width:36px;height:36px;background:var(--blue-dim);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.75rem;font-weight:800;color:var(--blue-l)">Y!</div>
+          <div>
+            <div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem">Yahoo Lifestyle</div>
+            <div style="font-weight:700;font-size:.85rem;color:var(--text);margin-bottom:.3rem;line-height:1.4">The resume format that beats ATS and gets you hired</div>
+            <div style="font-size:.75rem;color:var(--muted);line-height:1.5">The right formatting is the difference between being seen and being invisible. Simple beats fancy, every time.</div>
+          </div>
         </div>
       </a>
       <a href="https://www.deloitte.com/us/en/careers/join-deloitte/recruiting-tips/developing-great-resume.html" target="_blank" style="text-decoration:none">
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .2s;height:100%;display:flex;flex-direction:column" onmouseover="this.style.borderColor='rgba(59,108,250,.4)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)';this.style.transform=''">
-          <div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.6rem">Deloitte Careers</div>
-          <div style="font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.5rem;line-height:1.4">How to make your resume shine — recruiting tips from Deloitte</div>
-          <div style="font-size:.78rem;color:var(--muted);line-height:1.6;flex:1">Deloitte's own recruiters share what they look for: a strong summary, clear achievements, and a resume that tells a story of growth and impact.</div>
-          <div style="margin-top:1rem;font-size:.65rem;color:var(--blue-l);display:flex;align-items:center;gap:.3rem;font-weight:600">Read article <svg width="10" height="10" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .2s;display:flex;gap:1rem;align-items:flex-start" onmouseover="this.style.borderColor='rgba(59,108,250,.35)';this.style.background='var(--card)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)';this.style.background='var(--surface)'">
+          <div style="width:36px;height:36px;background:var(--blue-dim);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.6rem;font-weight:800;color:var(--blue-l)">DEL</div>
+          <div>
+            <div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem">Deloitte Careers</div>
+            <div style="font-weight:700;font-size:.85rem;color:var(--text);margin-bottom:.3rem;line-height:1.4">Recruiting tips: How to make your resume shine</div>
+            <div style="font-size:.75rem;color:var(--muted);line-height:1.5">Deloitte's own recruiters share what grabs their attention — and what sends resumes straight to the reject pile.</div>
+          </div>
         </div>
       </a>
       <a href="https://towardsdatascience.com/this-resume-landed-me-100k-data-science-ml-offers/" target="_blank" style="text-decoration:none">
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .2s;height:100%;display:flex;flex-direction:column" onmouseover="this.style.borderColor='rgba(59,108,250,.4)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)';this.style.transform=''">
-          <div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.6rem">Towards Data Science</div>
-          <div style="font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.5rem;line-height:1.4">This resume landed $100k+ data science and ML offers</div>
-          <div style="font-size:.78rem;color:var(--muted);line-height:1.6;flex:1">A real breakdown of a resume that worked — quantified achievements, clean formatting, and a sharp summary that immediately signals expertise.</div>
-          <div style="margin-top:1rem;font-size:.65rem;color:var(--blue-l);display:flex;align-items:center;gap:.3rem;font-weight:600">Read article <svg width="10" height="10" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .2s;display:flex;gap:1rem;align-items:flex-start" onmouseover="this.style.borderColor='rgba(59,108,250,.35)';this.style.background='var(--card)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)';this.style.background='var(--surface)'">
+          <div style="width:36px;height:36px;background:var(--green-dim);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.6rem;font-weight:800;color:var(--green)">TDS</div>
+          <div>
+            <div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem">Towards Data Science</div>
+            <div style="font-weight:700;font-size:.85rem;color:var(--text);margin-bottom:.3rem;line-height:1.4">This resume landed $100k+ data science and ML offers</div>
+            <div style="font-size:.75rem;color:var(--muted);line-height:1.5">A real resume breakdown — what worked, what didn't, and the exact structure that got results.</div>
+          </div>
         </div>
       </a>
       <a href="https://www.simplilearn.com/data-analyst-resume-article" target="_blank" style="text-decoration:none">
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .2s;height:100%;display:flex;flex-direction:column" onmouseover="this.style.borderColor='rgba(59,108,250,.4)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)';this.style.transform=''">
-          <div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.6rem">Simplilearn</div>
-          <div style="font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.5rem;line-height:1.4">Data analyst resume guide — what gets you hired</div>
-          <div style="font-size:.78rem;color:var(--muted);line-height:1.6;flex:1">Detailed guide on structuring a resume for competitive tech roles — covering skills sections, project descriptions, and the keywords hiring managers actually search for.</div>
-          <div style="margin-top:1rem;font-size:.65rem;color:var(--blue-l);display:flex;align-items:center;gap:.3rem;font-weight:600">Read article <svg width="10" height="10" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .2s;display:flex;gap:1rem;align-items:flex-start" onmouseover="this.style.borderColor='rgba(59,108,250,.35)';this.style.background='var(--card)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)';this.style.background='var(--surface)'">
+          <div style="width:36px;height:36px;background:var(--green-dim);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.6rem;font-weight:800;color:var(--green)">SL</div>
+          <div>
+            <div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem">Simplilearn</div>
+            <div style="font-weight:700;font-size:.85rem;color:var(--text);margin-bottom:.3rem;line-height:1.4">Data analyst resume guide — what gets you hired</div>
+            <div style="font-size:.75rem;color:var(--muted);line-height:1.5">How to structure your resume for competitive roles — the skills, keywords, and sections that hiring managers actually look for.</div>
+          </div>
         </div>
       </a>
     </div>
   </div>
 
-  <!-- PEOPLE SECTION -->
-  <div style="max-width:960px;margin:0 auto 5rem;padding:0 2rem">
+  <!-- TESTIMONIALS -->
+  <div style="max-width:1100px;margin:0 auto 4rem;padding:0 2rem">
     <div style="text-align:center;margin-bottom:2rem">
-      <div style="font-size:1.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text);margin-bottom:.5rem">Built for everyone</div>
-      <div style="font-size:.875rem;color:var(--muted);font-weight:300">Whether you're starting out, switching careers, or re-entering the workforce — ResumeTalk is for you.</div>
+      <div style="font-size:1.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text);margin-bottom:.4rem">Built for everyone</div>
+      <div style="font-size:.875rem;color:var(--muted);font-weight:300">Starting out, switching careers, or coming back — ResumeTalk works for you.</div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem">
-      <div class="person-card">
+      <div class="person-card" style="border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--surface)">
         <img class="person-photo" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300&h=200&fit=crop&crop=face" alt="Maya" loading="lazy">
-        <div class="person-info"><div class="person-name">Maya</div><div class="person-role">Now: Retail Manager</div><div class="person-quote">"Built my resume in 4 minutes. Got called back the same week."</div></div>
+        <div class="person-info"><div class="person-name">Maya</div><div class="person-role">Retail → Manager</div><div class="person-quote">"Got called back the same week. I couldn't believe it."</div></div>
       </div>
-      <div class="person-card">
-        <img class="person-photo" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=200&fit=crop&crop=face" alt="Sofia" loading="lazy">
-        <div class="person-info"><div class="person-name">Sofia</div><div class="person-role">Now: Medical Assistant</div><div class="person-quote">"As a new graduate I didn't know where to start. This changed everything."</div></div>
-      </div>
-      <div class="person-card">
+      <div class="person-card" style="border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--surface)">
         <img class="person-photo" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=200&fit=crop&crop=face" alt="Carlos" loading="lazy">
-        <div class="person-info"><div class="person-name">Carlos</div><div class="person-role">Now: Customer Success</div><div class="person-quote">"Spoke for 3 minutes. Got a full resume. Job offer within a week."</div></div>
+        <div class="person-info"><div class="person-name">Carlos</div><div class="person-role">Service → Customer Success</div><div class="person-quote">"Spoke 3 minutes. Job offer within a week."</div></div>
       </div>
-      <div class="person-card">
+      <div class="person-card" style="border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--surface)">
+        <img class="person-photo" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=200&fit=crop&crop=face" alt="Sofia" loading="lazy">
+        <div class="person-info"><div class="person-name">Sofia</div><div class="person-role">Graduate → Medical Asst</div><div class="person-quote">"As a new grad I had no idea how to start. This changed everything."</div></div>
+      </div>
+      <div class="person-card" style="border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--surface)">
         <img class="person-photo" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=300&h=200&fit=crop&crop=face" alt="Amara" loading="lazy">
-        <div class="person-info"><div class="person-name">Amara</div><div class="person-role">Now: HR Coordinator</div><div class="person-quote">"I moved from Nigeria and my experience didn't translate. ResumeTalk fixed that."</div></div>
+        <div class="person-info"><div class="person-name">Amara</div><div class="person-role">Newcomer → HR Coordinator</div><div class="person-quote">"My international experience finally translated perfectly."</div></div>
       </div>
     </div>
   </div>
 
   <!-- BOTTOM CTA -->
-  <div style="max-width:680px;margin:0 auto 6rem;padding:0 2rem;text-align:center">
-    <div style="background:linear-gradient(135deg,var(--blue-d),var(--blue));border-radius:20px;padding:3rem 2rem;box-shadow:0 16px 48px var(--blue-glow)">
-      <div style="font-size:1.75rem;font-weight:800;letter-spacing:-.04em;color:white;margin-bottom:.5rem">Ready to get your<br>resume seen?</div>
-      <div style="font-size:.9rem;color:rgba(255,255,255,.7);margin-bottom:1.75rem;font-weight:300">Free. No account. 5 minutes. Just speak — ResumeTalk handles the rest.</div>
-      <button onclick="showPage('build')" style="display:inline-flex;align-items:center;gap:.6rem;background:white;color:var(--blue-d);border:none;padding:.875rem 2rem;border-radius:10px;font-family:var(--font);font-size:.95rem;font-weight:700;cursor:pointer;transition:opacity .2s" onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='1'">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="currentColor"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        Build my free resume now →
-      </button>
+  <div style="max-width:700px;margin:0 auto 6rem;padding:0 2rem;text-align:center">
+    <div style="background:linear-gradient(135deg,var(--blue-d),var(--blue));border-radius:24px;padding:3.5rem 2rem;box-shadow:0 24px 64px var(--blue-glow);position:relative;overflow:hidden">
+      <div style="position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.04)"></div>
+      <div style="position:absolute;bottom:-40px;left:-40px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.03)"></div>
+      <div style="position:relative;z-index:1">
+        <div style="font-size:2rem;font-weight:800;letter-spacing:-.04em;color:white;margin-bottom:.5rem;line-height:1.2">Ready to get<br>your resume seen?</div>
+        <div style="font-size:.9rem;color:rgba(255,255,255,.7);margin-bottom:1.75rem;font-weight:300">Free. No account. 5 minutes.<br>Just speak — ResumeTalk handles the rest.</div>
+        <button onclick="showPage('build')" style="display:inline-flex;align-items:center;gap:.6rem;background:white;color:var(--blue-d);border:none;padding:.9rem 2rem;border-radius:12px;font-family:var(--font);font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 8px 24px rgba(0,0,0,0.2)" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform=''">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="currentColor"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          Build my free resume now →
+        </button>
+      </div>
     </div>
   </div>
 
