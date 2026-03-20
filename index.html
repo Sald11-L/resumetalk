@@ -92,11 +92,11 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
 .tpl-check{position:absolute;top:6px;right:6px;width:18px;height:18px;background:var(--blue);border-radius:50%;display:none;align-items:center;justify-content:center}
 .tpl-card.selected .tpl-check{display:flex}
 .tpl-preview{height:140px;padding:0;overflow:hidden}
-.tpl-name{padding:6px 8px;border-top:1px solid var(--border);font-size:.63rem;font-weight:600;color:var(--text);background:var(--card);display:flex;flex-direction:column;gap:4px}
+.tpl-name{padding:7px 8px;border-top:1px solid var(--border);background:var(--card)}
 .tpl-name-row1{display:flex;justify-content:space-between;align-items:center}
 .tpl-name-row2{display:flex;align-items:center;gap:.3rem;flex-wrap:wrap}
 .tpl-cat{font-size:.5rem;padding:.1rem .35rem;border-radius:6px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0}
-.tpl-industry{font-size:.48rem;padding:.08rem .3rem;border-radius:4px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);white-space:nowrap}
+.tpl-industry{font-size:.48rem;padding:.08rem .3rem;border-radius:4px;background:rgba(26,107,90,.08);border:1px solid rgba(26,107,90,.15);color:#1a6b5a;white-space:nowrap;font-weight:500}
 .cat-corporate{background:rgba(14,31,61,.08);color:#0f1f3d}
 .cat-tech{background:rgba(37,99,235,.1);color:#1d4ed8}
 .cat-healthcare{background:rgba(4,120,87,.1);color:#047857}
@@ -1238,7 +1238,7 @@ window.showPage=function(n){
 };
 window.openPreview=function(id){};
 window.pickTpl=function(id){};
-window.filterTpl=function(cat,btn){};
+window.filterTpl=function(cat,btn){document.querySelectorAll('.filter').forEach(b=>b.classList.remove('on'));if(btn)btn.classList.add('on');if(btn)btn.dataset.cat=cat;if(window.renderTpls)window.renderTpls(cat);};
 window.goRecord=function(){};
 window.goBack=function(){};
 window.toggleRec=function(){};
@@ -1349,7 +1349,7 @@ const TPL_INDUSTRIES={
 };
 
 // ── TEMPLATE PREVIEW MODAL ──
-function openPreview(id){
+window.openPreview=function openPreview(id){
   const t=TPLS.find(t=>t.id===id);
   if(!t)return;
   const modal=document.getElementById('tplModal');
@@ -1589,7 +1589,7 @@ function prevHTML(t){
   </div>`;}
 
 
-function renderTpls(filter='all'){
+window.renderTpls=function renderTpls(filter='all'){
   const grid=document.getElementById('tplGrid');
   const list=filter==='all'?TPLS:TPLS.filter(t=>t.cat===filter);
   grid.innerHTML=list.map(t=>{
@@ -1599,19 +1599,16 @@ function renderTpls(filter='all'){
       <div class="tpl-check"><svg width="9" height="9" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="white" stroke-width="3" stroke-linecap="round"/></svg></div>
       <div class="tpl-preview" onclick="pickTpl(${t.id})">${prevHTML(t)}</div>
       <div class="tpl-name">
-        <div class="tpl-name-row1">
-          <span style="cursor:pointer" onclick="pickTpl(${t.id})">${t.name}</span>
-          <div style="display:flex;align-items:center;gap:.3rem">
-            <span class="tpl-cat cat-${t.cat}">${t.cat}</span>
-            <button onclick="openPreview(${t.id})" style="background:rgba(26,107,90,0.08);border:1px solid rgba(26,107,90,0.2);color:#1a6b5a;border-radius:4px;padding:.15rem .4rem;font-size:.52rem;cursor:pointer;font-family:var(--font);white-space:nowrap;font-weight:600">Preview</button>
-          </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+          <span style="cursor:pointer;font-weight:700;font-size:.65rem;color:var(--text)" onclick="pickTpl(${t.id})">${t.name}</span>
+          <button onclick="openPreview(${t.id})" style="background:rgba(26,107,90,0.1);border:1px solid rgba(26,107,90,0.25);color:#1a6b5a;border-radius:5px;padding:.18rem .55rem;font-size:.55rem;cursor:pointer;font-family:var(--font);font-weight:600;white-space:nowrap;flex-shrink:0">Preview</button>
         </div>
-        <div class="tpl-name-row2">${inds}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:2px">${inds}</div>
       </div>
     </div>`}).join('');
 }
 
-function pickTpl(id){
+window.pickTpl=function pickTpl(id){
   selTpl=TPLS.find(t=>t.id===id);
   renderTpls(document.querySelector('.filter.on')?.dataset?.cat||'all');
 }
@@ -1622,7 +1619,7 @@ function filterTpl(cat,btn){
   renderTpls(cat);
 }
 
-function goRecord(){
+window.goRecord=function goRecord(){
   document.getElementById('tplSection').style.display='none';
   document.getElementById('stepsBar').style.display='none';
   document.getElementById('recSection').style.display='block';
@@ -1630,7 +1627,7 @@ function goRecord(){
   setSP(2);window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function goBack(){
+window.goBack=function goBack(){
   document.getElementById('tplSection').style.display='block';
   document.getElementById('stepsBar').style.display='flex';
   document.getElementById('recSection').style.display='none';
@@ -1639,7 +1636,7 @@ function goBack(){
 
 let recTimerInt=null,recSeconds=0;
 
-function startRec(){
+window.startRec=function startRec(){
   navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
     // Setup fresh recognition
     if(recognition){
@@ -1689,7 +1686,7 @@ function startRec(){
   }).catch(()=>showErr('Microphone access denied. Please allow mic permissions and try again.'));
 }
 
-function finishRec(){
+window.finishRec=function finishRec(){
   if(recognition){try{recognition.stop();}catch(e){}}
   if(mr&&mr.state!=='inactive'){mr.stop();}
   clearInterval(recTimerInt);
@@ -1707,7 +1704,7 @@ function finishRec(){
   setStatus('Done — review and hit build',false);setSP(3);
 }
 
-function addMoreRec(){
+window.addMoreRec=function addMoreRec(){
   // Save existing transcript as base
   window._baseTranscript=(document.getElementById('txBox').textContent||'')+' ';
   transcript=window._baseTranscript;
@@ -1754,7 +1751,7 @@ function startKW(txt){
   return{stop:()=>{clearInterval(kwInt);clearInterval(st);}};
 }
 
-async function buildResume(){
+window.buildResume=async function buildResume(){
   const txt=document.getElementById('txBox').textContent||'';
   if(txt.trim().length<20){showErr('Please tell us a bit more about yourself first.');return;}
   hideErr();
@@ -1954,13 +1951,13 @@ function renderJobs(jobs){
     </div>`;}).join('');
 }
 
-function filterJobs(ind,btn){
+window.filterJobs=function filterJobs(ind,btn){
   document.querySelectorAll('#jobsFilters button').forEach(b=>{b.style.background='var(--card)';b.style.color='var(--muted)';b.style.borderColor='var(--border)';});
   btn.style.background='var(--blue)';btn.style.color='white';btn.style.borderColor='var(--blue)';
   renderJobs(ind==='all'?window._jobs:(window._jobs||[]).filter(j=>j.industry===ind));
 }
 
-function dlWord(){
+window.dlWord=function dlWord(){
   const r=window._r;if(!r)return;
   const t=selTpl;const ac=t.a.startsWith('#')?t.a:'#2563eb';
   const html=`<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>${r.name}</title><style>body{font-family:Calibri,sans-serif;margin:2cm;color:#111;font-size:11pt;line-height:1.5}h1{font-size:22pt;font-weight:bold;color:${ac};margin:0 0 4pt;letter-spacing:-0.5pt}h2{font-size:8pt;font-weight:bold;letter-spacing:2pt;text-transform:uppercase;color:${ac};margin:14pt 0 5pt;border-bottom:1px solid #eee;padding-bottom:2pt}.contact{font-size:9pt;color:#666;margin-bottom:12pt;border-bottom:2px solid ${ac};padding-bottom:6pt}.job-title{font-weight:bold;font-size:10.5pt;margin:0}.job-meta{font-size:8.5pt;color:#888;margin:1pt 0 4pt}ul{font-size:10pt;color:#333;margin:0 0 10pt 12pt;padding:0}li{margin-bottom:2pt}.summary{font-size:10.5pt;color:#333;margin-bottom:12pt;line-height:1.6}.skills{font-size:10pt;color:#333}</style></head><body>
@@ -1973,7 +1970,7 @@ function dlWord(){
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([html],{type:'application/msword'}));a.download=`${r.name.replace(/\s+/g,'-')}-Resume.doc`;a.click();
 }
 
-function dlText(){
+window.dlText=function dlText(){
   const r=window._r;if(!r)return;
   let txt=`${r.name}\n${r.email} | ${r.phone} | ${r.location}\n${'─'.repeat(50)}\n\nSUMMARY\n${r.summary}\n\nEXPERIENCE\n`;
   (r.experience||[]).forEach(e=>{txt+=`\n${e.title} — ${e.company} (${e.dates})\n${(e.bullets||[]).map(b=>'  • '+b).join('\n')}\n`;});
@@ -1982,7 +1979,7 @@ function dlText(){
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'}));a.download=`${r.name.replace(/\s+/g,'-')}-Resume.txt`;a.click();
 }
 
-function resetAll(){
+window.resetAll=function resetAll(){
   transcript='';window._baseTranscript='';
   clearInterval(recTimerInt);
   if(recognition){try{recognition.abort();}catch(e){}}
@@ -2012,7 +2009,7 @@ function resetAll(){
   showPage('build');
 }
 
-function showPage(n){
+window.showPage=function showPage(n){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+n).classList.add('active');
@@ -2024,7 +2021,7 @@ function setSP(n){for(let i=1;i<=4;i++){const p=document.getElementById('sp'+i);
 function setStatus(t,l){const el=document.getElementById('statusTxt');el.textContent=t;el.classList.toggle('live',l);}
 function showErr(m){const e=document.getElementById('errMsg');e.textContent=m;e.classList.add('show');}
 function hideErr(){document.getElementById('errMsg').classList.remove('show');}
-function toggleFaq(el){el.nextElementSibling.classList.toggle('open');el.querySelector('.faq-icon').classList.toggle('open');}
+window.toggleFaq=function toggleFaq(el){el.nextElementSibling.classList.toggle('open');el.querySelector('.faq-icon').classList.toggle('open');}
 
 // Init
 renderTpls();
