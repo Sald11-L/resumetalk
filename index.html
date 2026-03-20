@@ -885,6 +885,7 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
               <strong style="display:block;margin-bottom:.3rem;color:#155749">📋 Say in order:</strong>
               Your name &amp; location → each job (with month + year dates) → education → what you're looking for
             </div>
+            <div id="recErrMsg" style="display:none;background:#fef2f2;border:1px solid #fecaca;color:#dc2626;padding:.75rem 1rem;border-radius:8px;font-size:.78rem;margin:0 1rem 1rem"></div>
           </div>
         </div>
 
@@ -1700,6 +1701,7 @@ function filterTpl(cat,btn){
 }
 
 window.goRecord=function goRecord(){
+  const e=document.getElementById('recErrMsg');if(e){e.style.display='none';e.textContent='';}
   document.getElementById('tplSection').style.display='none';
   document.getElementById('stepsBar').style.display='none';
   document.getElementById('recSection').style.display='block';
@@ -1743,6 +1745,7 @@ window.startRec=function startRec(){
       setTimeout(()=>{try{recognition.start();}catch(e){}},300);
     }
 
+    const errEl=document.getElementById('recErrMsg');if(errEl)errEl.style.display='none';
     mr=new MediaRecorder(stream);
     mr.ondataavailable=()=>{};
     mr.onstop=()=>{try{stream.getTracks().forEach(t=>t.stop());}catch(e){}};
@@ -1766,7 +1769,14 @@ window.startRec=function startRec(){
       const el=document.getElementById('recTimer');
       if(el)el.textContent=m+':'+(s<10?'0':'')+s;
     },1000);
-  }).catch(()=>showErr('Microphone access denied. Please allow mic permissions and try again.'));
+  }).catch((err)=>{
+    const msg = err && err.name === 'NotAllowedError' 
+      ? 'Microphone access denied. Click the lock icon in your browser address bar and allow microphone access.'
+      : 'Could not access microphone. Make sure you are using Chrome, Edge, or Safari.';
+    const el = document.getElementById('recErrMsg');
+    if(el){el.textContent=msg;el.style.display='block';}
+    else{alert(msg);}
+  });
 }
 
 window.finishRec=function finishRec(){
