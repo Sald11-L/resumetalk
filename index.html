@@ -1998,4 +1998,11 @@ function showPage(n){
 function setSP(n){for(let i=1;i<=4;i++){const p=document.getElementById('sp'+i);p.classList.remove('active','done');if(i<n)p.classList.add('done');else if(i===n)p.classList.add('active');}}
 function setStatus(t,l){const el=document.getElementById('statusTxt');el.textContent=t;el.classList.toggle('live',l);}
 function showErr(m){const e=document.getElementById('errMsg');e.textContent=m;e.classList.add('show');}
-function hideErr(){document.g
+function hideErr(){document.getElementById('errMsg').classList.remove('show');}
+function toggleFaq(el){el.nextElementSibling.classList.toggle('open');el.querySelector('.faq-icon').classList.toggle('open');}
+
+// Init
+renderTpls();
+</script>
+</body>
+</html>
