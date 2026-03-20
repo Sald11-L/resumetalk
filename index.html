@@ -438,7 +438,7 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
   <!-- HERO PHOTO -->
   <div style="max-width:960px;margin:0 auto 5rem;padding:0 2rem">
     <div style="border-radius:20px;overflow:hidden;border:1px solid var(--border);position:relative;box-shadow:0 24px 64px rgba(0,0,0,0.4)">
-      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=960&h=420&fit=crop&crop=center" alt="People working on resumes together" style="width:100%;height:380px;object-fit:cover;display:block" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=960&h=420&fit=crop&crop=center" alt="People working on resumes together" style="width:100%;height:380px;object-fit:cover;display:block" loading="lazy">
       <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(6,9,18,0.75) 0%,rgba(6,9,18,0.1) 55%,transparent 100%)"></div>
       <div style="position:absolute;inset:0;display:flex;align-items:center;padding:3rem">
         <div style="max-width:360px">
@@ -831,77 +831,154 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
 
 <!-- ═══════════ WHY ═══════════ -->
 <div class="page" id="page-why">
-  <div class="why-hero">
-    <h1>A great resume<br><em>changes everything.</em></h1>
-    <p>In today's job market your resume has seconds to make an impression. ResumeTalk gives everyone the tools to make those seconds count.</p>
+
+  <!-- HERO — full width photo split -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;min-height:480px;overflow:hidden">
+    <div style="position:relative;overflow:hidden">
+      <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=500&fit=crop&crop=center" alt="Professional woman confident at work" style="width:100%;height:100%;object-fit:cover;display:block">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,var(--bg) 100%)"></div>
+    </div>
+    <div style="background:var(--bg);display:flex;align-items:center;padding:4rem 3rem 4rem 2rem">
+      <div>
+        <div style="font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-l);margin-bottom:1rem">Why ResumeTalk</div>
+        <div style="font-size:2.4rem;font-weight:800;letter-spacing:-.04em;line-height:1.1;color:var(--text);margin-bottom:1rem">A great resume<br><em style="font-style:normal;background:linear-gradient(135deg,var(--blue-l),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">opens doors.</em></div>
+        <div style="font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;font-weight:300;max-width:380px">In today's job market your resume has seconds to make an impression. The right words, the right format, the right keywords — ResumeTalk gives you all three, instantly.</div>
+        <button onclick="showPage('build')" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--blue);color:white;border:none;padding:.75rem 1.5rem;border-radius:10px;font-family:var(--font);font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px var(--blue-glow);transition:all .2s">
+          Build my free resume →
+        </button>
+      </div>
+    </div>
   </div>
-  <div class="why-body">
-    <!-- Real people section -->
-    <div style="margin-bottom:3rem">
-      <div class="sec-heading" style="margin-bottom:.4rem">Their voice. Their future.</div>
-      <div class="sec-subtext">People just like you have used ResumeTalk to land jobs they deserve.</div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem">
-        <div class="person-card">
-          <img class="person-photo" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300&h=200&fit=crop&crop=face" alt="Maya" loading="lazy">
-          <div class="person-info">
-            <div class="person-name">Maya</div>
-            <div class="person-role">Now: Retail Manager</div>
-            <div class="person-quote">"I never knew how to put my experience on paper. ResumeTalk did it for me in minutes."</div>
+
+  <!-- STATS ROW -->
+  <div style="background:var(--surface);border-bottom:1px solid var(--border);padding:2.5rem 2rem">
+    <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;text-align:center">
+      <div>
+        <div style="font-size:2.5rem;font-weight:800;letter-spacing:-.04em;background:linear-gradient(135deg,var(--blue-l),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:.4rem">250+</div>
+        <div style="font-weight:600;font-size:.82rem;color:var(--text);margin-bottom:.2rem">applicants per job</div>
+        <div style="font-size:.72rem;color:var(--muted)">Glassdoor, 2024</div>
+      </div>
+      <div>
+        <div style="font-size:2.5rem;font-weight:800;letter-spacing:-.04em;background:linear-gradient(135deg,var(--blue-l),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:.4rem">6s</div>
+        <div style="font-weight:600;font-size:.82rem;color:var(--text);margin-bottom:.2rem">to scan your resume</div>
+        <div style="font-size:.72rem;color:var(--muted)">Cardinal Staffing, 2025</div>
+      </div>
+      <div>
+        <div style="font-size:2.5rem;font-weight:800;letter-spacing:-.04em;background:linear-gradient(135deg,var(--blue-l),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:.4rem">40%</div>
+        <div style="font-weight:600;font-size:.82rem;color:var(--text);margin-bottom:.2rem">higher interview rate</div>
+        <div style="font-size:.72rem;color:var(--muted)">with metrics in your resume</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:900px;margin:0 auto;padding:4rem 2rem 5rem">
+
+    <!-- WHO IT'S FOR — creative cards -->
+    <div style="margin-bottom:4rem">
+      <div style="text-align:center;margin-bottom:2.5rem">
+        <div style="font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.6rem">Who it's for</div>
+        <div style="font-size:1.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text)">Everyone building their next chapter</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=180&fit=crop&crop=face" style="width:100%;height:140px;object-fit:cover;display:block" alt="Professional" loading="lazy">
+          <div style="padding:1rem">
+            <div style="font-weight:700;font-size:.875rem;color:var(--text);margin-bottom:.3rem">Career changers</div>
+            <div style="font-size:.75rem;color:var(--muted);line-height:1.5">Switching fields? ResumeTalk finds the connections between your past experience and your next role.</div>
           </div>
         </div>
-        <div class="person-card">
-          <img class="person-photo" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=200&fit=crop&crop=face" alt="Sofia" loading="lazy">
-          <div class="person-info">
-            <div class="person-name">Sofia</div>
-            <div class="person-role">Now: Medical Assistant</div>
-            <div class="person-quote">"As a new graduate I had no idea how to start. This tool changed everything."</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=180&fit=crop&crop=face" style="width:100%;height:140px;object-fit:cover;display:block" alt="Graduate" loading="lazy">
+          <div style="padding:1rem">
+            <div style="font-weight:700;font-size:.875rem;color:var(--text);margin-bottom:.3rem">New graduates</div>
+            <div style="font-size:.75rem;color:var(--muted);line-height:1.5">Limited work history? We highlight your education, projects, and transferable skills in a way employers notice.</div>
           </div>
         </div>
-        <div class="person-card">
-          <img class="person-photo" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=200&fit=crop&crop=face" alt="Carlos" loading="lazy">
-          <div class="person-info">
-            <div class="person-name">Carlos</div>
-            <div class="person-role">Now: Customer Success</div>
-            <div class="person-quote">"Spoke for 3 minutes and got a full resume. Then got a job offer within a week."</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+          <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=180&fit=crop&crop=face" style="width:100%;height:140px;object-fit:cover;display:block" alt="Returning professional" loading="lazy">
+          <div style="padding:1rem">
+            <div style="font-weight:700;font-size:.875rem;color:var(--text);margin-bottom:.3rem">Returning professionals</div>
+            <div style="font-size:.75rem;color:var(--muted);line-height:1.5">Took time off? Moved countries? Your experience still counts — we help you present it with confidence.</div>
           </div>
         </div>
-        <div class="person-card">
-          <img class="person-photo" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=300&h=200&fit=crop&crop=face" alt="Amara" loading="lazy">
-          <div class="person-info">
-            <div class="person-name">Amara</div>
-            <div class="person-role">Now: HR Coordinator</div>
-            <div class="person-quote">"I moved from Nigeria and my experience didn't translate. ResumeTalk fixed that."</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=180&fit=crop&crop=face" style="width:100%;height:140px;object-fit:cover;display:block" alt="First job seeker" loading="lazy">
+          <div style="padding:1rem">
+            <div style="font-weight:700;font-size:.875rem;color:var(--text);margin-bottom:.3rem">First-time job seekers</div>
+            <div style="font-size:.75rem;color:var(--muted);line-height:1.5">Never written a resume? Just talk about what you've done. We'll turn it into something that gets noticed.</div>
+          </div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=180&fit=crop&crop=face" style="width:100%;height:140px;object-fit:cover;display:block" alt="Skilled worker" loading="lazy">
+          <div style="padding:1rem">
+            <div style="font-weight:700;font-size:.875rem;color:var(--text);margin-bottom:.3rem">Trades &amp; service workers</div>
+            <div style="font-size:.75rem;color:var(--muted);line-height:1.5">Hands-on experience is valuable. ResumeTalk translates real-world skills into professional resume language.</div>
+          </div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+          <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?w=400&h=180&fit=crop&crop=face" style="width:100%;height:140px;object-fit:cover;display:block" alt="Professional" loading="lazy">
+          <div style="padding:1rem">
+            <div style="font-weight:700;font-size:.875rem;color:var(--text);margin-bottom:.3rem">Experienced professionals</div>
+            <div style="font-size:.75rem;color:var(--muted);line-height:1.5">Years of experience can be hard to summarize. We distill it into a crisp, compelling resume that lands interviews.</div>
           </div>
         </div>
       </div>
     </div>
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-num">250</div><div class="stat-label">People apply for every corporate job posting on average</div><div class="stat-source">Glassdoor, 2024</div></div>
-      <div class="stat-card"><div class="stat-num">6s</div><div class="stat-label">Average time a recruiter spends reading your resume</div><div class="stat-source">Cardinal Staffing, 2025</div></div>
-      <div class="stat-card"><div class="stat-num">40%</div><div class="stat-label">Higher chance of an interview with a metrics-driven resume</div><div class="stat-source">Enhancv, 2025</div></div>
-    </div>
-    <div class="sec-heading">Who ResumeTalk is for</div>
-    <div class="sec-subtext">If any of these describe you, ResumeTalk was built for you.</div>
-    <div class="who-grid">
-      <div class="who-card"><div class="who-emoji">🌱</div><div class="who-title">First-time job seekers</div><div class="who-desc">Never written a resume? Just talk — we handle the rest.</div></div>
-      <div class="who-card"><div class="who-emoji">🔄</div><div class="who-title">Career changers</div><div class="who-desc">Switching fields? We find the connections employers care about.</div></div>
-      <div class="who-card"><div class="who-emoji">🌍</div><div class="who-title">Immigrants & newcomers</div><div class="who-desc">Your international experience matters. We translate it for the local market.</div></div>
-      <div class="who-card"><div class="who-emoji">👩‍👧</div><div class="who-title">Returning parents</div><div class="who-desc">Took time away for family? The skills you built still count.</div></div>
-      <div class="who-card"><div class="who-emoji">🛠️</div><div class="who-title">Trades & service workers</div><div class="who-desc">Hands-on experience is valuable. We help you put it on paper.</div></div>
-      <div class="who-card"><div class="who-emoji">🎓</div><div class="who-title">Recent graduates</div><div class="who-desc">Limited work history? We highlight your education and potential.</div></div>
-    </div>
-    <div class="ai-section">
-      <div class="sec-heading" style="margin-bottom:.5rem">How the AI works</div>
-      <div class="sec-subtext" style="margin-bottom:0">Simply explained — no tech knowledge needed.</div>
-      <div class="ai-steps">
-        <div class="ai-step"><div class="ai-step-num">1</div><div><h4>You speak — we listen</h4><p>Your browser's microphone captures what you say. Nothing is uploaded to any server.</p></div></div>
-        <div class="ai-step"><div class="ai-step-num">2</div><div><h4>ResumeTalk AI reads your transcript</h4><p>It understands your experience, skills, and strengths — recognising the full value of what you bring.</p></div></div>
-        <div class="ai-step"><div class="ai-step-num">3</div><div><h4>ResumeTalk AI writes your resume</h4><p>Your everyday speech becomes polished professional language without losing your voice.</p></div></div>
-        <div class="ai-step"><div class="ai-step-num">4</div><div><h4>You get your resume + career map</h4><p>Full resume, 15+ job recommendations, industry fit scores, and transferable skills — all in under 60 seconds.</p></div></div>
+
+    <!-- HOW THE AI WORKS — visual timeline -->
+    <div style="margin-bottom:4rem">
+      <div style="text-align:center;margin-bottom:2.5rem">
+        <div style="font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.6rem">Under the hood</div>
+        <div style="font-size:1.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text)">How the AI actually works</div>
       </div>
-      <div class="ai-note">🔒 ResumeTalk never stores your voice, transcript, or resume. Everything disappears when you close the tab.</div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr)">
+          <div style="padding:1.75rem 1.5rem;border-right:1px solid var(--border);position:relative">
+            <div style="width:32px;height:32px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;box-shadow:0 4px 12px var(--blue-glow)"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="white"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+            <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.4rem">1 · Capture</div>
+            <div style="font-weight:600;font-size:.82rem;color:var(--text);margin-bottom:.3rem">You speak</div>
+            <div style="font-size:.75rem;color:var(--muted);line-height:1.5">Your browser captures your voice locally. Nothing is sent to any server during recording.</div>
+          </div>
+          <div style="padding:1.75rem 1.5rem;border-right:1px solid var(--border)">
+            <div style="width:32px;height:32px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;box-shadow:0 4px 12px var(--blue-glow)"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+            <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-l);margin-bottom:.4rem">2 · Understand</div>
+            <div style="font-weight:600;font-size:.82rem;color:var(--text);margin-bottom:.3rem">AI reads your story</div>
+            <div style="font-size:.75rem;color:var(--muted);line-height:1.5">Claude AI understands your experience, detects your skills, and identifies your target industry.</div>
+          </div>
+          <div style="padding:1.75rem 1.5rem;border-right:1px solid var(--border)">
+            <div style="width:32px;height:32px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;box-shadow:0 4px 12px rgba(16,217,138,.3)"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+            <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:.4rem">3 · Write</div>
+            <div style="font-weight:600;font-size:.82rem;color:var(--text);margin-bottom:.3rem">Polished &amp; ATS-ready</div>
+            <div style="font-size:.75rem;color:var(--muted);line-height:1.5">Informal language becomes professional copy. Keywords are matched. Format is ATS-optimized.</div>
+          </div>
+          <div style="padding:1.75rem 1.5rem">
+            <div style="width:32px;height:32px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;box-shadow:0 4px 12px rgba(16,217,138,.3)"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+            <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:.4rem">4 · Deliver</div>
+            <div style="font-weight:600;font-size:.82rem;color:var(--text);margin-bottom:.3rem">Resume + career map</div>
+            <div style="font-size:.75rem;color:var(--muted);line-height:1.5">Full resume, 15+ jobs, salary ranges, industry fit scores — all in under 60 seconds.</div>
+          </div>
+        </div>
+        <div style="padding:1.25rem 1.5rem;background:var(--green-dim);border-top:1px solid rgba(16,217,138,.1);font-size:.78rem;color:var(--green);display:flex;align-items:center;gap:.5rem">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          Your voice recording and transcript are never stored. Everything is processed in your browser session and deleted when you close the tab.
+        </div>
+      </div>
     </div>
-    <div class="cta-strip"><h2>Ready to build your resume?</h2><p>It takes less than 5 minutes. Just speak — we handle everything else.</p><button class="cta-btn" onclick="showPage('build')">Start now — it's free →</button></div>
+
+    <!-- FAQ -->
+    <div>
+      <div style="font-size:1.4rem;font-weight:800;letter-spacing:-.03em;color:var(--text);margin-bottom:1.5rem;text-align:center">Common questions</div>
+      <div class="faq">
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is ResumeTalk really free?<span class="faq-icon">+</span></div><div class="faq-a">Yes — completely free. No subscription, no hidden fees, no account required. Ever.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is my information private?<span class="faq-icon">+</span></div><div class="faq-a">Yes. Your voice and transcript are never stored on any server. Everything disappears when you close the tab.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What if I don't have much work experience?<span class="faq-icon">+</span></div><div class="faq-a">Talk about volunteer work, school projects, community involvement, or any skills you have. The AI finds the value in everything you share.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I use it on my phone?<span class="faq-icon">+</span></div><div class="faq-a">Yes. Use Chrome on Android or Safari on iPhone for the best microphone experience.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What format does it download in?<span class="faq-icon">+</span></div><div class="faq-a">Word (.doc) compatible with Google Docs, and plain text (.txt). Both are ATS-friendly formats with low failure rates.</div></div>
+      </div>
+    </div>
+
+    <div class="cta-strip" style="margin-top:3rem"><h2>Ready to build your resume?</h2><p>Free, 5 minutes, your story deserves to be heard.</p><button class="cta-btn" onclick="showPage('build')">Build my resume — free →</button></div>
+
   </div>
 </div>
 
