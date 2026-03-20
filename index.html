@@ -1367,7 +1367,7 @@ renderTemplates();
 // Wire up modal button after DOM ready — fixes "saveKey is not defined" error
 document.addEventListener('DOMContentLoaded', function(){
   // If demo key is set, hide modal and nav key button immediately
-  if(DEMO_API_KEY){
+  if(DEMO_API_KEY){ key=DEMO_API_KEY;
     document.getElementById('modal').classList.remove('show');
     const navKeyBtn = document.querySelector('.nav-key-btn');
     if(navKeyBtn) navKeyBtn.style.display='none';
