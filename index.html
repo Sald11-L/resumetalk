@@ -98,7 +98,7 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
 .cat-modern{background:var(--blue-dim);color:var(--blue-l)}
 .cat-bold{background:rgba(250,50,50,.1);color:#f87171}
 .cat-simple{background:rgba(16,217,138,.08);color:var(--green)}
-.cat-two{background:rgba(168,85,247,.1);color:#c084fc}
+.cat-centered{background:rgba(234,179,8,.1);color:#ca8a04}
 
 /* Preview mini styles */
 .p{width:100%;height:100%;font-size:5px;line-height:1.4;overflow:hidden;color:#333}
@@ -107,6 +107,32 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
 .pd{height:.5px;background:currentColor;opacity:.2;margin:2px 0}
 .ps{font-weight:700;font-size:4px;letter-spacing:.08em;text-transform:uppercase;margin:3px 0 1px;opacity:.6}
 .pl{height:3.5px;border-radius:2px;background:currentColor;opacity:.1;margin-bottom:2px}
+
+/* TEMPLATE PREVIEW MODAL */
+.tpl-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(8px);padding:1.5rem}
+.tpl-modal-overlay.show{display:flex}
+.tpl-modal{background:white;border-radius:16px;overflow:hidden;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,0.6);position:relative}
+.tpl-modal-header{position:sticky;top:0;z-index:10;background:white;border-bottom:1px solid #eee;padding:.875rem 1.25rem;display:flex;justify-content:space-between;align-items:center}
+.tpl-modal-title{font-size:.85rem;font-weight:700;color:#111}
+.tpl-modal-actions{display:flex;gap:.5rem;align-items:center}
+.tpl-modal-close{background:none;border:1px solid #ddd;color:#666;padding:.35rem .75rem;border-radius:8px;cursor:pointer;font-size:.78rem;font-family:Inter,sans-serif;transition:all .2s}
+.tpl-modal-close:hover{background:#f5f5f5}
+.tpl-modal-select{background:#3b6cfa;color:white;border:none;padding:.35rem .875rem;border-radius:8px;cursor:pointer;font-size:.78rem;font-weight:600;font-family:Inter,sans-serif;transition:background .2s}
+.tpl-modal-select:hover{background:#2952d9}
+.tpl-modal-body{padding:2rem}
+
+/* PEOPLE SECTIONS */
+.people-row{display:flex;gap:1.25rem;margin-bottom:3rem;overflow-x:auto;padding-bottom:.5rem}
+.person-card{flex-shrink:0;width:200px;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.person-photo{width:100%;height:140px;object-fit:cover;display:block}
+.person-info{padding:.875rem}
+.person-name{font-weight:700;font-size:.82rem;color:var(--text);margin-bottom:.2rem}
+.person-role{font-size:.72rem;color:var(--muted)}
+.person-quote{font-size:.73rem;color:var(--muted);font-style:italic;margin-top:.4rem;line-height:1.5;border-left:2px solid var(--blue);padding-left:.5rem}
+
+/* PEOPLE GRID for why/how pages */
+.people-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;margin-bottom:3rem}
+.people-grid .person-card{width:100%}
 
 /* PROCEED BTN */
 .proceed{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;max-width:580px;margin:0 auto 3rem;padding:.875rem;background:var(--blue);color:white;border:none;border-radius:12px;font-family:var(--font);font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px var(--blue-glow)}
@@ -525,12 +551,13 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
     <div class="sec-title">Choose your resume style</div>
     <div class="sec-sub">Pick the look that fits you. You can change it anytime.</div>
     <div class="filter-row">
-      <button class="filter on" onclick="filterTpl('all',this)">All 25</button>
+      <button class="filter on" onclick="filterTpl('all',this)">All 29</button>
       <button class="filter" onclick="filterTpl('classic',this)">Classic</button>
       <button class="filter" onclick="filterTpl('modern',this)">Modern</button>
       <button class="filter" onclick="filterTpl('bold',this)">Bold</button>
       <button class="filter" onclick="filterTpl('simple',this)">Simple</button>
       <button class="filter" onclick="filterTpl('two',this)">Two Column</button>
+      <button class="filter" onclick="filterTpl('centered',this)">Centered Name</button>
     </div>
     <div class="tpl-grid" id="tplGrid"></div>
     <button class="proceed" onclick="goRecord()">
@@ -634,6 +661,61 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
     <p>In today's job market your resume has seconds to make an impression. ResumeTalk gives everyone the tools to make those seconds count.</p>
   </div>
   <div class="why-body">
+    <!-- Real people section -->
+    <div style="margin-bottom:3rem">
+      <div class="sec-heading" style="margin-bottom:.4rem">Their voice. Their future.</div>
+      <div class="sec-subtext">People just like you have used ResumeTalk to land jobs they deserve.</div>
+      <div class="people-grid">
+        <div class="person-card">
+          <img class="person-photo" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300&h=200&fit=crop&crop=face" alt="Maya" loading="lazy">
+          <div class="person-info">
+            <div class="person-name">Maya, 28</div>
+            <div class="person-role">Now: Retail Manager</div>
+            <div class="person-quote">"I never knew how to put my experience on paper. ResumeTalk did it for me in minutes."</div>
+          </div>
+        </div>
+        <div class="person-card">
+          <img class="person-photo" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&h=200&fit=crop&crop=face" alt="James" loading="lazy">
+          <div class="person-info">
+            <div class="person-name">James, 34</div>
+            <div class="person-role">Now: Logistics Coordinator</div>
+            <div class="person-quote">"I just talked about my work at FedEx and it built my whole resume. Incredible."</div>
+          </div>
+        </div>
+        <div class="person-card">
+          <img class="person-photo" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=200&fit=crop&crop=face" alt="Sofia" loading="lazy">
+          <div class="person-info">
+            <div class="person-name">Sofia, 24</div>
+            <div class="person-role">Now: Medical Assistant</div>
+            <div class="person-quote">"As a new graduate I had no idea how to start. This tool changed everything."</div>
+          </div>
+        </div>
+        <div class="person-card">
+          <img class="person-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop&crop=face" alt="David" loading="lazy">
+          <div class="person-info">
+            <div class="person-name">David, 41</div>
+            <div class="person-role">Now: Operations Supervisor</div>
+            <div class="person-quote">"After being laid off I didn't know where to start. ResumeTalk helped me land 3 interviews."</div>
+          </div>
+        </div>
+        <div class="person-card">
+          <img class="person-photo" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=300&h=200&fit=crop&crop=face" alt="Amara" loading="lazy">
+          <div class="person-info">
+            <div class="person-name">Amara, 31</div>
+            <div class="person-role">Now: HR Coordinator</div>
+            <div class="person-quote">"I moved from Nigeria and my experience didn't translate. ResumeTalk fixed that."</div>
+          </div>
+        </div>
+        <div class="person-card">
+          <img class="person-photo" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=200&fit=crop&crop=face" alt="Carlos" loading="lazy">
+          <div class="person-info">
+            <div class="person-name">Carlos, 27</div>
+            <div class="person-role">Now: Customer Success</div>
+            <div class="person-quote">"Spoke for 3 minutes and got a full resume. Then got a job offer within a week."</div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="stats-grid">
       <div class="stat-card"><div class="stat-num">250</div><div class="stat-label">People apply for every corporate job posting on average</div><div class="stat-source">Glassdoor, 2024</div></div>
       <div class="stat-card"><div class="stat-num">6s</div><div class="stat-label">Average time a recruiter spends reading your resume</div><div class="stat-source">Cardinal Staffing, 2025</div></div>
@@ -710,6 +792,47 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I use it on my phone?<span class="faq-icon">+</span></div><div class="faq-a">Yes. Use Chrome on Android or Safari on iPhone for the best microphone experience.</div></div>
     </div>
     <div class="cta-strip" style="margin-top:3rem;margin-bottom:3rem"><h2>Ready to get started?</h2><p>Free, 5 minutes, your story deserves to be heard.</p><button class="cta-btn" onclick="showPage('home')">Build my resume — free →</button></div>
+
+    <!-- People who used it -->
+    <div style="margin-bottom:3rem">
+      <div class="faq-title" style="margin-bottom:1rem">People using ResumeTalk right now</div>
+      <div class="people-row">
+        <div class="person-card">
+          <img class="person-photo" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300&h=180&fit=crop&crop=face" alt="Maya" loading="lazy">
+          <div class="person-info"><div class="person-name">Maya, Brooklyn</div><div class="person-role">Retail → Management</div><div class="person-quote">"Built my resume in 4 minutes."</div></div>
+        </div>
+        <div class="person-card">
+          <img class="person-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=180&fit=crop&crop=face" alt="David" loading="lazy">
+          <div class="person-info"><div class="person-name">David, Chicago</div><div class="person-role">Warehouse → Supervisor</div><div class="person-quote">"Got 3 interviews first week."</div></div>
+        </div>
+        <div class="person-card">
+          <img class="person-photo" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=180&fit=crop&crop=face" alt="Sofia" loading="lazy">
+          <div class="person-info"><div class="person-name">Sofia, Miami</div><div class="person-role">Graduate → Medical Asst</div><div class="person-quote">"Perfect for first-timers."</div></div>
+        </div>
+        <div class="person-card">
+          <img class="person-photo" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=300&h=180&fit=crop&crop=face" alt="Amara" loading="lazy">
+          <div class="person-info"><div class="person-name">Amara, Atlanta</div><div class="person-role">Newcomer → HR Role</div><div class="person-quote">"Translated my experience perfectly."</div></div>
+        </div>
+        <div class="person-card">
+          <img class="person-photo" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=180&fit=crop&crop=face" alt="Carlos" loading="lazy">
+          <div class="person-info"><div class="person-name">Carlos, LA</div><div class="person-role">Service → Customer Success</div><div class="person-quote">"Job offer within one week."</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEMPLATE PREVIEW MODAL -->
+<div class="tpl-modal-overlay" id="tplModal" onclick="if(event.target===this)closePreview()">
+  <div class="tpl-modal">
+    <div class="tpl-modal-header">
+      <span class="tpl-modal-title" id="tplModalTitle">Template Preview</span>
+      <div class="tpl-modal-actions">
+        <button class="tpl-modal-close" onclick="closePreview()">✕ Close</button>
+        <button class="tpl-modal-select" id="tplModalSelectBtn">Use this template →</button>
+      </div>
+    </div>
+    <div class="tpl-modal-body" id="tplModalBody"></div>
   </div>
 </div>
 
@@ -717,7 +840,131 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
 // ── CONFIG ──
 const API_KEY = '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';
 
-// ── TEMPLATES ──
+// ── TEMPLATE PREVIEW MODAL ──
+function openPreview(id){
+  const t=TPLS.find(t=>t.id===id);
+  if(!t)return;
+  const modal=document.getElementById('tplModal');
+  document.getElementById('tplModalTitle').textContent=t.name+' template — full preview';
+  document.getElementById('tplModalBody').innerHTML=fullPreviewHTML(t);
+  document.getElementById('tplModalSelectBtn').onclick=()=>{pickTpl(id);closePreview();};
+  modal.classList.add('show');
+}
+
+function closePreview(){
+  document.getElementById('tplModal').classList.remove('show');
+}
+
+function fullPreviewHTML(t){
+  const c=t.a,bg=t.bg,dk=t.dark;
+  const textColor=dk?'#f0f4ff':'#111';
+  const mutedColor=dk?'rgba(255,255,255,0.5)':'#888';
+  const bodyColor=dk?'rgba(255,255,255,0.7)':'#444';
+  const secColor=c;
+
+  const expSection=`
+    <div style="margin-bottom:1rem">
+      <div style="font-weight:700;font-size:.9rem;color:${textColor}">Warehouse Supervisor</div>
+      <div style="font-size:.72rem;color:${mutedColor};margin:.1rem 0 .35rem">FedEx — Brooklyn, NY &nbsp;·&nbsp; January 2017 – June 2022</div>
+      <div style="font-size:.82rem;color:${bodyColor};line-height:1.65">• Managed daily operations for a team of 12 warehouse staff, coordinating shift schedules and performance reviews<br>• Reduced package misdirection errors by 32% through a new barcode verification process<br>• Trained 20+ new employees on safety protocols and operational procedures</div>
+    </div>
+    <div style="margin-bottom:1rem">
+      <div style="font-weight:700;font-size:.9rem;color:${textColor}">Crew Member</div>
+      <div style="font-size:.72rem;color:${mutedColor};margin:.1rem 0 .35rem">McDonald's — Flatbush, Brooklyn &nbsp;·&nbsp; June 2014 – December 2016</div>
+      <div style="font-size:.82rem;color:${bodyColor};line-height:1.65">• Prepared food orders and operated cash register during high-volume shifts<br>• Recognized as Employee of the Month twice for outstanding customer service</div>
+    </div>`;
+
+  const skillsSection=`<div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.25rem">${['Team Leadership','Logistics','Inventory Management','Staff Training','Problem Solving','Time Management','Customer Service','MS Excel'].map(s=>`<span style="background:${c}18;border:1px solid ${c}35;color:${c};padding:.22rem .6rem;border-radius:4px;font-size:.75rem;font-weight:500">${s}</span>`).join('')}</div>`;
+
+  const summary=`<div style="font-size:.875rem;color:${bodyColor};line-height:1.7">A dedicated operations professional with over 8 years of experience in logistics and team management. Known for improving efficiency, mentoring staff, and delivering results under pressure. Seeking a supervisory role in warehousing or supply chain management in the New York metro area.</div>`;
+
+  const eduSection=`<div style="margin-bottom:.5rem"><div style="font-weight:700;font-size:.875rem;color:${textColor}">Brooklyn Technical High School</div><div style="font-size:.72rem;color:${mutedColor}">Diploma — Graduated 2013</div></div><div><div style="font-weight:700;font-size:.875rem;color:${textColor}">Forklift Operator Certification</div><div style="font-size:.72rem;color:${mutedColor}">OSHA Certified — 2018</div></div>`;
+
+  if(t.centered){
+    return `<div style="background:${bg};padding:2.5rem;font-family:Inter,sans-serif">
+      <div style="text-align:center;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:2px solid ${c}">
+        <div style="font-size:2rem;font-weight:800;letter-spacing:-.04em;color:${c};margin-bottom:.25rem">James Williams</div>
+        <div style="font-size:.82rem;color:${mutedColor};margin-bottom:.5rem">james.williams@email.com &nbsp;|&nbsp; (917) 555-0123 &nbsp;|&nbsp; Brooklyn, New York</div>
+        <div style="display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center">${['LinkedIn: /in/jameswilliams','Available Immediately'].map(s=>`<span style="background:${c}15;border:1px solid ${c}25;color:${c};padding:.2rem .6rem;border-radius:20px;font-size:.72rem">${s}</span>`).join('')}</div>
+      </div>
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${c};margin-bottom:.5rem;text-align:center">Professional Summary</div>
+      ${summary}
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${c};margin:1.25rem 0 .75rem;text-align:center">Work Experience</div>
+      ${expSection}
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${c};margin:1.25rem 0 .75rem;text-align:center">Education & Certifications</div>
+      ${eduSection}
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${c};margin:1.25rem 0 .5rem;text-align:center">Core Skills</div>
+      ${skillsSection}
+    </div>`;}
+
+  if(t.cat==='two'){
+    return `<div style="display:grid;grid-template-columns:240px 1fr;min-height:600px;font-family:Inter,sans-serif">
+      <div style="background:${t.sb||c};padding:2rem;color:white">
+        <div style="width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.2);margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;color:white">JW</div>
+        <div style="font-size:1.2rem;font-weight:800;text-align:center;color:white;margin-bottom:.25rem">James Williams</div>
+        <div style="font-size:.68rem;opacity:.65;margin-bottom:1.5rem;text-align:center;line-height:1.6">james@email.com<br>(917) 555-0123<br>Brooklyn, NY</div>
+        <div style="font-size:.58rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;opacity:.6;margin-bottom:.5rem">Skills</div>
+        ${['Team Leadership','Logistics','Inventory Mgmt','Staff Training','Problem Solving','MS Excel'].map(s=>`<div style="background:rgba(255,255,255,.12);border-radius:4px;padding:.25rem .6rem;font-size:.72rem;margin-bottom:4px;color:white">${s}</div>`).join('')}
+        <div style="font-size:.58rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;opacity:.6;margin-top:1rem;margin-bottom:.5rem">Languages</div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.8)">English (Native)<br>Spanish (Conversational)</div>
+      </div>
+      <div style="padding:2rem;background:${bg}">
+        <div style="font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:${c};margin-bottom:.5rem">Professional Summary</div>
+        ${summary}
+        <div style="font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:${c};margin:1.25rem 0 .75rem">Work Experience</div>
+        ${expSection}
+        <div style="font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:${c};margin:1.25rem 0 .75rem">Education</div>
+        ${eduSection}
+      </div>
+    </div>`;}
+
+  if(t.cat==='bold'){
+    return `<div style="background:${bg};padding:2.5rem;font-family:Inter,sans-serif">
+      <div style="font-size:2.5rem;font-weight:900;letter-spacing:-.04em;color:${c};line-height:1;margin-bottom:.25rem">James Williams</div>
+      <div style="font-size:.75rem;color:${mutedColor};margin-bottom:1rem">james@email.com &nbsp;·&nbsp; (917) 555-0123 &nbsp;·&nbsp; Brooklyn, New York</div>
+      <div style="height:3px;background:${c};margin-bottom:1.25rem"></div>
+      <div style="font-size:.58rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:${c};margin-bottom:.5rem">Summary</div>
+      ${summary}
+      <div style="font-size:.58rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:${c};margin:1.25rem 0 .75rem">Experience</div>
+      ${expSection}
+      <div style="font-size:.58rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:${c};margin:1.25rem 0 .75rem">Education</div>
+      ${eduSection}
+      <div style="font-size:.58rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:${c};margin:1.25rem 0 .5rem">Skills</div>
+      ${skillsSection}
+    </div>`;}
+
+  if(t.cat==='modern'){
+    return `<div style="background:${bg};font-family:Inter,sans-serif;overflow:hidden">
+      <div style="background:${c};padding:2rem">
+        <div style="font-size:2rem;font-weight:800;letter-spacing:-.04em;color:white;margin-bottom:.25rem">James Williams</div>
+        <div style="font-size:.75rem;color:rgba(255,255,255,.75)">james@email.com &nbsp;·&nbsp; (917) 555-0123 &nbsp;·&nbsp; Brooklyn, New York</div>
+      </div>
+      <div style="padding:2rem">
+        <div style="font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:${c};margin-bottom:.5rem">Summary</div>
+        ${summary}
+        <div style="font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:${c};margin:1.25rem 0 .75rem">Experience</div>
+        ${expSection.replace(/margin-bottom:.75rem/g,'margin-bottom:.75rem;padding-left:.75rem;border-left:3px solid '+c)}
+        <div style="font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:${c};margin:1.25rem 0 .75rem">Education</div>
+        ${eduSection}
+        <div style="font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:${c};margin:1.25rem 0 .5rem">Skills</div>
+        ${skillsSection}
+      </div>
+    </div>`;}
+
+  // classic / simple
+  return `<div style="background:${bg};padding:2.5rem;font-family:Georgia,serif">
+    <div style="font-size:2rem;font-weight:800;letter-spacing:-.03em;color:${c};margin-bottom:.25rem">James Williams</div>
+    <div style="font-size:.75rem;color:#888;border-bottom:${t.cat==='classic'?'2px':'1px'} solid ${c};padding-bottom:.75rem;margin-bottom:1rem">james@email.com &nbsp;·&nbsp; (917) 555-0123 &nbsp;·&nbsp; Brooklyn, New York</div>
+    <div style="font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${c};margin-bottom:.5rem">Professional Summary</div>
+    ${summary}
+    <div style="font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${c};margin:1.25rem 0 .75rem">Work Experience</div>
+    ${expSection}
+    <div style="font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${c};margin:1.25rem 0 .75rem">Education & Certifications</div>
+    ${eduSection}
+    <div style="font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${c};margin:1.25rem 0 .5rem">Skills</div>
+    ${skillsSection}
+  </div>`;
+}
 const TPLS=[
   {id:1,name:'Executive',cat:'classic',a:'#1a1a2e',bg:'#fff'},
   {id:2,name:'Timeless',cat:'classic',a:'#2c3e50',bg:'#fff'},
@@ -744,6 +991,11 @@ const TPLS=[
   {id:23,name:'Contrast',cat:'two',a:'#fff',bg:'#1f2937',sb:'#374151',dark:true},
   {id:24,name:'Sage',cat:'two',a:'#3f3f46',bg:'#fafaf9',sb:'#a8a29e'},
   {id:25,name:'Dusk',cat:'two',a:'#fff',bg:'#312e81',sb:'#4338ca',dark:true},
+  // CENTERED NAME
+  {id:26,name:'Centered',cat:'centered',a:'#1a1a2e',bg:'#fff',centered:true},
+  {id:27,name:'Symmetry',cat:'centered',a:'#0f766e',bg:'#f0fdf4',centered:true},
+  {id:28,name:'Spotlight',cat:'centered',a:'#7c3aed',bg:'#faf5ff',centered:true},
+  {id:29,name:'Pinnacle',cat:'centered',a:'#fff',bg:'#0f172a',dark:true,centered:true},
 ];
 
 let selTpl=TPLS[0],key=API_KEY,isRec=false,transcript='',mr=null,recognition=null;
@@ -780,6 +1032,16 @@ function prevHTML(t){
   const textColor=dk?'rgba(255,255,255,0.85)':'#222';
   const mutedColor=dk?'rgba(255,255,255,0.4)':'#888';
   const bodyColor=dk?'rgba(255,255,255,0.6)':'#555';
+
+  // centered name
+  if(t.centered){
+    return `<div style="background:${bg};padding:7px 8px;height:100%;font-family:Inter,sans-serif;text-align:center">
+      <div style="font-size:7.5px;font-weight:800;color:${c};margin-bottom:1px;letter-spacing:-.02em">James Williams</div>
+      <div style="font-size:3.5px;color:${dk?'rgba(255,255,255,.4)':'#888'};margin-bottom:2px">Brooklyn, NY · james@email.com</div>
+      <div style="height:1.5px;background:${c};margin-bottom:3px"></div>
+      <div style="font-size:3px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:${c};margin-bottom:1px;text-align:center">Summary</div>
+      <div style="font-size:3.5px;color:${dk?'rgba(255,255,255,.6)':'#555'};line-height:1.4;text-align:left">Logistics pro with 8+ years. Seeking supervisory role.</div>
+    </div>`;}
 
   if(t.cat==='two'){
     const sbText=dk?'rgba(255,255,255,0.9)':'white';
@@ -854,10 +1116,16 @@ function renderTpls(filter='all'){
   const grid=document.getElementById('tplGrid');
   const list=filter==='all'?TPLS:TPLS.filter(t=>t.cat===filter);
   grid.innerHTML=list.map(t=>`
-    <div class="tpl-card${t.id===selTpl.id?' selected':''}" onclick="pickTpl(${t.id})" data-id="${t.id}">
+    <div class="tpl-card${t.id===selTpl.id?' selected':''}" data-id="${t.id}">
       <div class="tpl-check"><svg width="9" height="9" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="white" stroke-width="3" stroke-linecap="round"/></svg></div>
-      <div class="tpl-preview">${prevHTML(t)}</div>
-      <div class="tpl-name"><span>${t.name}</span><span class="tpl-cat cat-${t.cat}">${t.cat}</span></div>
+      <div class="tpl-preview" onclick="pickTpl(${t.id})">${prevHTML(t)}</div>
+      <div class="tpl-name">
+        <span style="cursor:pointer" onclick="pickTpl(${t.id})">${t.name}</span>
+        <div style="display:flex;align-items:center;gap:.35rem">
+          <span class="tpl-cat cat-${t.cat}">${t.cat}</span>
+          <button onclick="openPreview(${t.id})" style="background:rgba(59,108,250,0.1);border:1px solid rgba(59,108,250,0.2);color:#6b8ffb;border-radius:4px;padding:.1rem .4rem;font-size:.55rem;cursor:pointer;font-family:var(--font);white-space:nowrap" title="Preview full resume">👁 Preview</button>
+        </div>
+      </div>
     </div>`).join('');
 }
 
@@ -1022,7 +1290,24 @@ function renderResults(r){
   // Resume HTML based on template
   let rHTML='';
   const ac=t.a,bg=t.bg,dk=t.dark;
-  if(t.cat==='two'){
+
+  if(t.centered){
+    rHTML=`<div style="background:${bg};padding:2rem;border-radius:8px;text-align:center">
+      <div style="font-size:2rem;font-weight:800;letter-spacing:-.04em;color:${ac};margin-bottom:.25rem">${r.name}</div>
+      <div style="font-size:.72rem;color:${dk?'rgba(255,255,255,.5)':'#888'};margin-bottom:.5rem">${r.email} &nbsp;·&nbsp; ${r.phone} &nbsp;·&nbsp; ${r.location}</div>
+      <div style="height:2px;background:${ac};margin-bottom:1.25rem"></div>
+      <div style="text-align:left">
+        <div style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${ac};margin-bottom:.5rem;text-align:center">Summary</div>
+        <div style="font-size:.875rem;color:${dk?'rgba(255,255,255,.7)':'#444'};line-height:1.7;margin-bottom:1rem;text-align:left">${r.summary}</div>
+        <div style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${ac};margin-bottom:.75rem;text-align:center">Experience</div>
+        ${(r.experience||[]).map(e=>`<div style="margin-bottom:.875rem"><div style="font-weight:700;font-size:.875rem;color:${dk?'white':'#111'}">${e.title}</div><div style="font-size:.68rem;color:${dk?'rgba(255,255,255,.45)':'#888'};margin-bottom:.25rem">${e.company} · ${e.dates}</div><div style="font-size:.8rem;color:${dk?'rgba(255,255,255,.65)':'#555'};line-height:1.65">${(e.bullets||[]).map(b=>`• ${b}`).join('<br>')}</div></div>`).join('')}
+        <div style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${ac};margin-bottom:.75rem;margin-top:.75rem;text-align:center">Education</div>
+        ${(r.education||[]).map(e=>`<div style="margin-bottom:.5rem"><div style="font-weight:700;font-size:.875rem;color:${dk?'white':'#111'}">${e.degree}</div><div style="font-size:.68rem;color:${dk?'rgba(255,255,255,.45)':'#888'}">${e.institution} · ${e.year}</div></div>`).join('')}
+        <div style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${ac};margin-bottom:.5rem;margin-top:.75rem;text-align:center">Skills</div>
+        <div style="display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center">${(r.skills||[]).map(s=>`<span style="background:${ac}18;border:1px solid ${ac}35;color:${ac};padding:.22rem .6rem;border-radius:20px;font-size:.72rem;font-weight:500">${s}</span>`).join('')}</div>
+      </div>
+    </div>`;
+  } else if(t.cat==='two'){
     rHTML=`<div style="display:grid;grid-template-columns:220px 1fr;min-height:400px;border-radius:8px;overflow:hidden">
       <div style="background:${t.sb||ac};padding:1.5rem;color:white">
         <div style="font-size:1.2rem;font-weight:800;letter-spacing:-.03em;margin-bottom:.2rem;color:white">${r.name}</div>
