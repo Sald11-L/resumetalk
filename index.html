@@ -1323,7 +1323,7 @@ nav{position:sticky;top:0;z-index:100;height:60px;padding:0 2rem;display:flex;al
 </div>
 
 <script data-cfasync="false">
-// ── GLOBAL STUBS (prevents "not defined" errors during parse) ──
+// -- GLOBAL STUBS (nav only - needed before full script parses) --
 window.showPage=function(n){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
@@ -1333,28 +1333,13 @@ window.showPage=function(n){
   if(nb)nb.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
 };
-window.openPreview=function(id){};
-window.pickTpl=function(id){};
-window.filterTpl=function(cat,btn){document.querySelectorAll('.filter').forEach(b=>b.classList.remove('on'));if(btn)btn.classList.add('on');if(btn)btn.dataset.cat=cat;if(window.renderTpls)window.renderTpls(cat);};
-window.goRecord=function(){};
-window.goBack=function(){};
-window.toggleRec=function(){};
-window.startRec=function(){};
-window.finishRec=function(){};
-window.addMoreRec=function(){};
-window.buildResume=function(){};
-window.filterJobs=function(){};
-window.dlWord=function(){};
-window.dlText=function(){};
-window.resetAll=function(){};
-window.toggleFaq=function(){};
 
-// ── CONFIG ──
+// -- CONFIG --
 const API_KEY = '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';
 
-// ── TEMPLATE DATA (must be first so all functions can reference) ──
+// -- TEMPLATE DATA (must be first so all functions can reference) --
 const TPLS=[
-  // ── CORPORATE / EXECUTIVE (ATS-first, clean, authoritative) ──
+  // -- CORPORATE / EXECUTIVE (ATS-first, clean, authoritative) --
   {id:1, name:'Boardroom',    cat:'corporate', a:'#0d1b2a', bg:'#ffffff'},
   {id:2, name:'Director',     cat:'corporate', a:'#1a2744', bg:'#ffffff'},
   {id:3, name:'C-Suite',      cat:'corporate', a:'#14213d', bg:'#fafafa'},
@@ -1364,7 +1349,7 @@ const TPLS=[
   {id:7, name:'Executive',    cat:'corporate', a:'#22223b', bg:'#ffffff'},
   {id:8, name:'Meridian',     cat:'corporate', a:'#1b3a4b', bg:'#ffffff'},
 
-  // ── TECH / ENGINEERING ──
+  // -- TECH / ENGINEERING --
   {id:9,  name:'Silicon',     cat:'tech', a:'#2563eb', bg:'#f8fafc'},
   {id:10, name:'Stack',       cat:'tech', a:'#0f172a', bg:'#f1f5f9'},
   {id:11, name:'Deploy',      cat:'tech', a:'#1d4ed8', bg:'#eff6ff'},
@@ -1373,7 +1358,7 @@ const TPLS=[
   {id:14, name:'Agile',       cat:'tech', a:'#0e7490', bg:'#ecfeff'},
   {id:15, name:'Pipeline',    cat:'tech', a:'#1e40af', bg:'#ffffff'},
 
-  // ── HEALTHCARE / SCIENCE ──
+  // -- HEALTHCARE / SCIENCE --
   {id:16, name:'Vitals',      cat:'healthcare', a:'#0d6e6e', bg:'#f0fdfa'},
   {id:17, name:'Caduceus',    cat:'healthcare', a:'#047857', bg:'#ecfdf5'},
   {id:18, name:'Clinical',    cat:'healthcare', a:'#065f46', bg:'#ffffff'},
@@ -1381,7 +1366,7 @@ const TPLS=[
   {id:20, name:'Research',    cat:'healthcare', a:'#1e4d6b', bg:'#f8fafc'},
   {id:21, name:'Scrubs',      cat:'healthcare', a:'#155e75', bg:'#ecfeff'},
 
-  // ── CREATIVE / DESIGN / MEDIA ──
+  // -- CREATIVE / DESIGN / MEDIA --
   {id:22, name:'Canvas',      cat:'creative', a:'#7c3aed', bg:'#faf5ff'},
   {id:23, name:'Studio',      cat:'creative', a:'#9333ea', bg:'#ffffff'},
   {id:24, name:'Frame',       cat:'creative', a:'#6d28d9', bg:'#f5f3ff'},
@@ -1389,7 +1374,7 @@ const TPLS=[
   {id:26, name:'Typeset',     cat:'creative', a:'#b45309', bg:'#fafaf9'},
   {id:27, name:'Palette',     cat:'creative', a:'#c026d3', bg:'#fdf4ff'},
 
-  // ── BUSINESS / FINANCE / CONSULTING ──
+  // -- BUSINESS / FINANCE / CONSULTING --
   {id:28, name:'Analyst',     cat:'business', a:'#1e3a5f', bg:'#ffffff'},
   {id:29, name:'Venture',     cat:'business', a:'#1e3a5f', bg:'#f8f9fa', sb:'#1e3a5f', two:true},
   {id:30, name:'Ledger',      cat:'business', a:'#064e3b', bg:'#f0fdf4'},
@@ -1397,13 +1382,13 @@ const TPLS=[
   {id:32, name:'Consultant',  cat:'business', a:'#374151', bg:'#f9fafb'},
   {id:33, name:'Advisor',     cat:'business', a:'#1e3a5f', bg:'#ffffff'},
 
-  // ── EDUCATION / NONPROFIT ──
+  // -- EDUCATION / NONPROFIT --
   {id:34, name:'Scholar',     cat:'education', a:'#7b3f00', bg:'#fdf9f3'},
   {id:35, name:'Campus',      cat:'education', a:'#1b4332', bg:'#f0fdf4'},
   {id:36, name:'Tenure',      cat:'education', a:'#1c1917', bg:'#fafaf9'},
   {id:37, name:'Civitas',     cat:'education', a:'#134e4a', bg:'#f0fdfa'},
 
-  // ── TWO-COLUMN LAYOUTS ──
+  // -- TWO-COLUMN LAYOUTS --
   {id:38, name:'Dual',        cat:'two-col', a:'#1e40af', bg:'#eff6ff', sb:'#1e40af'},
   {id:39, name:'Sidebar',     cat:'two-col', a:'#065f46', bg:'#ecfdf5', sb:'#065f46'},
   {id:40, name:'Profile',     cat:'two-col', a:'#374151', bg:'#f9fafb', sb:'#6b7280'},
@@ -1411,13 +1396,13 @@ const TPLS=[
   {id:42, name:'Horizon',     cat:'two-col', a:'#0e7490', bg:'#ecfeff', sb:'#0e7490'},
   {id:43, name:'Blueprint',   cat:'two-col', a:'#1e3a5f', bg:'#f0f9ff', sb:'#1e3a5f'},
 
-  // ── CENTERED NAME ──
+  // -- CENTERED NAME --
   {id:44, name:'Symmetry',    cat:'centered', a:'#0f1f3d', bg:'#ffffff', centered:true},
   {id:45, name:'Centered',    cat:'centered', a:'#1e3a5f', bg:'#f8fafc', centered:true},
   {id:46, name:'Spotlight',   cat:'centered', a:'#1a6b5a', bg:'#f0fdf4', centered:true},
   {id:47, name:'Marquee',     cat:'centered', a:'#7c3aed', bg:'#faf5ff', centered:true},
 
-  // ── MINIMAL / CLEAN ──
+  // -- MINIMAL / CLEAN --
   {id:48, name:'Minimal',     cat:'minimal', a:'#374151', bg:'#ffffff'},
   {id:49, name:'Crisp',       cat:'minimal', a:'#1f2937', bg:'#ffffff'},
   {id:50, name:'Pure',        cat:'minimal', a:'#111827', bg:'#fafafa'},
@@ -1445,7 +1430,7 @@ const TPL_INDUSTRIES={
   48:['Any Industry','Clean'],       49:['Any Industry','ATS-Safe'],     50:['Any Industry','Simple'],
 };
 
-// ── TEMPLATE PREVIEW MODAL ──
+// -- TEMPLATE PREVIEW MODAL --
 window.openPreview=function openPreview(id){
   const t=TPLS.find(t=>t.id===id);
   if(!t)return;
@@ -1712,7 +1697,7 @@ window.pickTpl=function pickTpl(id){
   renderTpls(document.querySelector('.filter.on')?.dataset?.cat||'all');
 }
 
-function filterTpl(cat,btn){
+window.filterTpl=function filterTpl(cat,btn){
   document.querySelectorAll('.filter').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');btn.dataset.cat=cat;
   renderTpls(cat);
@@ -2105,7 +2090,7 @@ window.dlWord=function dlWord(){
 
 window.dlText=function dlText(){
   const r=window._r;if(!r)return;
-  let txt=`${r.name}\n${r.email} | ${r.phone} | ${r.location}\n${'─'.repeat(50)}\n\nSUMMARY\n${r.summary}\n\nEXPERIENCE\n`;
+  let txt=`${r.name}\n${r.email} | ${r.phone} | ${r.location}\n${'-'.repeat(50)}\n\nSUMMARY\n${r.summary}\n\nEXPERIENCE\n`;
   (r.experience||[]).forEach(e=>{txt+=`\n${e.title} — ${e.company} (${e.dates})\n${(e.bullets||[]).map(b=>'  • '+b).join('\n')}\n`;});
   txt+=`\nEDUCATION\n`;(r.education||[]).forEach(e=>{txt+=`${e.degree}, ${e.institution} (${e.year})\n`;});
   txt+=`\nSKILLS\n${(r.skills||[]).join(', ')}\n`;
