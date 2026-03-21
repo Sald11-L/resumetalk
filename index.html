@@ -905,16 +905,16 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
 function prevHTML(t) {
   const c = t.a, bg = t.bg;
   if (t.centered) {
-    return '<div style="background:'+bg+';padding:7px 8px;height:100%;font-family:sans-serif;text-align:center"><div style="font-size:7.5px;font-weight:800;color:'+c+';margin-bottom:1px">James Williams</div><div style="font-size:3.5px;color:#888;margin-bottom:2px">Brooklyn, NY · james@email.com</div><div style="height:1.5px;background:'+c+';margin-bottom:3px"></div><div style="font-size:3px;font-weight:700;text-transform:uppercase;color:'+c+';margin-bottom:1px">Summary</div><div style="font-size:3.5px;color:#555;line-height:1.4">Logistics pro · 8+ years · Seeking supervisory role</div></div>';
+    return '<div style="background:'+bg+';padding:7px 8px;height:100%;font-family:sans-serif;text-align:center"><div style="font-size:7.5px;font-weight:800;color:'+c+';margin-bottom:1px">James Williams</div><div style="font-size:3.5px;color:#888;margin-bottom:2px">Brooklyn, NY  -  james@email.com</div><div style="height:1.5px;background:'+c+';margin-bottom:3px"></div><div style="font-size:3px;font-weight:700;text-transform:uppercase;color:'+c+';margin-bottom:1px">Summary</div><div style="font-size:3.5px;color:#555;line-height:1.4">Logistics pro  -  8+ years  -  Seeking supervisory role</div></div>';
   }
   if (t.cat === 'two-col') {
     const sb = t.sb || c;
     return '<div style="display:grid;grid-template-columns:38% 62%;height:100%;font-family:sans-serif"><div style="background:'+sb+';padding:5px 6px"><div style="width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.25);margin:0 auto 3px;display:flex;align-items:center;justify-content:center;font-size:7px;color:white;font-weight:700">JW</div><div style="font-size:4px;font-weight:700;color:rgba(255,255,255,.9);text-align:center;margin-bottom:3px">James Williams</div><div style="font-size:3px;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;margin-bottom:1px">Skills</div><div style="background:rgba(255,255,255,.15);border-radius:2px;padding:1px 3px;font-size:3px;color:rgba(255,255,255,.85);margin-bottom:1px">Leadership</div><div style="background:rgba(255,255,255,.15);border-radius:2px;padding:1px 3px;font-size:3px;color:rgba(255,255,255,.85)">Logistics</div></div><div style="padding:5px 6px;background:'+bg+'"><div style="font-size:3px;font-weight:700;text-transform:uppercase;color:'+c+';margin-bottom:2px">Experience</div><div style="font-size:4px;font-weight:700;color:#111">Warehouse Supervisor</div><div style="font-size:3px;color:#888;margin-bottom:1px">FedEx 2017-2022</div><div style="font-size:3.5px;color:#555">Managed 12 staff, cut errors 32%</div></div></div>';
   }
   if (t.cat === 'tech' || t.cat === 'healthcare' || t.cat === 'creative' || t.cat === 'business') {
-    return '<div style="background:'+bg+';height:100%;font-family:sans-serif;overflow:hidden"><div style="background:'+c+';padding:5px 7px;margin-bottom:4px"><div style="font-size:7px;font-weight:800;color:white">James Williams</div><div style="font-size:3.5px;color:rgba(255,255,255,.7)">'+t.name+' · Brooklyn, NY</div></div><div style="padding:0 7px"><div style="font-size:3px;font-weight:700;text-transform:uppercase;color:'+c+';margin-bottom:1px">Summary</div><div style="font-size:3.5px;color:#555;line-height:1.4;margin-bottom:3px">Operations professional, 8+ years logistics.</div><div style="font-size:3px;font-weight:700;text-transform:uppercase;color:'+c+';margin-bottom:1px">Experience</div><div style="padding-left:4px;border-left:2px solid '+c+'"><div style="font-size:4px;font-weight:700;color:#111">Warehouse Supervisor</div><div style="font-size:3px;color:#888">FedEx 2017-2022</div></div></div></div>';
+    return '<div style="background:'+bg+';height:100%;font-family:sans-serif;overflow:hidden"><div style="background:'+c+';padding:5px 7px;margin-bottom:4px"><div style="font-size:7px;font-weight:800;color:white">James Williams</div><div style="font-size:3.5px;color:rgba(255,255,255,.7)">'+t.name+'  -  Brooklyn, NY</div></div><div style="padding:0 7px"><div style="font-size:3px;font-weight:700;text-transform:uppercase;color:'+c+';margin-bottom:1px">Summary</div><div style="font-size:3.5px;color:#555;line-height:1.4;margin-bottom:3px">Operations professional, 8+ years logistics.</div><div style="font-size:3px;font-weight:700;text-transform:uppercase;color:'+c+';margin-bottom:1px">Experience</div><div style="padding-left:4px;border-left:2px solid '+c+'"><div style="font-size:4px;font-weight:700;color:#111">Warehouse Supervisor</div><div style="font-size:3px;color:#888">FedEx 2017-2022</div></div></div></div>';
   }
-  return '<div style="background:'+bg+';padding:7px 8px;height:100%;font-family:sans-serif"><div style="font-size:8px;font-weight:800;color:'+c+';letter-spacing:-.02em;margin-bottom:1px">James Williams</div><div style="font-size:3.5px;color:#888;border-bottom:1.5px solid '+c+';padding-bottom:2px;margin-bottom:3px">james@email.com · Brooklyn, NY</div><div style="font-size:3px;font-weight:700;text-transform:uppercase;color:'+c+';margin-bottom:1px">Summary</div><div style="font-size:3.5px;color:#555;line-height:1.4;margin-bottom:3px">Operations professional, 8+ years logistics.</div><div style="font-size:3px;font-weight:700;text-transform:uppercase;color:'+c+';margin-bottom:1px">Experience</div><div style="font-size:4px;font-weight:700;color:#111">Warehouse Supervisor</div><div style="font-size:3px;color:#888">FedEx 2017-2022</div></div>';
+  return '<div style="background:'+bg+';padding:7px 8px;height:100%;font-family:sans-serif"><div style="font-size:8px;font-weight:800;color:'+c+';letter-spacing:-.02em;margin-bottom:1px">James Williams</div><div style="font-size:3.5px;color:#888;border-bottom:1.5px solid '+c+';padding-bottom:2px;margin-bottom:3px">james@email.com  -  Brooklyn, NY</div><div style="font-size:3px;font-weight:700;text-transform:uppercase;color:'+c+';margin-bottom:1px">Summary</div><div style="font-size:3.5px;color:#555;line-height:1.4;margin-bottom:3px">Operations professional, 8+ years logistics.</div><div style="font-size:3px;font-weight:700;text-transform:uppercase;color:'+c+';margin-bottom:1px">Experience</div><div style="font-size:4px;font-weight:700;color:#111">Warehouse Supervisor</div><div style="font-size:3px;color:#888">FedEx 2017-2022</div></div>';
 }
 
 function renderTpls(filter) {
@@ -1189,12 +1189,12 @@ function renderResults(r) {
 
   // Resume body
   const exp = (r.experience || []).map(function(j) {
-    const bullets = (j.bullets || []).map(function(b){ return '<div style="font-size:.84rem;color:#374151;line-height:1.65;margin-bottom:.15rem">• ' + b + '</div>'; }).join('');
-    return '<div style="margin-bottom:1rem"><div style="font-weight:700;font-size:.95rem;color:#0f1f3d">' + j.title + ' · ' + j.company + '</div><div style="font-size:.75rem;color:#6b7280;margin:.1rem 0 .3rem">' + (j.dates||'') + '</div>' + bullets + '</div>';
+    const bullets = (j.bullets || []).map(function(b){ return '<div style="font-size:.84rem;color:#374151;line-height:1.65;margin-bottom:.15rem">* ' + b + '</div>'; }).join('');
+    return '<div style="margin-bottom:1rem"><div style="font-weight:700;font-size:.95rem;color:#0f1f3d">' + j.title + '  -  ' + j.company + '</div><div style="font-size:.75rem;color:#6b7280;margin:.1rem 0 .3rem">' + (j.dates||'') + '</div>' + bullets + '</div>';
   }).join('');
 
   const edu = (r.education || []).map(function(e) {
-    return '<div style="font-size:.84rem;color:#374151;margin-bottom:.2rem"><strong>' + e.degree + '</strong> — ' + e.institution + (e.year ? ', ' + e.year : '') + '</div>';
+    return '<div style="font-size:.84rem;color:#374151;margin-bottom:.2rem"><strong>' + e.degree + '</strong> - ' + e.institution + (e.year ? ', ' + e.year : '') + '</div>';
   }).join('');
 
   const skills = (r.skills || []).map(function(s) {
@@ -1204,7 +1204,7 @@ function renderResults(r) {
   document.getElementById('resumeBody').innerHTML =
     '<div style="border-bottom:2px solid ' + ac + ';padding-bottom:.75rem;margin-bottom:1rem">'
     + '<div style="font-size:1.5rem;font-weight:800;color:#0f1f3d;letter-spacing:-.02em">' + (r.name||'Your Name') + '</div>'
-    + '<div style="font-size:.78rem;color:#6b7280;margin-top:.2rem">' + [r.email,r.phone,r.location].filter(Boolean).join(' · ') + '</div>'
+    + '<div style="font-size:.78rem;color:#6b7280;margin-top:.2rem">' + [r.email,r.phone,r.location].filter(Boolean).join('  -  ') + '</div>'
     + '</div>'
     + (r.summary ? '<div style="margin-bottom:1.25rem"><div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:'+ac+';margin-bottom:.4rem">Summary</div><div style="font-size:.875rem;color:#374151;line-height:1.7">' + r.summary + '</div></div>' : '')
     + (exp ? '<div style="margin-bottom:1.25rem"><div style="font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:'+ac+';margin-bottom:.6rem">Experience</div>' + exp + '</div>' : '')
@@ -1288,19 +1288,19 @@ function dlWord() {
   if (r.experience && r.experience.length) {
     doc += '<h2 style="font-size:13pt;border-bottom:1pt solid #333;margin-bottom:8pt">Experience</h2>';
     r.experience.forEach(function(j) {
-      doc += '<p style="margin:0;font-size:11pt"><strong>' + j.title + '</strong> · ' + j.company + '</p>';
+      doc += '<p style="margin:0;font-size:11pt"><strong>' + j.title + '</strong>  -  ' + j.company + '</p>';
       doc += '<p style="margin:0 0 4pt;font-size:9pt;color:#666">' + (j.dates||'') + '</p>';
-      (j.bullets||[]).forEach(function(b){ doc += '<p style="margin:0 0 2pt;font-size:10pt">• ' + b + '</p>'; });
+      (j.bullets||[]).forEach(function(b){ doc += '<p style="margin:0 0 2pt;font-size:10pt">* ' + b + '</p>'; });
       doc += '<p style="margin-bottom:8pt"></p>';
     });
   }
   if (r.education && r.education.length) {
     doc += '<h2 style="font-size:13pt;border-bottom:1pt solid #333;margin-bottom:8pt">Education</h2>';
-    r.education.forEach(function(e){ doc += '<p style="font-size:10pt"><strong>' + e.degree + '</strong> — ' + e.institution + (e.year ? ', ' + e.year : '') + '</p>'; });
+    r.education.forEach(function(e){ doc += '<p style="font-size:10pt"><strong>' + e.degree + '</strong> - ' + e.institution + (e.year ? ', ' + e.year : '') + '</p>'; });
   }
   if (r.skills && r.skills.length) {
     doc += '<h2 style="font-size:13pt;border-bottom:1pt solid #333;margin-bottom:8pt">Skills</h2>';
-    doc += '<p style="font-size:10pt">' + r.skills.join(' · ') + '</p>';
+    doc += '<p style="font-size:10pt">' + r.skills.join('  -  ') + '</p>';
   }
   doc += '</body></html>';
   const blob = new Blob([doc], {type: 'application/msword'});
